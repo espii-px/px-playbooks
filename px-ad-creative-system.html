@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PX Ad Creative System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --slot1:#2563EB; --slot1-bg:#EFF6FF; --slot1-mid:#93C5FD; --slot1-dark:#1E40AF; /* Ideas */
+  --slot2:#0891B2; --slot2-bg:#ECFEFF; --slot2-mid:#67E8F9; --slot2-dark:#164E63; /* Angle Testing */
+  --slot3:#059669; --slot3-bg:#ECFDF5; --slot3-mid:#6EE7B7; --slot3-dark:#064E3B; /* Execution Styles */
+  --slot4:#D97706; --slot4-bg:#FFFBEB; --slot4-mid:#FCD34D; --slot4-dark:#92400E; /* Iterations */
+  --slot5:#DB2777; --slot5-bg:#FDF2F8; --slot5-mid:#F9A8D4; --slot5-dark:#831843; /* Ad Elements */
+  --slot6:#7C3AED; --slot6-bg:#F5F3FF; --slot6-mid:#C4B5FD; --slot6-dark:#4C1D95; /* Why It Wins */
+  --slate:#475569; --slate-bg:#F1F5F9; --slate-mid:#CBD5E1; --slate-dark:#1E293B; /* Sub-Niches */
+  --teal:#0F766E; --teal-bg:#F0FDFA; --teal-mid:#99F6E4; --teal-dark:#134E4A;
+  --ink:#0F172A; --ink2:#334155; --ink3:#64748B; --surface:#F8FAFC; --border:#E2E8F0; --white:#FFFFFF;
+  --r-sm:6px; --r-md:10px; --r-lg:16px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'DM Sans',sans-serif; background:var(--surface); color:var(--ink); line-height:1.6; }
+
+.hero { background:var(--ink); color:#fff; padding:56px 40px 48px; text-align:center; }
+.hero-label { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#94A3B8; margin-bottom:12px; }
+.hero h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(26px,5vw,46px); font-weight:700; line-height:1.15; margin-bottom:14px; }
+.hero h1 span { color:#93C5FD; }
+.hero p { color:#94A3B8; font-size:15px; max-width:600px; margin:0 auto 36px; }
+
+.funnel-wrap { max-width:920px; margin:0 auto; }
+.funnel-strip-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#64748B; text-align:center; margin-bottom:8px; }
+.funnel-strip { display:flex; justify-content:center; }
+.funnel-seg { flex:1; position:relative; padding:12px 10px 12px 24px; cursor:pointer; border:none; background:none; color:#fff; text-align:left; transition:filter .2s; }
+.funnel-seg:first-child { padding-left:16px; border-radius:8px 0 0 8px; }
+.funnel-seg:last-child { border-radius:0 8px 8px 0; }
+.funnel-seg:hover { filter:brightness(1.08); }
+.funnel-seg .seg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.75; margin-bottom:2px; }
+.funnel-seg .seg-name { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; line-height:1.2; }
+.funnel-seg::after { content:''; position:absolute; right:-14px; top:0; width:0; height:0; border-top:23px solid transparent; border-bottom:23px solid transparent; z-index:2; }
+.funnel-seg:last-child::after { display:none; }
+.seg-slot1 { background:var(--slot1); } .seg-slot1::after { border-left:14px solid var(--slot1); }
+.seg-slot2 { background:var(--slot2); } .seg-slot2::after { border-left:14px solid var(--slot2); }
+.seg-slot3 { background:var(--slot3); } .seg-slot3::after { border-left:14px solid var(--slot3); }
+.seg-slot4 { background:var(--slot4); } .seg-slot4::after { border-left:14px solid var(--slot4); }
+
+.add-chips { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.chips-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#64748B; }
+.add-chip { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; cursor:pointer; border:1px solid; transition:filter .2s; }
+.add-chip:hover { filter:brightness(1.08); }
+.chip-slate { background:var(--slate); color:#fff; border-color:var(--slate); }
+.chip-slot5b { background:var(--slot5); color:#fff; border-color:var(--slot5); }
+.chip-slot6 { background:var(--slot6); color:#fff; border-color:var(--slot6); }
+
+.tabs-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
+.tabs-nav::-webkit-scrollbar { display:none; }
+.tab-btn { flex:0 0 auto; padding:12px 16px; border:none; border-bottom:3px solid transparent; background:none; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:6px; transition:color .2s,border-color .2s; }
+.tab-btn .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.tab-btn.active { color:var(--ink); }
+.tab-btn[data-tab="overview"].active { border-color:var(--ink2); color:var(--ink); }
+.tab-btn[data-tab="ideas"].active { border-color:var(--slot1); color:var(--slot1-dark); }
+.tab-btn[data-tab="angles"].active { border-color:var(--slot2); color:var(--slot2-dark); }
+.tab-btn[data-tab="exec"].active { border-color:var(--slot3); color:var(--slot3-dark); }
+.tab-btn[data-tab="iterate"].active { border-color:var(--slot4); color:var(--slot4-dark); }
+.tab-btn[data-tab="elements"].active { border-color:var(--slot5); color:var(--slot5-dark); }
+.tab-btn[data-tab="subniche"].active { border-color:var(--slate); color:var(--slate-dark); }
+.tab-btn[data-tab="why"].active { border-color:var(--slot6); color:var(--slot6-dark); }
+.tab-btn[data-tab="structure"].active { border-color:var(--ink2); color:var(--ink); }
+.tab-divider { width:1px; background:var(--border); margin:8px 0; flex-shrink:0; }
+
+.main { max-width:1100px; margin:0 auto; padding:36px 24px 80px; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+.campaign-header { display:flex; align-items:flex-start; gap:18px; margin-bottom:28px; padding:24px 28px; border-radius:var(--r-lg); border:1px solid; }
+.campaign-header .badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:5px 10px; border-radius:4px; flex-shrink:0; margin-top:3px; color:#fff; }
+.campaign-header h2 { font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; margin-bottom:6px; line-height:1.2; }
+.campaign-header p { font-size:14px; color:var(--ink2); max-width:680px; }
+.header-slot1 { background:var(--slot1-bg); border-color:var(--slot1-mid); }
+.header-slot2 { background:var(--slot2-bg); border-color:var(--slot2-mid); }
+.header-slot3 { background:var(--slot3-bg); border-color:var(--slot3-mid); }
+.header-slot4 { background:var(--slot4-bg); border-color:var(--slot4-mid); }
+.header-slot5 { background:var(--slot5-bg); border-color:var(--slot5-mid); }
+.header-slot6 { background:var(--slot6-bg); border-color:var(--slot6-mid); }
+.header-slate { background:var(--slate-bg); border-color:var(--slate-mid); }
+.badge-slot1 { background:var(--slot1); } .badge-slot2 { background:var(--slot2); }
+.badge-slot3 { background:var(--slot3); } .badge-slot4 { background:var(--slot4); }
+.badge-slot5 { background:var(--slot5); } .badge-slot6 { background:var(--slot6); }
+.badge-slate { background:var(--slate); }
+
+.callout { border-radius:var(--r-md); padding:14px 18px; font-size:13px; margin-bottom:14px; border-left:3px solid; }
+.callout.blue { background:var(--slot1-bg); border-color:var(--slot1); color:var(--slot1-dark); }
+.callout.cyan { background:var(--slot2-bg); border-color:var(--slot2); color:var(--slot2-dark); }
+.callout.green { background:var(--slot3-bg); border-color:var(--slot3); color:var(--slot3-dark); }
+.callout.amber { background:var(--slot4-bg); border-color:var(--slot4); color:var(--slot4-dark); }
+.callout.pink { background:var(--slot5-bg); border-color:var(--slot5); color:var(--slot5-dark); }
+.callout.purple { background:var(--slot6-bg); border-color:var(--slot6); color:var(--slot6-dark); }
+.callout.slate { background:var(--slate-bg); border-color:var(--slate); color:var(--slate-dark); }
+.callout.red { background:#FEF2F2; border-color:#EF4444; color:#991B1B; }
+
+.detail-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-bottom:20px; }
+.dg-item { background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px; }
+.dg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px; }
+.dg-value { font-size:13px; color:var(--ink2); }
+
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-bottom:20px; }
+.grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-bottom:20px; }
+.card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
+.card-title { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+.card-title::before { content:''; display:inline-block; width:3px; height:13px; border-radius:2px; flex-shrink:0; }
+.card-title.slot1::before { background:var(--slot1); }
+.card-title.slot2::before { background:var(--slot2); }
+.card-title.slot3::before { background:var(--slot3); }
+.card-title.slot4::before { background:var(--slot4); }
+.card-title.slot5::before { background:var(--slot5); }
+.card-title.slot6::before { background:var(--slot6); }
+.card-title.slate::before { background:var(--slate); }
+.card p { font-size:13px; color:var(--ink2); }
+
+.stat-row { display:flex; flex-wrap:wrap; gap:7px; }
+.stat-chip { font-size:12px; padding:5px 11px; border-radius:20px; font-weight:500; border:1px solid; }
+.chip-slot1 { background:var(--slot1-bg); color:var(--slot1-dark); border-color:var(--slot1-mid); }
+.chip-slot2 { background:var(--slot2-bg); color:var(--slot2-dark); border-color:var(--slot2-mid); }
+.chip-slot3 { background:var(--slot3-bg); color:var(--slot3-dark); border-color:var(--slot3-mid); }
+.chip-slot4 { background:var(--slot4-bg); color:var(--slot4-dark); border-color:var(--slot4-mid); }
+.chip-slot5 { background:var(--slot5-bg); color:var(--slot5-dark); border-color:var(--slot5-mid); }
+.chip-slot6 { background:var(--slot6-bg); color:var(--slot6-dark); border-color:var(--slot6-mid); }
+.chip-slate { background:var(--slate-bg); color:var(--slate-dark); border-color:var(--slate-mid); }
+
+.info-list { list-style:none; }
+.info-list li { padding:7px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--ink2); display:flex; align-items:flex-start; gap:7px; }
+.info-list li:last-child { border-bottom:none; }
+.info-list li::before { content:'\2192'; font-size:11px; color:var(--ink3); flex-shrink:0; margin-top:2px; }
+.info-list li strong { font-family:'Space Grotesk',sans-serif; font-weight:600; color:var(--ink); }
+
+.notes-box { border-radius:var(--r-md); background:var(--surface); border:1px solid var(--border); padding:16px 20px; font-size:13px; color:var(--ink2); margin-bottom:14px; }
+.notes-box strong { font-family:'Space Grotesk',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink3); display:block; margin-bottom:5px; }
+.exclude-box { background:#FFF7ED; border:1px solid #FED7AA; border-radius:var(--r-md); padding:12px 16px; font-size:13px; color:#92400E; margin-top:8px; }
+.exclude-box strong { font-family:'Space Grotesk',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:3px; }
+
+.ov-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-bottom:28px; }
+.ov-card { border-radius:var(--r-lg); padding:18px; border:1px solid; cursor:pointer; transition:transform .15s,box-shadow .15s; }
+.ov-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.08); }
+.ov-tag { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.7; display:block; margin-bottom:4px; }
+.ov-name { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; line-height:1.2; display:block; margin-bottom:5px; }
+.ov-desc { font-size:12px; line-height:1.5; opacity:.8; }
+.ov-slot1 { background:var(--slot1-bg); border-color:var(--slot1-mid); color:var(--slot1-dark); }
+.ov-slot2 { background:var(--slot2-bg); border-color:var(--slot2-mid); color:var(--slot2-dark); }
+.ov-slot3 { background:var(--slot3-bg); border-color:var(--slot3-mid); color:var(--slot3-dark); }
+.ov-slot4 { background:var(--slot4-bg); border-color:var(--slot4-mid); color:var(--slot4-dark); }
+.ov-slot5 { background:var(--slot5-bg); border-color:var(--slot5-mid); color:var(--slot5-dark); }
+.ov-slot6 { background:var(--slot6-bg); border-color:var(--slot6-mid); color:var(--slot6-dark); }
+.ov-slate { background:var(--slate-bg); border-color:var(--slate-mid); color:var(--slate-dark); }
+
+.sec { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin:32px 0 16px; color:var(--ink); border-bottom:2px solid var(--border); padding-bottom:8px; }
+.h2 { font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; margin-bottom:9px; }
+.lead { font-size:14px; color:var(--ink2); line-height:1.7; margin-bottom:26px; max-width:720px; }
+
+.struct-block { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); margin-bottom:16px; overflow:hidden; }
+.struct-header { display:flex; align-items:center; gap:12px; padding:16px 22px; cursor:pointer; user-select:none; }
+.struct-header:hover { background:var(--surface); }
+.struct-badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:4px; flex-shrink:0; color:#fff; }
+.struct-title { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; flex:1; }
+.struct-toggle { font-size:16px; color:var(--ink3); transition:transform .2s; flex-shrink:0; }
+.struct-block.open .struct-toggle { transform:rotate(180deg); }
+.struct-body { display:none; padding:0 22px 22px; }
+.struct-block.open .struct-body { display:block; }
+.hierarchy { display:flex; flex-direction:column; }
+.h-level { display:flex; align-items:stretch; }
+.h-indent { width:30px; flex-shrink:0; position:relative; }
+.h-indent::before { content:''; position:absolute; left:14px; top:0; bottom:0; width:1px; background:var(--border); }
+.h-indent::after { content:''; position:absolute; left:14px; top:50%; width:12px; height:1px; background:var(--border); }
+.h-node { margin:3px 0; flex:1; border-radius:var(--r-sm); padding:9px 13px; font-size:12px; border:1px solid; }
+.h-node .h-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:2px; }
+.h-node .h-detail { opacity:.75; }
+.h-campaign { background:var(--ink); border-color:var(--ink); color:#fff; }
+.h-adset-slot1 { background:var(--slot1-bg); border-color:var(--slot1-mid); color:var(--slot1-dark); }
+.h-adset-slot2 { background:var(--slot2-bg); border-color:var(--slot2-mid); color:var(--slot2-dark); }
+.h-adset-slot3 { background:var(--slot3-bg); border-color:var(--slot3-mid); color:var(--slot3-dark); }
+.h-adset-slot4 { background:var(--slot4-bg); border-color:var(--slot4-mid); color:var(--slot4-dark); }
+.h-ads { display:flex; flex-wrap:wrap; gap:5px; margin:5px 0 3px; }
+.h-ad { font-size:11px; padding:3px 9px; border-radius:4px; border:1px solid var(--border); background:var(--surface); color:var(--ink3); font-family:'Space Grotesk',sans-serif; font-weight:500; }
+.h-ad.winner { background:var(--slot3-bg); border-color:var(--slot3-mid); color:var(--slot3-dark); }
+.h-note { font-size:11px; color:var(--ink3); background:var(--surface); border-radius:var(--r-sm); padding:6px 10px; margin:5px 0; font-style:italic; }
+
+.trigger-bar { display:flex; align-items:center; gap:14px; background:var(--slot4-bg); border:1px solid var(--slot4-mid); border-radius:var(--r-md); padding:14px 18px; margin-bottom:18px; }
+.trigger-icon { width:34px; height:34px; background:var(--slot4); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:15px; color:#fff; font-weight:700; }
+.trigger-bar p { font-size:13px; color:var(--slot4-dark); }
+.link { color:inherit; font-weight:600; text-decoration:underline; }
+
+.header-teal { background:var(--teal-bg); border-color:var(--teal-mid); }
+.badge-teal { background:var(--teal); }
+.card-title.teal::before { background:var(--teal); }
+.ov-teal { background:var(--teal-bg); border-color:var(--teal-mid); color:var(--teal-dark); }
+.chip-teal { background:var(--teal-bg); color:var(--teal-dark); border-color:var(--teal-mid); }
+.seg-teal { background:var(--teal); } .seg-teal::after { border-left:14px solid var(--teal); }
+.tab-btn[data-tab="newsletter"].active { border-color:var(--teal); color:var(--teal-dark); }
+/* Playbook switcher: global nav across the four PX playbooks */
+.pb-switch { background:#0A0F1D; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:6px; padding:8px 20px; overflow-x:auto; scrollbar-width:none; }
+.pb-switch::-webkit-scrollbar { display:none; }
+.pb-switch-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#64748B; margin-right:8px; white-space:nowrap; }
+.pb-tab { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#94A3B8; text-decoration:none; padding:5px 13px; border-radius:20px; white-space:nowrap; transition:background .2s,color .2s; }
+.pb-tab:hover { color:#fff; background:rgba(255,255,255,.07); }
+.pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
+.pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
+.pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+
+/* Continuous learning-loop diagram */
+.loop { background:var(--ink); border-radius:var(--r-lg); padding:24px 22px 20px; margin-bottom:28px; }
+.loop-title { text-align:center; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:#94A3B8; margin-bottom:18px; }
+.loop-row { display:flex; align-items:stretch; justify-content:center; gap:6px; flex-wrap:wrap; }
+.loop-node { flex:0 0 auto; min-width:116px; text-align:center; border-radius:var(--r-md); padding:12px 14px; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:#fff; cursor:pointer; transition:transform .15s,filter .2s; display:flex; flex-direction:column; justify-content:center; gap:3px; }
+.loop-node:hover { transform:translateY(-2px); filter:brightness(1.1); }
+.loop-node small { font-family:'DM Sans',sans-serif; font-size:9.5px; font-weight:400; opacity:.85; letter-spacing:0; text-transform:none; line-height:1.3; }
+.loop-arrow { align-self:center; color:#475569; font-size:15px; font-weight:700; }
+.n-sig { background:var(--slot1); } .n-cos { background:var(--teal); min-width:186px; } .n-ang { background:var(--slot2); } .n-exec { background:var(--slot3); } .n-iter { background:var(--slot4); } .n-perf { background:var(--slot6); }
+.loop-return { margin-top:16px; text-align:center; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#93C5FD; display:flex; align-items:center; justify-content:center; gap:10px; }
+.loop-return::before, .loop-return::after { content:''; height:1px; flex:1; max-width:90px; background:linear-gradient(90deg,transparent,#334155); }
+
+@media (max-width:600px) {
+  .hero { padding:36px 18px 30px; }
+  .funnel-strip { flex-wrap:wrap; }
+  .funnel-seg::after { display:none; }
+  .main { padding:20px 14px 50px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PLAYBOOK SWITCHER: links the four PX playbooks -->
+<div class="pb-switch">
+  <span class="pb-switch-label">PX Playbooks</span>
+  <a class="pb-tab active">Ad Creative</a>
+  <a class="pb-tab" href="px-media-buying.html">Meta Scaling</a>
+  <a class="pb-tab soon">CRO <span>soon</span></a>
+  <a class="pb-tab soon">Data <span>soon</span></a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">Performance Marketing · Creative</p>
+  <h1>The PX Ad Creative <span>System</span></h1>
+  <p>How PX continuously discovers, validates, and scales buyer psychology into high-performing creative.</p>
+
+  <div class="funnel-wrap">
+    <div class="funnel-strip-label">The Pipeline</div>
+    <div class="funnel-strip">
+      <button class="funnel-seg seg-slot1" onclick="switchTab('ideas')">
+        <div class="seg-label">Phase 1</div><div class="seg-name">Buyer Signals</div>
+      </button>
+      <button class="funnel-seg seg-teal" onclick="switchTab('newsletter')">
+        <div class="seg-label">Phase 2</div><div class="seg-name">Research &amp; Intelligence</div>
+      </button>
+      <button class="funnel-seg seg-slot2" onclick="switchTab('angles')">
+        <div class="seg-label">Phase 3</div><div class="seg-name">Angle Testing</div>
+      </button>
+      <button class="funnel-seg seg-slot3" onclick="switchTab('exec')">
+        <div class="seg-label">Phase 4</div><div class="seg-name">Execution Styles</div>
+      </button>
+      <button class="funnel-seg seg-slot4" onclick="switchTab('iterate')">
+        <div class="seg-label">Phase 5</div><div class="seg-name">Iterations</div>
+      </button>
+    </div>
+    <div class="add-chips">
+      <span class="chips-label">Lenses:</span>
+      <button class="add-chip chip-slot5b" onclick="switchTab('elements')">Ad Elements</button>
+      <button class="add-chip chip-slate" onclick="switchTab('subniche')">Sub-Niches</button>
+      <span class="chips-label">Why:</span>
+      <button class="add-chip chip-slot6" onclick="switchTab('why')">The Enemy & Outcome</button>
+    </div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')"><span class="dot" style="background:#94A3B8"></span>Overview</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="ideas" onclick="switchTab('ideas')"><span class="dot" style="background:var(--slot1)"></span>Buyer Signals</button>
+  <button class="tab-btn" data-tab="newsletter" onclick="switchTab('newsletter')"><span class="dot" style="background:var(--teal)"></span>Research &amp; Intelligence</button>
+  <button class="tab-btn" data-tab="angles" onclick="switchTab('angles')"><span class="dot" style="background:var(--slot2)"></span>Angle Testing</button>
+  <button class="tab-btn" data-tab="exec" onclick="switchTab('exec')"><span class="dot" style="background:var(--slot3)"></span>Execution Styles</button>
+  <button class="tab-btn" data-tab="iterate" onclick="switchTab('iterate')"><span class="dot" style="background:var(--slot4)"></span>Iterations</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="elements" onclick="switchTab('elements')"><span class="dot" style="background:var(--slot5)"></span>Ad Elements</button>
+  <button class="tab-btn" data-tab="subniche" onclick="switchTab('subniche')"><span class="dot" style="background:var(--slate)"></span>Sub-Niches</button>
+  <button class="tab-btn" data-tab="why" onclick="switchTab('why')"><span class="dot" style="background:var(--slot6)"></span>Why It Wins</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="structure" onclick="switchTab('structure')"><span class="dot" style="background:var(--ink2)"></span>Structure</button>
+</nav>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="tab-panel active">
+    <p class="h2">A creative operating system, not a workflow</p>
+    <p class="lead">PX runs a continuous learning loop, not a linear production line. Every ad is an experiment. Every experiment produces buyer data. That data feeds CreativeOS, the intelligence engine at the center of the system. The best buyer intelligence and the fastest feedback loops win.</p>
+
+    <div class="loop">
+      <div class="loop-title">A continuous learning loop, not a linear pipeline</div>
+      <div class="loop-row">
+        <div class="loop-node n-sig" onclick="switchTab('ideas')">Buyer Signals</div>
+        <span class="loop-arrow">&#8594;</span>
+        <div class="loop-node n-cos" onclick="switchTab('newsletter')">CreativeOS<small>Ingest · Analyze · Prioritize · Brief · Learn</small></div>
+        <span class="loop-arrow">&#8594;</span>
+        <div class="loop-node n-ang" onclick="switchTab('angles')">Angle Testing</div>
+        <span class="loop-arrow">&#8594;</span>
+        <div class="loop-node n-exec" onclick="switchTab('exec')">Execution Styles</div>
+        <span class="loop-arrow">&#8594;</span>
+        <div class="loop-node n-iter" onclick="switchTab('iterate')">Iterations</div>
+        <span class="loop-arrow">&#8594;</span>
+        <div class="loop-node n-perf" onclick="switchTab('why')">Performance</div>
+      </div>
+      <div class="loop-return">&#8635;&nbsp; Performance feeds new buyer signals. The system compounds every week.</div>
+    </div>
+
+    <div class="sec">The feedback loop</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title slot1">Every ad is an experiment</div><p>Each ad tests a buyer hypothesis. Win or lose, it produces data about what the market responds to.</p></div>
+      <div class="card"><div class="card-title teal">Data becomes intelligence</div><p>CreativeOS ingests the buyer data and analyzes the patterns. It surfaces angles, language, objections, sub-niches, and winning themes.</p></div>
+      <div class="card"><div class="card-title slot2">Intelligence becomes hypotheses</div><p>The intelligence generates prioritized creative hypotheses. Each one is the next angle worth testing, briefed and ready.</p></div>
+      <div class="card"><div class="card-title slot3">Hypotheses get validated</div><p>Angle testing validates each hypothesis cheaply. Winners prove real buyer demand. Losers get killed fast.</p></div>
+      <div class="card"><div class="card-title slot4">Winners get scaled</div><p>Proven buyer psychology scales across proven formats. Iteration extends each winner further.</p></div>
+      <div class="card"><div class="card-title slot6">Results feed back in</div><p>Performance data flows back into CreativeOS as fresh buyer signals. The system gets sharper every week.</p></div>
+    </div>
+
+    <div class="callout red"><strong>The problem this solves:</strong> The ad platform needs creative diversity to find the right buyers. Most accounts reuse the same few hooks, angles, and formats. Without a system for buyer intelligence, creative gets made reactively when performance drops. Fewer buyer signals reach the platform. Winners fatigue faster. Cost per lead and cost of acquisition rise. Lead quality declines. The sales team wastes calls. Spend gets harder to scale. The loop is how we beat it.</div>
+
+    <div class="sec">Explore the system</div>
+    <div class="ov-grid">
+      <div class="ov-card ov-slot1" onclick="switchTab('ideas')"><span class="ov-tag">Phase 1</span><span class="ov-name">Buyer Signals</span><span class="ov-desc">Raw buyer intelligence from every source, ready for analysis.</span></div>
+      <div class="ov-card ov-teal" onclick="switchTab('newsletter')"><span class="ov-tag">Phase 2</span><span class="ov-name">Research &amp; Intelligence</span><span class="ov-desc">CreativeOS turns buyer data into prioritized creative.</span></div>
+      <div class="ov-card ov-slot2" onclick="switchTab('angles')"><span class="ov-tag">Phase 3</span><span class="ov-name">Angle Testing</span><span class="ov-desc">Validate buyer hypotheses cheaply with 10-second ads.</span></div>
+      <div class="ov-card ov-slot3" onclick="switchTab('exec')"><span class="ov-tag">Phase 4</span><span class="ov-name">Execution Styles</span><span class="ov-desc">Scale proven buyer psychology across proven PX formats.</span></div>
+      <div class="ov-card ov-slot4" onclick="switchTab('iterate')"><span class="ov-tag">Phase 5</span><span class="ov-name">Iterations</span><span class="ov-desc">Continuous optimization of every winner before it fatigues.</span></div>
+      <div class="ov-card ov-slot5" onclick="switchTab('elements')"><span class="ov-tag">Lens</span><span class="ov-name">Ad Elements</span><span class="ov-desc">The 8 variables inside any ad you can chop up and test.</span></div>
+      <div class="ov-card ov-slate" onclick="switchTab('subniche')"><span class="ov-tag">Lens</span><span class="ov-name">Sub-Niches</span><span class="ov-desc">The money pockets inside a broad market.</span></div>
+      <div class="ov-card ov-slot6" onclick="switchTab('why')"><span class="ov-tag">Why</span><span class="ov-name">Why It Wins</span><span class="ov-desc">The problem it beats and the outcomes it produces.</span></div>
+    </div>
+
+    <div class="callout slate"><strong>80 / 20 rule:</strong> Roughly 80% of spend runs proven creative. The remaining 20&ndash;30% tests new angles and execution styles. This keeps fresh signal flowing into the loop.</div>
+  </div>
+
+  <!-- IDEAS -->
+  <div id="tab-ideas" class="tab-panel slot1">
+    <div class="campaign-header header-slot1">
+      <span class="badge badge-slot1">Phase 1 · Buyer Signals</span>
+      <div><h2 style="color:var(--slot1-dark)">Buyer Signals: Raw Buyer Intelligence</h2>
+      <p>The raw material of the system. Everything downstream depends on the quality of the buyer data going in. These are real signals from real buyers. They are not random ideas, and not reactive ideas made only when performance drops.</p></div>
+    </div>
+
+    <div class="callout blue"><strong>Core job:</strong> Feed CreativeOS a constant stream of raw buyer intelligence. This is the language, objections, and desires of real buyers, captured from every source and ready for analysis.</div>
+
+    <div class="sec">Where the signals come from</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title slot1">First-party data</div>
+        <ul class="info-list">
+          <li><strong>Meta performance data</strong>. What is winning and losing at the ad level.</li>
+          <li><strong>CRM pipeline data</strong>. Which leads become buyers, and which do not.</li>
+          <li><strong>Sales calls</strong>. A consistent source of top winners.</li>
+          <li><strong>Team interviews</strong>. Frontline knowledge of the buyer.</li>
+          <li><strong>Reviews and testimonials</strong>. Buyer language, plus proof and emotional triggers.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title slot1">External sources</div>
+        <ul class="info-list">
+          <li><strong>Competitor reviews</strong>. Gaps and objections in the market.</li>
+          <li><strong>News and trends</strong>. Timely hooks and pattern interrupts.</li>
+          <li><strong>Swipe and observation</strong>. Manual research into what works elsewhere.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout blue"><strong>Output: raw buyer signals ready for analysis.</strong> Everything here feeds <a class="link" onclick="switchTab('newsletter')" style="cursor:pointer">Research &amp; Intelligence &rarr;</a>. CreativeOS scans the account, analyzes the patterns, and turns these signals into prioritized creative. Open the next tab to see it.</div>
+
+    <div class="notes-box"><strong>Human and machine</strong>
+      CreativeOS is the engine. People should also review these sources directly. AI now surfaces genuinely useful intelligence, which was not true a few months ago. The edge is combining that speed with human judgment on what to test.
+    </div>
+  </div>
+
+  <!-- THE NEWSLETTER -->
+  <div id="tab-newsletter" class="tab-panel teal">
+    <div class="campaign-header header-teal">
+      <span class="badge badge-teal">Phase 2 · CreativeOS</span>
+      <div><h2 style="color:var(--teal-dark)">Research &amp; Intelligence: CreativeOS</h2>
+      <p>The intelligence engine at the center of the loop. It ingests buyer data, analyzes the patterns, and detects opportunities. It generates hypotheses, prioritizes the creative worth making, and produces the deliverables the team executes.</p></div>
+    </div>
+
+    <div class="callout teal"><strong>Core job:</strong> Turn raw buyer signals into prioritized, briefed creative. It runs automatically, every cycle. CreativeOS reads what is winning and analyzes why. It hands the team ready-to-produce briefs. A human makes the final call.</div>
+
+    <div class="sec">What CreativeOS does</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title teal">Ingest</div><p>Pulls buyer data from every source. Performance, sales calls, reviews, competitors, and trends.</p></div>
+      <div class="card"><div class="card-title teal">Analyze</div><p>Detects patterns in buyer psychology, language, and objections. Spots market shifts and winning themes.</p></div>
+      <div class="card"><div class="card-title teal">Detect opportunities</div><p>Finds the angles and sub-niches with room to run before anyone else is on them.</p></div>
+      <div class="card"><div class="card-title teal">Generate hypotheses</div><p>Turns intelligence into specific creative hypotheses. Each one is a next angle worth testing.</p></div>
+      <div class="card"><div class="card-title teal">Prioritize</div><p>Ranks what to make next by expected impact. Effort goes where the data points.</p></div>
+      <div class="card"><div class="card-title teal">Produce deliverables</div><p>Outputs briefs, scripts, and tagged tasks. Production-ready, every cycle.</p></div>
+    </div>
+
+    <div class="sec">Inputs &rarr; Analysis &rarr; Outputs</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title teal">Inputs</div><ul class="info-list">
+        <li>Sales Calls</li><li>CRM</li><li>Reviews</li><li>Competitors</li><li>Meta</li><li>Testimonials</li><li>Trends</li><li>Client Assets</li>
+      </ul></div>
+      <div class="card"><div class="card-title teal">Analysis</div><ul class="info-list">
+        <li>Buyer psychology</li><li>Language</li><li>Objections</li><li>Angles</li><li>Sub-niches</li><li>Market shifts</li><li>Winning themes</li>
+      </ul></div>
+      <div class="card"><div class="card-title teal">Outputs</div><ul class="info-list">
+        <li>Weekly intelligence briefing</li><li>Creative briefs</li><li>Scripts</li><li>ClickUp tasks</li><li>Execution recommendations</li><li>Iteration recommendations</li><li>Prompt library updates</li>
+      </ul></div>
+    </div>
+
+    <div class="callout teal"><strong>The newsletter is one delivery mechanism.</strong> The weekly intelligence briefing is one of the outputs CreativeOS produces. It is not the system itself. The system is the intelligence engine. The newsletter is how one slice of it reaches the team.</div>
+
+    <div class="sec">Impact today</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Saved / week</div><div class="dg-value">~46 hrs across all clients</div></div>
+      <div class="dg-item"><div class="dg-label">Clients / run</div><div class="dg-value">~12</div></div>
+      <div class="dg-item"><div class="dg-label">AI cost / cycle</div><div class="dg-value">~$2</div></div>
+      <div class="dg-item"><div class="dg-label">Tasks / run</div><div class="dg-value">40+ briefed &amp; tagged</div></div>
+      <div class="dg-item"><div class="dg-label">Operator time</div><div class="dg-value">~10 min of review</div></div>
+      <div class="dg-item"><div class="dg-label">Cadence</div><div class="dg-value">Weekly (auto Sunday) or on demand</div></div>
+    </div>
+
+    <div class="sec">The weekly pipeline</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title teal">0 · Sync clients</div><p>Reads each client profile from a shared drive. Brand, audience, offer, and KPIs stay current without touching code.</p></div>
+      <div class="card"><div class="card-title teal">1 · Pull performance</div><p>Pulls the last 7 days from Meta for every client. Identifies each account's top-performing ads.</p></div>
+      <div class="card"><div class="card-title teal">2 · Briefing + concepts</div><p>Claude writes a plain-English intelligence briefing into the client doc. It then recommends concepts: iterations on winners plus fresh hypotheses.</p></div>
+      <div class="card"><div class="card-title teal">3 · Scripts &amp; briefs</div><p>Each concept becomes a full brief. Hooks, script, CTA, and a reference ad, mined from real sales-call language and saved as a polished doc.</p></div>
+      <div class="card"><div class="card-title teal">4 · Tasks &amp; assets</div><p>Every brief becomes a tagged ClickUp task in the sprint. Matching drive folders and docs are created automatically.</p></div>
+      <div class="card"><div class="card-title teal">5 · Human in the loop</div><p>An operator reviews the published tasks. They select and edit the briefs worth producing, then assign them to an editor.</p></div>
+    </div>
+
+    <div class="notes-box"><strong>Where it's going</strong>
+      Execution-style recommendations are baked in, including 10-second ads and the proven formats. The weekly output already reflects this system. It is built on the tools the team already uses: Meta, Google Drive, ClickUp, and Claude, orchestrated by n8n and reviewed by a human at every step.
+    </div>
+
+    <div class="callout teal">This feeds straight into <a class="link" onclick="switchTab('angles')" style="cursor:pointer">Angle Testing &rarr;</a>. The hypotheses it generates become the angles we validate.</div>
+  </div>
+
+  <!-- ANGLE TESTING -->
+  <div id="tab-angles" class="tab-panel slot2">
+    <div class="campaign-header header-slot2">
+      <span class="badge badge-slot2">Phase 3 · Validation</span>
+      <div><h2 style="color:var(--slot2-dark)">Angle Testing: Validating Hypotheses</h2>
+      <p>The hypotheses CreativeOS generates get validated here, cheaply, before we pour effort into execution. The 10-second ad is the primary tool. It is fast to make and it converts.</p></div>
+    </div>
+
+    <div class="callout cyan"><strong>Core job:</strong> Validate buyer hypotheses cheaply before pouring effort into execution. Each test proves or kills an angle by putting it in front of real buyers. We vary the sub-niche and angle, and slightly the offer, using low-effort formats first.</div>
+
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Primary tool</div><div class="dg-value">10-second ads (dedicated video placements, all platforms)</div></div>
+      <div class="dg-item"><div class="dg-label">Also test angles with</div><div class="dg-value">Native-news statics (static placements add placement diversity)</div></div>
+      <div class="dg-item"><div class="dg-label">What we vary</div><div class="dg-value">Sub-niche · Angle · (slightly) the Offer</div></div>
+      <div class="dg-item"><div class="dg-label">Cadence</div><div class="dg-value">Set by budget. A small account and a large account test very differently.</div></div>
+      <div class="dg-item"><div class="dg-label">Who sets volume</div><div class="dg-value">The performance lead sets how many new angles to test each month.</div></div>
+      <div class="dg-item"><div class="dg-label">Default for new launches</div><div class="dg-value">10-second ads plus native-news statics on the same angles</div></div>
+    </div>
+
+    <div class="sec">What counts as a winning angle</div>
+    <div class="callout cyan"><strong>The definition:</strong> The angle hits the KPI the platform optimizes for, the cost per result, and stays there across several results. Judge it by results, not days. Around 5 results at KPI is a useful benchmark, because accounts spend at very different rates.</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title slot2">How we call it</div><ul class="info-list">
+        <li>Starts <strong>under KPI</strong> right away. Strong angles usually keep working, and the best ones win immediately.</li>
+        <li>Confirm over roughly 5 results at KPI, not a set number of days.</li>
+        <li>Then check the downstream buyer metric by hand. Cheap leads that do not close are not winners.</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot2">Set it per account</div><ul class="info-list">
+        <li>Every account has its own definition of a winning ad.</li>
+        <li>It lives in the <strong>90-day plan</strong>. Set the target acquisition cost, then work back to a target cost per lead.</li>
+        <li>A winner moves into scaling and triggers execution styles.</li>
+      </ul></div>
+    </div>
+
+    <div class="notes-box"><strong>Why 10-second ads</strong>
+      They are fast to make and they convert. They are primarily an angle-testing tool, not just an execution style. Running a 10-second video and a native-news static on the same angle also adds placement diversity. That means different inventory, different CPMs, and more chances to be seen.
+    </div>
+    <div class="exclude-box"><strong>Don't over-apply</strong>
+      For accounts with existing winners, do not run only 10-second tests. Keep iterating on the proven winners too.
+    </div>
+  </div>
+
+  <!-- EXECUTION STYLES -->
+  <div id="tab-exec" class="tab-panel slot3">
+    <div class="campaign-header header-slot3">
+      <span class="badge badge-slot3">Phase 4 · Scale</span>
+      <div><h2 style="color:var(--slot3-dark)">Execution Styles: The Proven Formats</h2>
+      <p>Scale proven buyer psychology across proven formats. Once an angle validates, rebuild that winning psychology in 1&ndash;5 proven execution styles. This prevents fatigue and reaches more buyers.</p></div>
+    </div>
+
+    <div class="callout green"><strong>Core job:</strong> Scale one validated angle across multiple proven formats. Keep the winning sub-niche and buyer psychology. Swap only the execution style.</div>
+
+    <div class="sec">Proven formats: the core set</div>
+    <div class="callout green">Every account is different, but these formats are proven across accounts. Once you find a winner, produce it in variations of these.</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title slot3">Video</div><ul class="info-list">
+        <li>AI Ambassador (tells a story)</li>
+        <li>Founder talking to camera</li>
+        <li>B-roll + voiceover</li>
+        <li>Street interview</li>
+        <li>10-second ads</li>
+        <li>5-frame influencer style</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot3">Static</div><ul class="info-list">
+        <li>Native-news style</li>
+        <li>Direct-to-offer (logo + bold headline + CTA)</li>
+        <li>DTO image + ICP circle</li>
+        <li>Carousel</li>
+        <li>Text-on-colour</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot3">Explainer &amp; proof</div><ul class="info-list">
+        <li>Whiteboard</li>
+        <li>Napkin / flowchart explainer</li>
+        <li>Testimonial montage</li>
+      </ul></div>
+    </div>
+
+    <div class="sec">Testing queue: candidates to graduate</div>
+    <div class="callout green">New styles under test to join the proven set. Test on a few accounts. If a style works on 2 or 3, it becomes a standard.</div>
+    <div class="stat-row" style="margin-bottom:18px">
+      <span class="stat-chip chip-slot3">Claymation</span>
+      <span class="stat-chip chip-slot3">Founder AI</span>
+      <span class="stat-chip chip-slot3">Podcast style</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="card"><div class="card-title slot3">The rules</div><ul class="info-list">
+        <li><strong>80% proven, 20&ndash;30% new.</strong> Leverage what works, but always test.</li>
+        <li>Each account has its own winning styles. Not every format works everywhere.</li>
+        <li>Find a winner on your account? Share it so others can test it.</li>
+        <li>A style that works on 2 or 3 accounts becomes a new standard.</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot3">Signals vs North Star</div><ul class="info-list">
+        <li>Watch time reflects <strong>hook rate and hold rate</strong>. These are useful signals on the creative.</li>
+        <li>The North Star is <strong>cost of acquisition per buyer</strong>, not watch time.</li>
+        <li>A low watch-time ad that stays under target still runs. This is direct response, not organic content.</li>
+      </ul></div>
+    </div>
+
+    <div class="notes-box"><strong>Testing workflow</strong>
+      A dedicated owner runs the testing queue. They bring new styles to test, then graduate the winners into the core set. Anyone can add an execution-style idea to the queue.
+    </div>
+  </div>
+
+  <!-- ITERATIONS -->
+  <div id="tab-iterate" class="tab-panel slot4">
+    <div class="campaign-header header-slot4">
+      <span class="badge badge-slot4">Phase 5 · Optimize</span>
+      <div><h2 style="color:var(--slot4-dark)">Iterations: Continuous Optimization</h2>
+      <p>Continuous optimization of every winner. As soon as an angle hits, we keep optimizing it with new variations, formats, and remixes. The goal is maximum mileage before it fatigues. Internally we call this "squeeze the juice."</p></div>
+    </div>
+
+    <div class="trigger-bar">
+      <div class="trigger-icon">&#9889;</div>
+      <p><strong>Trigger:</strong> A winning angle. When anyone spots a winner, flag it and produce it in 3&ndash;4 more formats right away.</p>
+    </div>
+
+    <div class="callout amber"><strong>Core job:</strong> Get maximum mileage out of every winning angle before it fatigues. An ad can last a day or a year. You cannot predict which.</div>
+
+    <div class="sec">Format swaps: same winning angle, new form</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title slot4">Swap the format</div><ul class="info-list">
+        <li>Winning hook visual &rarr; turn it into a <strong>still</strong>.</li>
+        <li>Talking head &rarr; <strong>voiceover + B-roll</strong>.</li>
+        <li>Talking head &rarr; <strong>UGC remake</strong> (same script, new presenter).</li>
+        <li>Static or video &rarr; <strong>carousel</strong>.</li>
+        <li>Video script &rarr; <strong>text on a still</strong>.</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot4">Remix the parts</div><ul class="info-list">
+        <li><strong>Chop the winning ad.</strong> Cut the hook and add a different opening. This is the winning ad multiplier. It makes one ad go further.</li>
+        <li><strong>Recombine winners.</strong> Take the strongest hook, body, and close from different winning ads and combine them into one.</li>
+      </ul></div>
+    </div>
+
+    <div class="notes-box"><strong>Squeeze forever</strong>
+      Keep adding variations even while an ad is working, because fatigue is hard to predict. For example, take a winning ad, make a green-screen version, then animate the image into the video. This keeps the winner alive. The technique gets more sophisticated over time. For now, keep changing the elements.
+    </div>
+  </div>
+
+  <!-- AD ELEMENTS -->
+  <div id="tab-elements" class="tab-panel slot5">
+    <div class="campaign-header header-slot5">
+      <span class="badge badge-slot5">Lens · Variables</span>
+      <div><h2 style="color:var(--slot5-dark)">Ad Elements to Test</h2>
+      <p>Get granular. Every ad is built from components you can test independently. Any communication has a messenger, a message, and a receiver. Change one and it lands differently.</p></div>
+    </div>
+
+    <div class="callout pink"><strong>Why it matters:</strong> Saying "I love you" to your partner lands differently than saying it to a stranger. Same message, different context. The receiver, messenger, and message all shift the meaning. These are the levers.</div>
+
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">1 · Sub-niche (receiver)</div><div class="dg-value">Who the message is for. The specific group.</div></div>
+      <div class="dg-item"><div class="dg-label">2 · Stage of awareness</div><div class="dg-value">How much education they need.</div></div>
+      <div class="dg-item"><div class="dg-label">3 · Message / Angle</div><div class="dg-value">The core idea we lead with.</div></div>
+      <div class="dg-item"><div class="dg-label">4 · Messenger</div><div class="dg-value">The character delivering it.</div></div>
+      <div class="dg-item"><div class="dg-label">5 · Proof type</div><div class="dg-value">How we make it believable.</div></div>
+      <div class="dg-item"><div class="dg-label">6 · Offer</div><div class="dg-value">What they get, and how it connects to the angle.</div></div>
+      <div class="dg-item"><div class="dg-label">7 · Hook</div><div class="dg-value">The opening that stops the scroll.</div></div>
+      <div class="dg-item"><div class="dg-label">8 · Execution style</div><div class="dg-value">The proven format it's built in.</div></div>
+    </div>
+
+    <div class="notes-box"><strong>Ad copy note</strong>
+      Headlines, descriptions, and on-ad copy sit on top of the creative. They are handled alongside these elements. This lens is about the creative itself.
+    </div>
+  </div>
+
+  <!-- SUB-NICHES -->
+  <div id="tab-subniche" class="tab-panel slate">
+    <div class="campaign-header header-slate">
+      <span class="badge badge-slate">Lens · Money Pockets</span>
+      <div><h2 style="color:var(--slate-dark)">Sub-Niches: The High-Value Pockets</h2>
+      <p>This is a core way we differentiate. Inside a broad market, the highest-value buyers sit in smaller groups. They feel the problem in a specific, repeated, and emotionally distinct way.</p></div>
+    </div>
+
+    <div class="callout slate"><strong>Definition:</strong> A target market shares the broad problem. A sub-niche shares the specific <strong>situation</strong> where that problem becomes more urgent. Every market has them. You may not have found them yet.</div>
+
+    <div class="sec">How to uncover them</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title slate">Look for repeated patterns</div><ul class="info-list">
+        <li>Where the problem happens</li>
+        <li>Who it happens to</li>
+        <li>What they want</li>
+        <li>What they've already tried</li>
+        <li>Why it matters now</li>
+      </ul></div>
+      <div class="card"><div class="card-title slate">Dimensions to slice by</div><ul class="info-list">
+        <li>Activity, meaning what they are doing when it happens</li>
+        <li>Life stage</li>
+        <li>Goal</li>
+        <li>Trigger moment</li>
+        <li>Failed solution</li>
+        <li>Severity · geography · size · psychographics</li>
+      </ul></div>
+    </div>
+
+    <div class="sec">Examples</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title slate">Auto shops</div><div class="stat-row"><span class="stat-chip chip-slate">Car wrecker</span><span class="stat-chip chip-slate">Mechanic</span><span class="stat-chip chip-slate">Ceramic wrap</span></div></div>
+      <div class="card"><div class="card-title slate">Telehealth</div><div class="stat-row"><span class="stat-chip chip-slate">HRT</span><span class="stat-chip chip-slate">Weight loss</span><span class="stat-chip chip-slate">IV injections</span></div></div>
+      <div class="card"><div class="card-title slate">Business funding</div><div class="stat-row"><span class="stat-chip chip-slate">Auto shops</span><span class="stat-chip chip-slate">Medical offices</span><span class="stat-chip chip-slate">Restaurants</span></div></div>
+      <div class="card"><div class="card-title slate">Veterinary clinics</div><div class="stat-row"><span class="stat-chip chip-slate">Geographic</span><span class="stat-chip chip-slate">Clinic size</span><span class="stat-chip chip-slate">General vs emergency</span></div></div>
+    </div>
+
+    <div class="notes-box"><strong>Same solution, different sub-niche means a different ad</strong>
+      Compare three openings for one product, business funding. "Get working capital in 48 hours." "Auto shop waiting on a big parts invoice?" "Restaurant owner covering payroll before the weekend?" Same solution, different situation. A brand can even become known for one sub-niche. You do not know which until you test.
+    </div>
+  </div>
+
+  <!-- WHY IT WINS -->
+  <div id="tab-why" class="tab-panel slot6">
+    <div class="campaign-header header-slot6">
+      <span class="badge badge-slot6">Why · Problem &rarr; Outcome</span>
+      <div><h2 style="color:var(--slot6-dark)">Why It Wins: The Problem &amp; The Outcome</h2>
+      <p>Why the system matters. Without a steady creative pipeline, performance decays in a predictable way. With one, creative stays healthy, lead quality improves, and acquisition costs fall.</p></div>
+    </div>
+
+    <div class="callout red"><strong>The fatigue spiral:</strong> The same few hooks, angles, and formats &rarr; fewer buyer signals for the platform &rarr; winners fatigue faster &rarr; cost per lead and cost of acquisition rise &rarr; lead quality declines &rarr; the sales team wastes calls &rarr; spend will not scale.</div>
+
+    <div class="sec">Differentiation: avoid the sea of sameness</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title slot6">The market now</div><ul class="info-list">
+        <li>The category is crowded. Many competitors run the same "30 qualified leads in 10 days" offer.</li>
+        <li>The ad platform floods a lead with competitor ads the moment they engage.</li>
+        <li>If your ad looks like everyone else's, you become top-of-funnel for competitors.</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot6">How we stand out</div><ul class="info-list">
+        <li>Better angles, drawn from real understanding of the market and its sub-niches.</li>
+        <li>Memorable, distinct ads that do not look like everyone else's.</li>
+        <li>Build authority. Become the obvious choice, not another "get 30 leads" offer.</li>
+      </ul></div>
+    </div>
+
+    <div class="sec">Nurture and retargeting: own the space</div>
+    <div class="callout purple"><strong>Familiarity is a powerful persuasion trigger.</strong> Once you have a lead, serve them steady video views so they do not forget you. Occupy the ad space so they see fewer competitor offers and build authority with your brand.</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title slot6">Retargeting</div><ul class="info-list">
+        <li>Optimized for conversion events. Target people who did not convert.</li>
+        <li>Low budget, few results per month, usually just below KPI.</li>
+        <li>Improves overall efficiency and closes more deals downstream.</li>
+      </ul></div>
+      <div class="card"><div class="card-title slot6">Nurture</div><ul class="info-list">
+        <li>Best metric is video views and percent watched. Aim for 90%+ thruplays and 60&ndash;70% watching 75&ndash;80%.</li>
+        <li>No direct platform attribution, because you are not asking them to convert.</li>
+        <li>Educational, authority-building content keeps you top of mind.</li>
+      </ul></div>
+    </div>
+
+    <div class="sec">The outcome</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title slot6">Creative health</div><ul class="info-list"><li>Prevent ad fatigue</li><li>Launch stronger creative faster</li><li>More buyer-producing winners</li></ul></div>
+      <div class="card"><div class="card-title slot6">Sales impact</div><ul class="info-list"><li>Improve lead quality</li><li>Reduce wasted sales calls</li><li>Improve utilization rate</li><li>Close more deals</li></ul></div>
+      <div class="card"><div class="card-title slot6">Economics</div><ul class="info-list"><li>Lower CAC</li><li>Scale spend more efficiently</li><li>Increase ROI</li></ul></div>
+    </div>
+  </div>
+
+  <!-- STRUCTURE -->
+  <div id="tab-structure" class="tab-panel">
+    <p class="h2">The System at a Glance</p>
+    <p class="lead">The whole pipeline in one view. Buyer signals flow into angle tests. A winner triggers execution styles. Iterations keep every winner alive.</p>
+
+    <div class="struct-block open" id="str-flow">
+      <div class="struct-header" onclick="toggleStruct('str-flow')">
+        <span class="struct-badge" style="background:var(--ink)">Pipeline</span>
+        <span class="struct-title">Buyer Signals &rarr; CreativeOS &rarr; Angle Testing &rarr; Execution &rarr; Iterations</span>
+        <span class="struct-toggle">&#9662;</span>
+      </div>
+      <div class="struct-body">
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Phase 1 · Buyer Signals</div><div class="h-detail">Raw buyer intelligence &rarr; feeds CreativeOS</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">Sources feeding the signals</div><div class="h-ads"><span class="h-ad">Sales calls</span><span class="h-ad">Team interviews</span><span class="h-ad">Client reviews</span><span class="h-ad">Testimonials</span><span class="h-ad">Competitor reviews</span><span class="h-ad">News &amp; trends</span></div></div></div>
+
+          <div class="h-level"><div class="h-node" style="background:var(--teal-bg);border-color:var(--teal-mid);color:var(--teal-dark)"><div class="h-label">Phase 2 · Research &amp; Intelligence</div><div class="h-detail">CreativeOS ingests &rarr; analyzes &rarr; prioritizes &rarr; briefs (newsletter is one output)</div></div></div>
+
+          <div class="h-level"><div class="h-node h-adset-slot2"><div class="h-label">Phase 3 · Angle Testing</div><div class="h-detail">10-second ads + native-news statics · sub-niche &times; angle</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">Winner = hits KPI over ~5 results (per the 90-day plan)</div><div class="h-ads"><span class="h-ad">Sub-niche 1 · Angle A</span><span class="h-ad">Sub-niche 1 · Angle B</span><span class="h-ad winner">WINNER: Angle A</span></div></div></div>
+
+          <div class="h-level"><div class="h-node h-adset-slot3"><div class="h-label">Phase 4 · Execution Styles</div><div class="h-detail">Rebuild the winning angle in 1&ndash;5 proven formats</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">Proven core set (80%) + testing queue (20&ndash;30%)</div><div class="h-ads"><span class="h-ad winner">AI Ambassador</span><span class="h-ad winner">Founder to camera</span><span class="h-ad winner">Street interview</span><span class="h-ad winner">Native-news static</span><span class="h-ad">Claymation (testing)</span><span class="h-ad">Founder AI (testing)</span></div></div></div>
+
+          <div class="h-level"><div class="h-node h-adset-slot4"><div class="h-label">Phase 5 · Iterations</div><div class="h-detail">Squeeze the juice: format swaps + remixes</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">Keep the winner alive until it fatigues</div><div class="h-ads"><span class="h-ad">Hook &rarr; still</span><span class="h-ad">Talking head &rarr; UGC remake</span><span class="h-ad">Chop the ad</span><span class="h-ad">Frankenstein winners</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-block" id="str-elements">
+      <div class="struct-header" onclick="toggleStruct('str-elements')">
+        <span class="struct-badge" style="background:var(--slot5)">Variables</span>
+        <span class="struct-title">The 8 ad elements we can chop &amp; test</span>
+        <span class="struct-toggle">&#9662;</span>
+      </div>
+      <div class="struct-body">
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-adset-slot1"><div class="h-label">Any single ad</div><div class="h-detail">Built from independently-testable components</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Sub-niche</span><span class="h-ad">Awareness stage</span><span class="h-ad">Angle</span><span class="h-ad">Messenger</span><span class="h-ad">Proof type</span><span class="h-ad">Offer</span><span class="h-ad">Hook</span><span class="h-ad">Execution style</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  const btn = document.querySelector('[data-tab="' + id + '"]');
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleStruct(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+</script>
+</body>
+</html>

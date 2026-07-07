@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PX Playbooks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#0A0F1D; --ink2:#475569; --line:#E2E8F0; --bg:#F8FAFC;
+    --creative:#2563EB; --scaling:#0EA5A4; --cro:#7C3AED; --data:#F59E0B;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:900px; margin:0 auto; padding:64px 24px 80px; }
+  .eyebrow { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); margin-bottom:14px; }
+  h1 { font-family:'Space Grotesk',sans-serif; font-size:44px; font-weight:700; letter-spacing:-.02em; line-height:1.08; margin-bottom:14px; }
+  h1 span { color:var(--creative); }
+  .sub { font-size:17px; color:var(--ink2); max-width:620px; line-height:1.5; margin-bottom:44px; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .card { display:block; text-decoration:none; color:inherit; background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px 24px; transition:transform .15s, box-shadow .2s, border-color .2s; position:relative; }
+  a.card:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(15,23,42,.09); }
+  .card.soon { opacity:.62; pointer-events:none; }
+  .tag { display:inline-block; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px; color:#fff; margin-bottom:16px; }
+  .t-creative { background:var(--creative); } .t-scaling { background:var(--scaling); } .t-cro { background:var(--cro); } .t-data { background:var(--data); }
+  .card h2 { font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; letter-spacing:-.01em; margin-bottom:8px; }
+  .card p { font-size:14px; color:var(--ink2); line-height:1.5; }
+  .arrow { position:absolute; top:26px; right:24px; font-family:'Space Grotesk',sans-serif; font-size:18px; color:var(--ink2); }
+  .soon-badge { position:absolute; top:28px; right:24px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink2); }
+  .foot { margin-top:44px; font-size:13px; color:var(--ink2); }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } h1 { font-size:34px; } .wrap { padding:44px 18px 60px; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Persuasion Experience</div>
+    <h1>The PX <span>Playbooks</span></h1>
+    <p class="sub">Interactive playbooks on how PX runs performance marketing. One shared system, four disciplines. Open one to explore it.</p>
+
+    <div class="grid">
+      <a class="card" href="px-ad-creative-system.html">
+        <span class="arrow">&#8599;</span>
+        <span class="tag t-creative">Ad Creative</span>
+        <h2>The PX Ad Creative System</h2>
+        <p>How PX discovers, validates, and scales buyer psychology into high-performing creative. Built around CreativeOS, the intelligence engine.</p>
+      </a>
+
+      <a class="card" href="px-media-buying.html">
+        <span class="arrow">&#8599;</span>
+        <span class="tag t-scaling">Meta Scaling</span>
+        <h2>The PX Meta Scaling System</h2>
+        <p>The campaign architecture behind spend: pixel seasoning, the core campaigns, lead magnets, scaling, and the winning ad multiplier.</p>
+      </a>
+
+      <div class="card soon">
+        <span class="soon-badge">Coming soon</span>
+        <span class="tag t-cro">CRO</span>
+        <h2>The PX CRO System</h2>
+        <p>Turning traffic into booked calls and buyers. Landing pages, funnels, and conversion rate optimization.</p>
+      </div>
+
+      <div class="card soon">
+        <span class="soon-badge">Coming soon</span>
+        <span class="tag t-data">Data</span>
+        <h2>The PX Data System</h2>
+        <p>The measurement layer. Tracking, attribution, and the reporting that keeps every decision honest.</p>
+      </div>
+    </div>
+
+    <p class="foot">Persuasion Experience &middot; internal and client reference</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PX Meta Scaling System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tofu:        #2563EB; --tofu-bg:    #EFF6FF; --tofu-mid:   #93C5FD; --tofu-dark:  #1E40AF;
+    --lm:          #0891B2; --lm-bg:      #ECFEFF; --lm-mid:     #67E8F9; --lm-dark:    #164E63;
+    --prosp:       #059669; --prosp-bg:   #ECFDF5; --prosp-mid:  #6EE7B7; --prosp-dark: #064E3B;
+    --retarg:      #D97706; --retarg-bg:  #FFFBEB; --retarg-mid: #FCD34D; --retarg-dark:#92400E;
+    --nurture:     #DB2777; --nurture-bg: #FDF2F8; --nurture-mid:#F9A8D4; --nurture-dark:#831843;
+    --bonus:       #7C3AED; --bonus-bg:   #F5F3FF; --bonus-mid:  #C4B5FD; --bonus-dark: #4C1D95;
+    --pixel:       #475569; --pixel-bg:   #F1F5F9; --pixel-mid:  #CBD5E1; --pixel-dark: #1E293B;
+    --win:         #0F766E; --win-bg:     #F0FDFA; --win-mid:    #99F6E4; --win-dark:   #134E4A;
+    --ink:  #0F172A; --ink2: #334155; --ink3: #64748B;
+    --surface: #F8FAFC; --border: #E2E8F0; --white: #FFFFFF;
+    --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: #fff; padding: 56px 40px 48px; text-align: center; }
+  .hero-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #94A3B8; margin-bottom: 12px; }
+  .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px,5vw,46px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+  .hero h1 span { color: #93C5FD; }
+  .hero p { color: #94A3B8; font-size: 15px; max-width: 560px; margin: 0 auto 36px; }
+  .funnel-wrap { max-width: 920px; margin: 0 auto; }
+  .funnel-strip { display: flex; justify-content: center; gap: 0; }
+  .funnel-seg { flex:1; position:relative; padding:12px 10px 12px 24px; cursor:pointer; transition:filter .2s; text-align:left; border:none; background:none; color:inherit; }
+  .funnel-seg:first-child { padding-left:16px; border-radius:8px 0 0 8px; }
+  .funnel-seg:last-child  { border-radius:0 8px 8px 0; }
+  .funnel-seg:hover { filter:brightness(1.08); }
+  .funnel-seg .seg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.75; margin-bottom:2px; }
+  .funnel-seg .seg-name  { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; line-height:1.2; }
+  .funnel-seg::after { content:''; position:absolute; right:-14px; top:0; width:0; height:0; border-top:23px solid transparent; border-bottom:23px solid transparent; z-index:2; }
+  .seg-tofu    { background:var(--tofu);    color:#fff; }
+  .seg-prosp   { background:var(--prosp);   color:#fff; }
+  .seg-retarg  { background:var(--retarg);  color:#fff; }
+  .seg-nurture { background:var(--nurture); color:#fff; }
+  .seg-tofu::after    { border-left:14px solid var(--tofu); }
+  .seg-prosp::after   { border-left:14px solid var(--prosp); }
+  .seg-retarg::after  { border-left:14px solid var(--retarg); }
+  .add-campaigns { display:flex; justify-content:center; gap:8px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+  .add-chip { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; cursor:pointer; border:1px solid; transition:filter .2s; }
+  .add-chip:hover { filter:brightness(1.08); }
+  .chip-lm     { background:var(--lm);    color:#fff; border-color:var(--lm); }
+  .chip-bonus  { background:var(--bonus); color:#fff; border-color:var(--bonus); }
+  .chip-pixel  { background:var(--pixel); color:#fff; border-color:var(--pixel); }
+  .chip-win    { background:var(--win);   color:#fff; border-color:var(--win); }
+
+  /* NAV */
+  .tabs-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
+  .tabs-nav::-webkit-scrollbar { display:none; }
+  .tab-btn { flex:0 0 auto; padding:12px 16px; border:none; border-bottom:3px solid transparent; background:none; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); cursor:pointer; white-space:nowrap; transition:color .2s,border-color .2s; display:flex; align-items:center; gap:6px; }
+  .tab-btn .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .tab-btn.active { color:var(--ink); }
+  .tab-btn[data-tab="overview"].active   { border-color:var(--ink2);    color:var(--ink); }
+  .tab-btn[data-tab="pixel"].active      { border-color:var(--pixel);   color:var(--pixel-dark); }
+  .tab-btn[data-tab="tofu"].active       { border-color:var(--tofu);    color:var(--tofu-dark); }
+  .tab-btn[data-tab="lm"].active         { border-color:var(--lm);      color:var(--lm-dark); }
+  .tab-btn[data-tab="prosp"].active      { border-color:var(--prosp);   color:var(--prosp-dark); }
+  .tab-btn[data-tab="retarg"].active     { border-color:var(--retarg);  color:var(--retarg-dark); }
+  .tab-btn[data-tab="nurture"].active    { border-color:var(--nurture); color:var(--nurture-dark); }
+  .tab-btn[data-tab="bonus"].active      { border-color:var(--bonus);   color:var(--bonus-dark); }
+  .tab-btn[data-tab="winner"].active     { border-color:var(--win);     color:var(--win-dark); }
+  .tab-btn[data-tab="structure"].active  { border-color:var(--ink2);    color:var(--ink); }
+  .tab-divider { width:1px; background:var(--border); margin:8px 0; flex-shrink:0; }
+
+  /* MAIN */
+  .main { max-width:1100px; margin:0 auto; padding:36px 24px 80px; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* CAMPAIGN HEADER */
+  .campaign-header { display:flex; align-items:flex-start; gap:18px; margin-bottom:28px; padding:24px 28px; border-radius:var(--r-lg); border:1px solid; }
+  .campaign-header .badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:5px 10px; border-radius:4px; flex-shrink:0; margin-top:3px; color:#fff; }
+  .campaign-header h2 { font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; margin-bottom:6px; line-height:1.2; }
+  .campaign-header p { font-size:14px; color:var(--ink2); max-width:680px; }
+  .header-pixel   { background:var(--pixel-bg);   border-color:var(--pixel-mid); }
+  .header-tofu    { background:var(--tofu-bg);    border-color:var(--tofu-mid); }
+  .header-lm      { background:var(--lm-bg);      border-color:var(--lm-mid); }
+  .header-prosp   { background:var(--prosp-bg);   border-color:var(--prosp-mid); }
+  .header-retarg  { background:var(--retarg-bg);  border-color:var(--retarg-mid); }
+  .header-nurture { background:var(--nurture-bg); border-color:var(--nurture-mid); }
+  .header-bonus   { background:var(--bonus-bg);   border-color:var(--bonus-mid); }
+  .header-win     { background:var(--win-bg);     border-color:var(--win-mid); }
+
+  /* GRIDS */
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-bottom:20px; }
+  .grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-bottom:20px; }
+
+  /* CARDS */
+  .card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
+  .card-title { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .card-title::before { content:''; display:inline-block; width:3px; height:13px; border-radius:2px; flex-shrink:0; }
+  .pixel   .card-title::before { background:var(--pixel); }
+  .tofu    .card-title::before { background:var(--tofu); }
+  .lm      .card-title::before { background:var(--lm); }
+  .prosp   .card-title::before { background:var(--prosp); }
+  .retarg  .card-title::before { background:var(--retarg); }
+  .nurture .card-title::before { background:var(--nurture); }
+  .bonus   .card-title::before { background:var(--bonus); }
+  .win     .card-title::before { background:var(--win); }
+
+  /* CHIPS */
+  .stat-row { display:flex; flex-wrap:wrap; gap:7px; }
+  .stat-chip { font-size:12px; padding:5px 11px; border-radius:20px; font-weight:500; border:1px solid; }
+  .chip-pixel   { background:var(--pixel-bg);   color:var(--pixel-dark);   border-color:var(--pixel-mid); }
+  .chip-tofu    { background:var(--tofu-bg);    color:var(--tofu-dark);    border-color:var(--tofu-mid); }
+  .chip-lm      { background:var(--lm-bg);      color:var(--lm-dark);      border-color:var(--lm-mid); }
+  .chip-prosp   { background:var(--prosp-bg);   color:var(--prosp-dark);   border-color:var(--prosp-mid); }
+  .chip-retarg  { background:var(--retarg-bg);  color:var(--retarg-dark);  border-color:var(--retarg-mid); }
+  .chip-nurture { background:var(--nurture-bg); color:var(--nurture-dark); border-color:var(--nurture-mid); }
+  .chip-bonus   { background:var(--bonus-bg);   color:var(--bonus-dark);   border-color:var(--bonus-mid); }
+  .chip-win     { background:var(--win-bg);     color:var(--win-dark);     border-color:var(--win-mid); }
+
+  /* LIST */
+  .info-list { list-style:none; }
+  .info-list li { padding:7px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--ink2); display:flex; align-items:flex-start; gap:7px; }
+  .info-list li:last-child { border-bottom:none; }
+  .info-list li::before { content:'→'; font-size:11px; color:var(--ink3); flex-shrink:0; margin-top:2px; }
+
+  /* CALLOUT */
+  .callout { border-radius:var(--r-md); padding:14px 18px; font-size:13px; margin-bottom:14px; border-left:3px solid; }
+  .callout.slate  { background:var(--pixel-bg); border-color:var(--pixel);   color:var(--pixel-dark); }
+  .callout.blue   { background:#EFF6FF;          border-color:var(--tofu);    color:#1E3A8A; }
+  .callout.cyan   { background:#ECFEFF;          border-color:var(--lm);      color:#164E63; }
+  .callout.green  { background:#ECFDF5;          border-color:var(--prosp);   color:#064E3B; }
+  .callout.amber  { background:#FFFBEB;          border-color:var(--retarg);  color:#78350F; }
+  .callout.pink   { background:#FDF2F8;          border-color:var(--nurture); color:#701A75; }
+  .callout.purple { background:#F5F3FF;          border-color:var(--bonus);   color:#3B0764; }
+  .callout.teal   { background:var(--win-bg);    border-color:var(--win);     color:var(--win-dark); }
+  .callout.red    { background:#FEF2F2;          border-color:#EF4444;        color:#991B1B; }
+
+  /* SECTION LABEL */
+  .sec { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin:32px 0 16px; color:var(--ink); border-bottom:2px solid var(--border); padding-bottom:8px; }
+
+  /* DETAIL GRID */
+  .detail-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-bottom:20px; }
+  .dg-item { background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px; }
+  .dg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px; }
+  .dg-value { font-size:13px; color:var(--ink2); }
+
+  /* NOTES / EXCLUDE */
+  .notes-box { border-radius:var(--r-md); background:var(--surface); border:1px solid var(--border); padding:16px 20px; font-size:13px; color:var(--ink2); margin-bottom:14px; }
+  .notes-box strong { font-family:'Space Grotesk',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink3); display:block; margin-bottom:5px; }
+  .exclude-box { background:#FFF7ED; border:1px solid #FED7AA; border-radius:var(--r-md); padding:12px 16px; font-size:13px; color:#92400E; margin-top:8px; }
+  .exclude-box strong { font-family:'Space Grotesk',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:3px; }
+
+  /* OVERVIEW */
+  .ov-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-bottom:28px; }
+  .ov-card { border-radius:var(--r-lg); padding:18px; border:1px solid; cursor:pointer; transition:transform .15s,box-shadow .15s; }
+  .ov-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.08); }
+  .ov-tag  { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.7; display:block; margin-bottom:4px; }
+  .ov-name { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; line-height:1.2; display:block; margin-bottom:5px; }
+  .ov-desc { font-size:12px; line-height:1.5; opacity:.8; }
+  .ov-pixel   { background:var(--pixel-bg);   border-color:var(--pixel-mid);   color:var(--pixel-dark); }
+  .ov-tofu    { background:var(--tofu-bg);    border-color:var(--tofu-mid);    color:var(--tofu-dark); }
+  .ov-lm      { background:var(--lm-bg);      border-color:var(--lm-mid);      color:var(--lm-dark); }
+  .ov-prosp   { background:var(--prosp-bg);   border-color:var(--prosp-mid);   color:var(--prosp-dark); }
+  .ov-retarg  { background:var(--retarg-bg);  border-color:var(--retarg-mid);  color:var(--retarg-dark); }
+  .ov-nurture { background:var(--nurture-bg); border-color:var(--nurture-mid); color:var(--nurture-dark); }
+  .ov-bonus   { background:var(--bonus-bg);   border-color:var(--bonus-mid);   color:var(--bonus-dark); }
+  .ov-win     { background:var(--win-bg);     border-color:var(--win-mid);     color:var(--win-dark); }
+
+  .h2   { font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; margin-bottom:9px; }
+  .lead { font-size:14px; color:var(--ink2); line-height:1.7; margin-bottom:26px; max-width:680px; }
+
+  /* PIXEL EVENTS LIST */
+  .event-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px; margin:12px 0 20px; }
+  .event-chip { background:var(--white); border:1px solid var(--pixel-mid); border-radius:var(--r-md); padding:10px 14px; }
+  .event-chip .ev-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--pixel-dark); margin-bottom:3px; }
+  .event-chip .ev-note { font-size:11px; color:var(--ink3); }
+  .priority-badge { display:inline-block; font-size:10px; font-weight:600; font-family:'Space Grotesk',sans-serif; padding:2px 7px; border-radius:3px; margin-left:6px; vertical-align:middle; }
+  .pb-optimize { background:#DBEAFE; color:#1E40AF; }
+  .pb-seed { background:#D1FAE5; color:#065F46; }
+
+  /* WINNING AD MULTIPLIER */
+  .winner-visual { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:28px 24px; margin-bottom:20px; }
+  .winning-ad-box { background:var(--win); color:#fff; border-radius:var(--r-md); padding:16px 20px; text-align:center; width:160px; margin:0 auto 0; }
+  .winning-ad-box .wab-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.8; margin-bottom:4px; }
+  .winning-ad-box .wab-name  { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; }
+  .variants-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px; }
+  .variant-card { border-radius:var(--r-md); padding:16px 18px; border:1px solid; }
+  .variant-card .vc-type { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
+  .variant-card .vc-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+  .variant-card .vc-desc { font-size:13px; line-height:1.5; }
+  .vc-trim-sm  { background:#EFF6FF; border-color:#93C5FD; color:#1E3A8A; }
+  .vc-trim-lg  { background:#EDE9FE; border-color:#C4B5FD; color:#4C1D95; }
+  .vc-extend-sm{ background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
+  .vc-extend-lg{ background:#FFF7ED; border-color:#FCD34D; color:#78350F; }
+  .cbo-badge { display:inline-block; background:var(--win); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:.08em; padding:4px 10px; border-radius:4px; margin-top:8px; }
+
+  /* TRIGGER BAR */
+  .trigger-bar { display:flex; align-items:center; gap:14px; background:var(--bonus-bg); border:1px solid var(--bonus-mid); border-radius:var(--r-md); padding:14px 18px; margin-bottom:18px; }
+  .trigger-icon { width:34px; height:34px; background:var(--bonus); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:15px; color:#fff; font-weight:700; }
+  .trigger-bar p { font-size:13px; color:var(--bonus-dark); }
+
+  /* STRUCTURE */
+  .struct-campaign { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); margin-bottom:16px; overflow:hidden; }
+  .struct-header { display:flex; align-items:center; gap:12px; padding:16px 22px; cursor:pointer; user-select:none; }
+  .struct-header:hover { background:var(--surface); }
+  .struct-badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:4px; flex-shrink:0; color:#fff; }
+  .struct-title { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; flex:1; }
+  .struct-toggle { font-size:16px; color:var(--ink3); transition:transform .2s; flex-shrink:0; }
+  .struct-campaign.open .struct-toggle { transform:rotate(180deg); }
+  .struct-body { display:none; padding:0 22px 22px; }
+  .struct-campaign.open .struct-body { display:block; }
+  .hierarchy { display:flex; flex-direction:column; }
+  .h-level { display:flex; align-items:stretch; }
+  .h-indent { width:30px; flex-shrink:0; position:relative; }
+  .h-indent::before { content:''; position:absolute; left:14px; top:0; bottom:0; width:1px; background:var(--border); }
+  .h-indent::after  { content:''; position:absolute; left:14px; top:50%; width:12px; height:1px; background:var(--border); }
+  .h-node { margin:3px 0; flex:1; border-radius:var(--r-sm); padding:9px 13px; font-size:12px; border:1px solid; }
+  .h-node .h-label  { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:2px; }
+  .h-node .h-detail { opacity:.75; }
+  .h-campaign      { background:var(--ink);       border-color:var(--ink);        color:#fff; }
+  .h-adset-tofu    { background:var(--tofu-bg);   border-color:var(--tofu-mid);   color:var(--tofu-dark); }
+  .h-adset-lm      { background:var(--lm-bg);     border-color:var(--lm-mid);     color:var(--lm-dark); }
+  .h-adset-prosp   { background:var(--prosp-bg);  border-color:var(--prosp-mid);  color:var(--prosp-dark); }
+  .h-adset-retarg  { background:var(--retarg-bg); border-color:var(--retarg-mid); color:var(--retarg-dark); }
+  .h-adset-nurture { background:var(--nurture-bg);border-color:var(--nurture-mid);color:var(--nurture-dark); }
+  .h-adset-bonus   { background:var(--bonus-bg);  border-color:var(--bonus-mid);  color:var(--bonus-dark); }
+  .h-ads  { display:flex; flex-wrap:wrap; gap:5px; margin:5px 0 3px; }
+  .h-ad   { font-size:11px; padding:3px 9px; border-radius:4px; border:1px solid var(--border); background:var(--surface); color:var(--ink3); font-family:'Space Grotesk',sans-serif; font-weight:500; }
+  .h-ad.winner { background:#ECFDF5; border-color:var(--prosp-mid); color:var(--prosp-dark); }
+  .h-note { font-size:11px; color:var(--ink3); background:var(--surface); border-radius:var(--r-sm); padding:6px 10px; margin:5px 0; font-style:italic; }
+  .pack-grid { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .pack-card { border:1px solid var(--border); border-radius:var(--r-md); padding:11px 14px; background:var(--surface); min-width:150px; }
+  .pack-card .pack-name { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:var(--prosp-dark); margin-bottom:5px; }
+
+  @media (max-width:600px) {
+    .hero { padding:36px 18px 30px; }
+    .funnel-strip { flex-wrap:wrap; }
+    .funnel-seg::after { display:none; }
+    .main { padding:20px 14px 50px; }
+    .variants-grid { grid-template-columns:1fr; }
+  }
+/* Playbook switcher — global nav across the four PX playbooks */
+.pb-switch { background:#0A0F1D; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:6px; padding:8px 20px; overflow-x:auto; scrollbar-width:none; }
+.pb-switch::-webkit-scrollbar { display:none; }
+.pb-switch-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#64748B; margin-right:8px; white-space:nowrap; }
+.pb-tab { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#94A3B8; text-decoration:none; padding:5px 13px; border-radius:20px; white-space:nowrap; transition:background .2s,color .2s; }
+.pb-tab:hover { color:#fff; background:rgba(255,255,255,.07); }
+.pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
+.pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
+.pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+.pb-tab.map { color:#93C5FD; background:rgba(147,197,253,.1); margin-left:auto; }
+.pb-tab.map:hover { color:#fff; background:rgba(147,197,253,.22); }
+/* Hero visual-map link */
+.hero-map { display:inline-flex; align-items:center; gap:7px; margin-top:2px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#0F172A; background:#93C5FD; padding:8px 16px; border-radius:20px; text-decoration:none; transition:filter .2s; }
+.hero-map:hover { filter:brightness(1.06); }
+</style>
+</head>
+<body>
+
+<!-- PLAYBOOK SWITCHER — links the four PX playbooks -->
+<div class="pb-switch">
+  <span class="pb-switch-label">PX Playbooks</span>
+  <a class="pb-tab" href="px-ad-creative-system.html">Ad Creative</a>
+  <a class="pb-tab active">Meta Scaling</a>
+  <a class="pb-tab soon">CRO <span>soon</span></a>
+  <a class="pb-tab soon">Data <span>soon</span></a>
+  <a class="pb-tab map" href="https://link.excalidraw.com/l/A403qDUZDJv/7g0s81HDplN" target="_blank" rel="noopener">&#128506; Visual Map &#8599;</a>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Performance Marketing · Meta Advertising</p>
+  <h1>The PX <span>Meta Scaling</span> System</h1>
+  <p>The full system: pixel seasoning, 4 core campaigns, a lead magnet pipeline, a scaling layer, and a winning ad multiplier process.</p>
+  <div class="funnel-wrap">
+    <div style="font-size:10px;color:#64748B;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">4 Core Campaigns</div>
+    <div class="funnel-strip">
+      <button class="funnel-seg seg-tofu"    onclick="switchTab('tofu')"><div class="seg-label">Cold</div><div class="seg-name">Top of Funnel</div></button>
+      <button class="funnel-seg seg-prosp"   onclick="switchTab('prosp')"><div class="seg-label">Cold</div><div class="seg-name">Prospecting</div></button>
+      <button class="funnel-seg seg-retarg"  onclick="switchTab('retarg')"><div class="seg-label">Warm</div><div class="seg-name">Retargeting</div></button>
+      <button class="funnel-seg seg-nurture" onclick="switchTab('nurture')"><div class="seg-label">Hot</div><div class="seg-name">Nurture</div></button>
+    </div>
+  </div>
+</div>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="overview"   onclick="switchTab('overview')"><span class="dot" style="background:#94A3B8"></span>Overview</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="tofu"      onclick="switchTab('tofu')"><span class="dot" style="background:var(--tofu)"></span>Cold TOFU</button>
+  <button class="tab-btn" data-tab="prosp"     onclick="switchTab('prosp')"><span class="dot" style="background:var(--prosp)"></span>Cold Prospecting</button>
+  <button class="tab-btn" data-tab="retarg"    onclick="switchTab('retarg')"><span class="dot" style="background:var(--retarg)"></span>Warm Retargeting</button>
+  <button class="tab-btn" data-tab="nurture"   onclick="switchTab('nurture')"><span class="dot" style="background:var(--nurture)"></span>Hot Nurture</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="lm"        onclick="switchTab('lm')"><span class="dot" style="background:var(--lm)"></span>Lead Magnet</button>
+  <button class="tab-btn" data-tab="bonus"     onclick="switchTab('bonus')"><span class="dot" style="background:var(--bonus)"></span>Cold Scaling</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="winner"    onclick="switchTab('winner')"><span class="dot" style="background:var(--win)"></span>Winning Ad Multiplier</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="pixel"     onclick="switchTab('pixel')"><span class="dot" style="background:var(--pixel)"></span>Pixel Seasoning</button>
+  <button class="tab-btn" data-tab="structure" onclick="switchTab('structure')"><span class="dot" style="background:var(--ink2)"></span>Structure</button>
+</nav>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="tab-panel active">
+    <p class="h2">The full campaign ecosystem</p>
+    <p class="lead">PX structures paid media into distinct jobs-to-be-done. Start with pixel seasoning, run 4 core campaigns, add a lead magnet pipeline for long-term nurture, scale proven winners, and compound results with the Winning Ad Multiplier.</p>
+    <div class="ov-grid">
+      <div class="ov-card ov-pixel"   onclick="switchTab('pixel')"><span class="ov-tag">Foundation</span><span class="ov-name">Pixel Seasoning</span><span class="ov-desc">Fire all standard events before launching. Teach the pixel what good looks like.</span></div>
+      <div class="ov-card ov-tofu"    onclick="switchTab('tofu')"><span class="ov-tag">Cold · Stage 1</span><span class="ov-name">Cold TOFU</span><span class="ov-desc">Prepare the market to agree with your worldview before you ask for the call.</span></div>
+      <div class="ov-card ov-prosp"   onclick="switchTab('prosp')"><span class="ov-tag">Cold · Stage 2</span><span class="ov-name">Cold Prospecting</span><span class="ov-desc">Primary revenue driver. Drive booked calls and appointments from cold audiences.</span></div>
+      <div class="ov-card ov-retarg"  onclick="switchTab('retarg')"><span class="ov-tag">Warm · Stage 3</span><span class="ov-name">Warm Retargeting</span><span class="ov-desc">Re-engage and recover warm prospects who interacted but didn't convert.</span></div>
+      <div class="ov-card ov-nurture" onclick="switchTab('nurture')"><span class="ov-tag">Hot · Stage 4</span><span class="ov-name">Hot Nurture</span><span class="ov-desc">Increase show rate and close rate for booked appointments at ~$1/day.</span></div>
+      <div class="ov-card ov-lm"      onclick="switchTab('lm')"><span class="ov-tag">Additional</span><span class="ov-name">Lead Magnet Pipeline</span><span class="ov-desc">Capture future buyers earlier. Many leads convert over 60–90 days via email nurture.</span></div>
+      <div class="ov-card ov-bonus"   onclick="switchTab('bonus')"><span class="ov-tag">Bonus · Spend &gt; 2× CPM</span><span class="ov-name">Cold Scaling</span><span class="ov-desc">Amplify proven winners only. Never test here — separate from the testing engine.</span></div>
+      <div class="ov-card ov-win"     onclick="switchTab('winner')"><span class="ov-tag">Optimization</span><span class="ov-name">Winning Ad Multiplier</span><span class="ov-desc">Take your top-spend winner and create 4 hook variants. Launch in a new CBO pack.</span></div>
+    </div>
+    <div class="sec">How it all connects</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title pixel">Start with the pixel</div><p style="font-size:13px;color:var(--ink2)">Before any campaign goes live, fire all standard Meta events. The pixel needs data to optimize. Don't promote until the data calls for it.</p></div>
+      <div class="card"><div class="card-title tofu">Season, then convert</div><p style="font-size:13px;color:var(--ink2)">TOFU prepares the market. Prospects who've seen authority content arrive at prospecting ads pre-warmed, lowering CPAs across the board.</p></div>
+      <div class="card"><div class="card-title retarg">Recover and compound</div><p style="font-size:13px;color:var(--ink2)">Retargeting captures everyone who bounced. At 3–5% of budget it often delivers the highest ROI by converting already-interested traffic.</p></div>
+      <div class="card"><div class="card-title nurture">Close from the inside</div><p style="font-size:13px;color:var(--ink2)">Hot Nurture runs to booked appointments only. The prospect arrives already sold. $1/day is the most asymmetric investment in the stack.</p></div>
+      <div class="card"><div class="card-title lm">Build long-term pipeline</div><p style="font-size:13px;color:var(--ink2)">Lead Magnet Pipeline captures future buyers at the research phase. Many won't book for 60–90 days — but they convert when nurtured correctly.</p></div>
+      <div class="card"><div class="card-title win">Multiply winners</div><p style="font-size:13px;color:var(--ink2)">Once an ad proves itself by spend at KPI, create 4 hook variants — trimmed and extended. Launch them in a new CBO pack and find the next winner.</p></div>
+    </div>
+
+    <div class="sec">Creative Launch Volume — the bridge to Ad Creative</div>
+    <div class="notes-box"><strong>Where media buying meets creative</strong>
+      Each launch feeds the campaigns above with a standard set of asset packs. <em>What</em> goes inside each pack — the angles, hooks, sub-niches, and execution styles — lives in the <a href="px-ad-creative-system.html" style="color:var(--prosp);font-weight:600;text-decoration:underline">Ad Creative playbook &#8594;</a>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title tofu">1 Pack · Statics</div><p style="font-size:13px;color:var(--ink2)">Multi-angle testing. Fast and cheap — high creative volume Andromeda loves.</p></div>
+      <div class="card"><div class="card-title prosp">1 Pack · 10-Second Ads</div><p style="font-size:13px;color:var(--ink2)">Multi-angle testing. The angle-testing hack — quick to make and they convert.</p></div>
+      <div class="card"><div class="card-title retarg">2 Packs · Videos</div><p style="font-size:13px;color:var(--ink2)">One high-conviction angle per pack. Deeper execution once an angle proves out.</p></div>
+    </div>
+  </div>
+
+  <!-- PIXEL SEASONING -->
+  <div id="tab-pixel" class="tab-panel pixel">
+    <div class="campaign-header header-pixel">
+      <span class="badge" style="background:var(--pixel)">Foundation</span>
+      <div><h2 style="color:var(--pixel-dark)">Pixel Seasoning</h2><p>Before any campaign goes live, you need to teach the Meta pixel what good looks like. Fire all standard events and let the data accumulate before optimising deeper down the funnel.</p></div>
+    </div>
+    <div class="callout slate"><strong>Core principle:</strong> The pixel optimises toward what it has seen. The more quality signals you feed it early, the faster and cheaper every subsequent campaign will perform. Never launch cold into a conversion objective without seasoning first.</div>
+
+    <div class="sec">Step 1 — Launch TOFU content first</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title pixel">What to do</div>
+        <ul class="info-list">
+          <li>Launch TPF (Top of Funnel) content before any conversion campaign</li>
+          <li>Run all funnel events across Meta and Facebook simultaneously</li>
+          <li>Let the pixel observe real user behavior before you ask it to optimise</li>
+          <li>Do not launch prospecting until pixel has meaningful data</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title pixel">Why it matters</div>
+        <ul class="info-list">
+          <li>Meta's algorithm needs signal volume to exit the learning phase</li>
+          <li>Optimising for Lead before Appointment is cheaper and faster to season</li>
+          <li>Each downstream event becomes more accurate as upstream events accumulate</li>
+          <li>Prevents wasted spend during the learning phase of key campaigns</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">Step 2 — Fire all standard pixel events</div>
+    <p style="font-size:13px;color:var(--ink2);margin-bottom:16px">Run these events in order of ease — start broad, work toward the final conversion. Each event seeds the algorithm with increasingly qualified signal.</p>
+    <div class="event-grid">
+      <div class="event-chip"><div class="ev-name">Lead <span class="priority-badge pb-optimize">Optimise first</span></div><div class="ev-note">Primary starting optimisation objective</div></div>
+      <div class="event-chip"><div class="ev-name">Contact</div><div class="ev-note">Inbound interest signals</div></div>
+      <div class="event-chip"><div class="ev-name">Subscribe</div><div class="ev-note">List opt-in and email capture</div></div>
+      <div class="event-chip"><div class="ev-name">Complete Registration</div><div class="ev-note">Form completions and sign-ups</div></div>
+      <div class="event-chip"><div class="ev-name">Schedule</div><div class="ev-note">Booking intent signals</div></div>
+      <div class="event-chip"><div class="ev-name">Appointment <span class="priority-badge pb-seed">Seed</span></div><div class="ev-note">Confirmed booking events</div></div>
+      <div class="event-chip"><div class="ev-name">Qualified Appointment <span class="priority-badge pb-seed">Seed</span></div><div class="ev-note">Vetted, high-intent bookings</div></div>
+      <div class="event-chip"><div class="ev-name">Application</div><div class="ev-note">High-intent form submissions</div></div>
+    </div>
+
+    <div class="sec">Step 3 — Optimisation progression</div>
+    <div class="callout slate"><strong>Rule:</strong> Optimise for Lead until there are enough data points to go deeper. Then progressively move the optimisation event further down the funnel as each stage accumulates 50+ conversions per week.</div>
+    <div class="grid-3">
+      <div class="card" style="border-left:3px solid var(--pixel)">
+        <div class="dg-label" style="margin-bottom:8px">Phase 1</div>
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimise for Lead</p>
+        <p style="font-size:13px;color:var(--ink2)">Start here. Broad signal, fastest to accumulate, cheapest to collect. Run until 50+ leads/week are firing consistently.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--prosp)">
+        <div class="dg-label" style="margin-bottom:8px">Phase 2</div>
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimise for Appointment</p>
+        <p style="font-size:13px;color:var(--ink2)">Move here once Lead is seasoned. The algorithm now has enough data to find people likely to book — not just submit a form.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--retarg)">
+        <div class="dg-label" style="margin-bottom:8px">Phase 3</div>
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimise for Qualified Appt</p>
+        <p style="font-size:13px;color:var(--ink2)">Move here when Appointment volume is strong. Now targeting the highest quality signal: vetted, sales-ready prospects.</p>
+      </div>
+    </div>
+
+    <div class="sec">Important warning — audience separation</div>
+    <div class="callout red"><strong>Do not allow overlap:</strong> When the data calls for it, prospects being served ads should not appear in both Lead Gen and Core funnels simultaneously. Irrelevant leads should not be allowed to enter both the LG and Core Subsequent funnels. Separate exclusion audiences carefully at each transition point.</div>
+  </div>
+
+  <!-- COLD TOFU -->
+  <div id="tab-tofu" class="tab-panel tofu">
+    <div class="campaign-header header-tofu">
+      <span class="badge" style="background:var(--tofu)">Cold · TOFU</span>
+      <div><h2 style="color:var(--tofu-dark)">Cold: Top of Funnel</h2><p>Prepare the market to agree with your worldview before you ever ask for the call. TOFU is always on, long-term, and compounding.</p></div>
+    </div>
+    <div class="callout blue"><strong>Core job:</strong> Lower cost-per-acquisition by creating familiarity, trust, and authority before the sales conversation begins. Combat false brand representation, agitate known problems, build category authority.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Video Views (ThruPlay)</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$8/day</div></div>
+      <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Broad</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch immediately, always on — start with 3–5 hero videos + 3–5 value videos</div></div>
+      <div class="dg-item"><div class="dg-label">Recommended Build</div><div class="dg-value">1–2 hero videos, 2–5 explainer/value videos per month</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">3–5 new videos per month; repurpose organic content regularly</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title tofu">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-tofu">Cost per ThruPlay</span><span class="stat-chip chip-tofu">Watch %</span><span class="stat-chip chip-tofu">Audience growth</span><span class="stat-chip chip-tofu">Video retention</span><span class="stat-chip chip-tofu">Engagement rate</span></div></div>
+      <div class="card"><div class="card-title tofu">Creative Types</div><ul class="info-list"><li>Selfie / authority talking head videos</li><li>Educational explainers and breakdowns</li><li>Thought leadership / rants</li><li>Split-testing hooks and formats</li><li>Brand awareness and testimonials</li></ul></div>
+      <div class="card"><div class="card-title tofu">What it produces</div><ul class="info-list"><li>Seasons the feed with brand presence</li><li>Refines misconceptions pre-pitch</li><li>Agitates known problems without selling</li><li>Builds category authority</li><li>Creates familiarity before the sales ask</li></ul></div>
+    </div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Long-term compounding layer. Post clearly and consistently — even as audience size grows, this maintains an always-on advertiser presence. Track CPV relative to benchmarks. Add new creatives when frequency exceeds threshold.</div>
+  </div>
+
+  <!-- LEAD MAGNET -->
+  <div id="tab-lm" class="tab-panel lm">
+    <div class="campaign-header header-lm">
+      <span class="badge" style="background:var(--lm)">Additional Campaign</span>
+      <div><h2 style="color:var(--lm-dark)">Lead Magnet Pipeline</h2><p>Capture future buyers earlier in the decision-making process and build a returnable email pipeline. Many leads convert over 60–90 days through capture and follow-up.</p></div>
+    </div>
+    <div class="callout cyan"><strong>Core job:</strong> Reduce dependence on expensive direct leads by building a long-term pipeline of future buyers who are researching now but not yet ready to book. Nurture them until they are.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$8/day</div></div>
+      <div class="dg-item"><div class="dg-label">Primary Audience</div><div class="dg-value">Cold Broad + Lookalikes</div></div>
+      <div class="dg-item"><div class="dg-label">Secondary Audience</div><div class="dg-value">Retargeting audiences from ThruPlay (TOFU) engagement</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">2–4 new creatives per week</div></div>
+      <div class="dg-item"><div class="dg-label">Ad Structure</div><div class="dg-value">Same adset/pack structure as Cold Prospecting</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title lm">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-lm">CPL</span><span class="stat-chip chip-lm">Funnel conversion %</span><span class="stat-chip chip-lm">Leads loaded</span><span class="stat-chip chip-lm">Email open rate</span><span class="stat-chip chip-lm">Downstream bookings</span></div></div>
+      <div class="card"><div class="card-title lm">Creative / Offer Types</div><ul class="info-list"><li>Lead guides and planning guides</li><li>Educational resources and toolkits</li><li>Calculators and assessment tools</li><li>"How to know if you're ready to book" formats</li><li>Quizzes and diagnostic tools</li></ul></div>
+      <div class="card"><div class="card-title lm">Why this exists</div><ul class="info-list"><li>Not everyone books on first exposure</li><li>60–90 day conversion window for many buyers</li><li>Builds email list independent of Meta</li><li>Lowers overall CAC by warming pipeline</li><li>Creates retargeting pool from TOFU viewers</li></ul></div>
+    </div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Scale CPL spend once funnel conversion metrics are proven. This campaign feeds directly into warm retargeting and eventually into hot nurture as leads progress. Existing leads already inside the funnel must be excluded.</div>
+    <div class="exclude-box"><strong>Exclude from targeting</strong> Existing leads already inside the lead magnet funnel</div>
+  </div>
+
+  <!-- COLD PROSPECTING -->
+  <div id="tab-prosp" class="tab-panel prosp">
+    <div class="campaign-header header-prosp">
+      <span class="badge" style="background:var(--prosp)">Cold · Prospecting</span>
+      <div><h2 style="color:var(--prosp-dark)">Cold: Prospecting</h2><p>The primary revenue driver. Directly advertise booked calls and appointments from qualified interested prospects. Majority of budget lives here.</p></div>
+    </div>
+    <div class="callout green"><strong>Core job:</strong> Generate booked calls, consultations, and immediate buying decisions. Primary scaling engine — majority of budget and testing volume should happen here.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads / Booked Calls / Appointment Dimensions</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">70–80% of total account budget</div></div>
+      <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Broad + Lookalikes + Demographic Dimensions</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch immediately; start with creative leadership — test fast</div></div>
+      <div class="dg-item"><div class="dg-label">Recommended Launch Volume</div><div class="dg-value">2–3 test packs, 3–4 variations per pack, one new pack per week</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">2–3 new ads per week depending on spend volume</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title prosp">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-prosp">CAC</span><span class="stat-chip chip-prosp">CPC</span><span class="stat-chip chip-prosp">CPL</span><span class="stat-chip chip-prosp">Total leads</span><span class="stat-chip chip-prosp">Lead rate</span><span class="stat-chip chip-prosp">Hook hold %</span></div></div>
+      <div class="card"><div class="card-title prosp">Creative Types</div><ul class="info-list"><li>UGC (User Generated Content)</li><li>Direct response / founder scripts</li><li>Ambassador / influencer formats</li><li>Case study lead ads</li></ul></div>
+      <div class="card"><div class="card-title prosp">Creative Goal</div><ul class="info-list"><li>Strictly conversion — booked calls only</li><li>Each pack = one angle + avatar combo</li><li>Test format, style, hook variations within pack</li><li>Winners from here go to Cold Scaling + Winning Ad Multiplier</li></ul></div>
+    </div>
+    <div class="sec">The Pack System</div>
+    <div class="callout green">Do not run a single-ad pack AND a multi-ad pack for the same angle simultaneously while testing. Each pack = one specific angle + avatar combination.</div>
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-title prosp">How packs work</div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:14px">Adsets are organised as packs — each targeting a specific angle/avatar combo. Budget testing starts at $1–$25 per pack. Variations within a pack can differ by format, style, or hook.</p>
+      <div class="pack-grid">
+        <div class="pack-card"><div class="pack-name">Pack 1 — Angle A / Avatar X</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div>
+        <div class="pack-card"><div class="pack-name">Pack 2 — Angle B / Avatar X</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div>
+        <div class="pack-card"><div class="pack-name">Pack 3 — Angle A / Avatar Y</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div>
+      </div>
+    </div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Primary scaling engine. Majority of budget and testing volume lives here. Winners move into Cold Scaling and feed the Winning Ad Multiplier. Continually refresh with new packs — never stop testing.</div>
+    <div class="exclude-box"><strong>Exclude from targeting</strong> Existing customers · Current post-opportunity leads</div>
+  </div>
+
+  <!-- WARM RETARGETING -->
+  <div id="tab-retarg" class="tab-panel retarg">
+    <div class="campaign-header header-retarg">
+      <span class="badge" style="background:var(--retarg)">Warm · Retargeting</span>
+      <div><h2 style="color:var(--retarg-dark)">Warm: Retargeting</h2><p>Re-engage prospects who are warmed up and ready to convert. Recover lost conversions, maximise conversion efficiency, and extract maximum value from existing traffic.</p></div>
+    </div>
+    <div class="callout amber"><strong>Core job:</strong> Increase booked call rates, reduce wasted traffic budget, and eliminate buying hesitation for people already aware of the brand. Often the highest ROI campaign in the account.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads / Booked Calls / Appointment Dimensions</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~3–5% of total account spend</div></div>
+      <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Website visitors, social engagers, lead magnet openers, landing page visitors</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">After 3–6 weeks of brand launch + 30+ days of traffic exposure</div></div>
+      <div class="dg-item"><div class="dg-label">Recommended Launch Volume</div><div class="dg-value">2–3 launch adsets; 2–3 organic traffic adsets</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">Refresh monthly</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title retarg">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-retarg">CAC</span><span class="stat-chip chip-retarg">CPL</span><span class="stat-chip chip-retarg">Conversion rate</span><span class="stat-chip chip-retarg">Frequency</span><span class="stat-chip chip-retarg">ROAS</span></div></div>
+      <div class="card"><div class="card-title retarg">Creative Types</div><ul class="info-list"><li>Testimonials and social proof</li><li>FAQ and objection handling</li><li>Urgency-based booking ads</li><li>Case study creatives</li></ul></div>
+      <div class="card"><div class="card-title retarg">Two Adset Structure</div><ul class="info-list"><li><strong>Adset 1 (Lead obj):</strong> Broad warm — website, ad engagers, video viewers; no LAL</li><li><strong>Adset 2 (Appt obj):</strong> Appointment-adjacent, high-intent action takers</li></ul></div>
+    </div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Often the highest ROI campaign as traffic volume increases. Scale retargeting budget proportionally as prospecting spend grows. Watch frequency — if it spikes, refresh creative before cutting budget.</div>
+    <div class="exclude-box"><strong>Exclude from targeting</strong> Booked appointments · Existing customers</div>
+  </div>
+
+  <!-- HOT NURTURE -->
+  <div id="tab-nurture" class="tab-panel nurture">
+    <div class="campaign-header header-nurture">
+      <span class="badge" style="background:var(--nurture)">Hot · Nurture</span>
+      <div><h2 style="color:var(--nurture-dark)">Hot: Nurture</h2><p>Increase show rate and close rate. The prospect should arrive on the call having already seen your credibility, process, and social proof. Close the close before the call starts.</p></div>
+    </div>
+    <div class="callout pink"><strong>Core job:</strong> Increase trust-based outcomes, reduce objection handling by the sales team, and improve appointment quality. Must launch with a 2–3 day head start before the appointment date.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Video Views + Engagement (ThruPlay)</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$1/day</div></div>
+      <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Booked calls + Engaged prospects</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch with confirmed appointments — must have 2–3 day head start minimum</div></div>
+      <div class="dg-item"><div class="dg-label">Content Maintained</div><div class="dg-value">4–6 pieces of content live at all times</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">1–2 new videos per week</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title nurture">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-nurture">Show rate</span><span class="stat-chip chip-nurture">Close rate</span><span class="stat-chip chip-nurture">Sales velocity</span><span class="stat-chip chip-nurture">Cost per ThruPlay</span><span class="stat-chip chip-nurture">Watch %</span></div></div>
+      <div class="card"><div class="card-title nurture">Creative Types</div><ul class="info-list"><li>Personality / founder story content</li><li>Process walk-throughs</li><li>FAQ / objection handling videos</li><li>Client results and case studies</li><li>Social proof and testimonials</li></ul></div>
+      <div class="card"><div class="card-title nurture">Creative Goal</div><ul class="info-list"><li>Build credibility, trust, and confidence before the close</li><li>Disarm objections the sales team hears most</li><li>Show the process ahead of time</li><li>Reinforce the decision to show up and engage</li></ul></div>
+    </div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Dramatically asymmetric ROI versus budget. A $1/day campaign that moves show rate by 10% outperforms almost any other investment in the account. Never cut this campaign — it's insurance on every booked call.</div>
+    <div class="exclude-box"><strong>Exclude from targeting</strong> Existing clients and customers</div>
+  </div>
+
+  <!-- COLD SCALING -->
+  <div id="tab-bonus" class="tab-panel bonus">
+    <div class="campaign-header header-bonus">
+      <span class="badge" style="background:var(--bonus)">Bonus Campaign</span>
+      <div><h2 style="color:var(--bonus-dark)">Cold Scaling</h2><p>Unlock proven creatives horizontally and vertically to move media spend towards exponential results. Separate from the testing engine — never test here.</p></div>
+    </div>
+    <div class="trigger-bar">
+      <div class="trigger-icon">⚡</div>
+      <p><strong>Launch trigger:</strong> When spend exceeds 2× CPM in the core prospecting campaign — winners are proven, data is reliable, and the algorithm has enough signal to scale efficiently.</p>
+    </div>
+    <div class="callout purple"><strong>Core job:</strong> Remove human error and projection by letting the algorithm drive proven creative at scale. Drives higher volume and cost efficiency on high-performing ads without disrupting the testing pipeline.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads / Booked Calls / Appointment Dimensions</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">Scales inside 470+ CPM threshold — start with high-performing responsive audiences</div></div>
+      <div class="dg-item"><div class="dg-label">Audience 1</div><div class="dg-value">Broad targeting — same as prospecting</div></div>
+      <div class="dg-item"><div class="dg-label">Audience 2</div><div class="dg-value">Winning Lookalikes 1–5% (if data supports)</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Only after winning packs are operationally proven inside core prospecting</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">Add ads based on frequency and performance data only — not by schedule</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title bonus">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-bonus">CPM efficiency</span><span class="stat-chip chip-bonus">ROAS</span><span class="stat-chip chip-bonus">Conversion rate</span><span class="stat-chip chip-bonus">Speed efficiency</span></div></div>
+      <div class="card"><div class="card-title bonus">The creative rule</div><ul class="info-list"><li>Strictly winning packs only — no new creative testing</li><li>Only high-performing ads from existing campaign data</li><li>Add creatives based on frequency/performance, not schedule</li><li>Never introduce unproven angles into this campaign</li></ul></div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title bonus">Adset Structure</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
+        <div><p style="font-size:12px;font-weight:600;color:var(--bonus-dark);margin-bottom:8px">Adset 1 — Broad Targeting</p><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div>
+        <div><p style="font-size:12px;font-weight:600;color:var(--bonus-dark);margin-bottom:8px">Adset 2 — Winning LAL 1–5%</p><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div>
+      </div>
+    </div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Completely separate from the testing engine. Never test here. Use only proven winners. Budget decisions should always respect the primary phase of optimization first. Scaling prematurely pollutes the algorithm and wastes spend on unvalidated creative.</div>
+  </div>
+
+  <!-- WINNING AD MULTIPLIER -->
+  <div id="tab-winner" class="tab-panel win">
+    <div class="campaign-header header-win">
+      <span class="badge" style="background:var(--win)">Optimization Framework</span>
+      <div><h2 style="color:var(--win-dark)">Winning Ad Multiplier</h2><p>Once an ad proves itself by achieving the most spend at KPI, don't just scale the budget — multiply it. Create 4 hook variants from the winning ad and launch them in a new CBO pack to find your next winner.</p></div>
+    </div>
+    <div class="callout teal"><strong>Core principle:</strong> Identify your winning ad by most spend at KPI. Then systematically create shorter and longer hook variations. Each variant tests a different entry point into the same proven message — without rebuilding the ad from scratch.</div>
+
+    <div class="sec">The Process</div>
+    <div class="winner-visual">
+      <div style="text-align:center;margin-bottom:8px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px">Start here: your proven winner</div>
+        <div class="winning-ad-box"><div class="wab-label">Identified by most spend at KPI</div><div class="wab-name">Winning Ad #1</div></div>
+        <div style="font-size:12px;color:var(--ink3);margin-top:10px;font-style:italic">Now create 4 hook variants and launch in a new CBO pack</div>
+      </div>
+      <div class="variants-grid">
+        <div class="variant-card vc-trim-sm">
+          <div class="vc-type">&#8722;3 sec</div>
+          <div class="vc-label">Trim the hook</div>
+          <div class="vc-desc">Remove the first 3 seconds of the ad. Find your strongest hook moment and bring it to the very start. Cut any slow preamble or setup before the real hook lands.</div>
+        </div>
+        <div class="variant-card vc-trim-lg">
+          <div class="vc-type">&#8722;7 sec</div>
+          <div class="vc-label">Trim deeper</div>
+          <div class="vc-desc">Remove the first 7 seconds. A more aggressive cut — drops further into the content where the message is already warm. Works well when the original hook is soft.</div>
+        </div>
+        <div class="variant-card vc-extend-sm">
+          <div class="vc-type">&#43;3 sec</div>
+          <div class="vc-label">Add a new hook</div>
+          <div class="vc-desc">Add a brand new 3-second hook to the front of the existing ad. The body of the ad stays identical — only the entry point changes. Test a different pattern interrupt or opening line.</div>
+        </div>
+        <div class="variant-card vc-extend-lg">
+          <div class="vc-type">&#43;9 sec</div>
+          <div class="vc-label">Add an extended intro</div>
+          <div class="vc-desc">Add a 9-second new intro to the front of the existing ad. Use this to add more context, agitation, or curiosity before the proven message kicks in.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">Launch all 4 variants together</div>
+        <span class="cbo-badge">Launch in New CBO Pack</span>
+        <p style="font-size:12px;color:var(--ink3);margin-top:8px">Each variant enters the same CBO campaign. Meta allocates budget to the best performer automatically.</p>
+      </div>
+    </div>
+
+    <div class="sec">Why it works</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title win">Proven body, new entry</div><p style="font-size:13px;color:var(--ink2)">The middle and end of the ad is already validated — it converted. You're only testing different ways to hook the viewer in. Lower risk than creating new ads from scratch.</p></div>
+      <div class="card"><div class="card-title win">Hook is the highest leverage point</div><p style="font-size:13px;color:var(--ink2)">The first 3 seconds determine whether someone keeps watching. A winner with 3 different hooks can find 3× the audience who respond to different patterns of interruption.</p></div>
+      <div class="card"><div class="card-title win">CBO does the work</div><p style="font-size:13px;color:var(--ink2)">Launching all 4 variants into a new CBO pack lets Meta's algorithm find which hook version performs best. No manual budget splitting — the winning hook self-identifies.</p></div>
+    </div>
+
+    <div class="sec">When to trigger this</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title win">Trigger signals</div>
+        <ul class="info-list">
+          <li>Ad has the highest spend of any creative in the account at or below KPI</li>
+          <li>Ad has been running long enough to have statistical confidence (typically 7–14 days)</li>
+          <li>Frequency is rising — need fresh entry points for the same audience</li>
+          <li>You want to scale the message without simply raising the budget</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title win">What to do next</div>
+        <ul class="info-list">
+          <li>Identify the Winning Ad #1 by most spend at KPI</li>
+          <li>Create all 4 variants (±3s, ±7s/9s) from the same source file</li>
+          <li>Launch all variants in a dedicated new CBO pack</li>
+          <li>Let it run for 7–14 days before making decisions</li>
+          <li>The new winner becomes the next input to the multiplier process</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRUCTURE -->
+  <div id="tab-structure" class="tab-panel">
+    <p class="h2">Campaign Structure at a Glance</p>
+    <p class="lead">Every campaign follows a Campaign → Adset → Ads hierarchy. Structure varies by campaign based on audience temperature, objective, and testing needs. Prefer the whole picture in one view? Open the full visual map.</p>
+    <div style="margin:-8px 0 24px"><a class="hero-map" href="https://link.excalidraw.com/l/A403qDUZDJv/7g0s81HDplN" target="_blank" rel="noopener">&#128506; Open the full visual map &#8599;</a></div>
+
+    <div class="struct-campaign open" id="str-pixel">
+      <div class="struct-header" onclick="toggleStruct('str-pixel')">
+        <span class="struct-badge" style="background:var(--pixel)">Pixel</span>
+        <span class="struct-title">Pixel Seasoning — fire before any campaign launches</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="h-note">Not a Meta campaign — a pre-launch checklist. Fire all standard events and run TOFU content before launching any conversion objective.</div>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:7px">
+          <span class="stat-chip chip-pixel">Lead</span><span class="stat-chip chip-pixel">Contact</span><span class="stat-chip chip-pixel">Subscribe</span><span class="stat-chip chip-pixel">Complete Registration</span><span class="stat-chip chip-pixel">Schedule</span><span class="stat-chip chip-pixel">Appointment</span><span class="stat-chip chip-pixel">Qualified Appointment</span><span class="stat-chip chip-pixel">Application</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-tofu">
+      <div class="struct-header" onclick="toggleStruct('str-tofu')">
+        <span class="struct-badge" style="background:var(--tofu)">TOFU</span>
+        <span class="struct-title">Cold Top of Funnel — always on, broad, 10+ ads</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold TOFU — Video Views (ThruPlay) · ~$8/day</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-tofu"><div class="h-label">Adset</div><div class="h-detail">Audience: Broad · Allow Meta to optimise</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">10+ ads — wide creative variety, always refreshing</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span><span class="h-ad">Ad 5+</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-lm">
+      <div class="struct-header" onclick="toggleStruct('str-lm')">
+        <span class="struct-badge" style="background:var(--lm)">Lead Magnet</span>
+        <span class="struct-title">Lead Magnet Pipeline — same pack structure as prospecting</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="h-note" style="margin-bottom:10px">Adset structure mirrors Cold Prospecting packs. Audience pulls from cold broad/LAL and TOFU ThruPlay retargeting pools.</div>
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Lead Magnet Pipeline — Leads objective · ~$8/day</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-lm"><div class="h-label">Pack 1 — Cold Broad/LAL</div><div class="h-detail">Lead magnet creative — angle A offer type</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-lm"><div class="h-label">Pack 2 — TOFU Retargeting</div><div class="h-detail">ThruPlay viewers from TOFU campaign</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-prosp">
+      <div class="struct-header" onclick="toggleStruct('str-prosp')">
+        <span class="struct-badge" style="background:var(--prosp)">Prospecting</span>
+        <span class="struct-title">Cold Prospecting — Pack System (primary testing engine)</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="h-note" style="margin-bottom:10px">Never run single + multi-ad pack on the same angle simultaneously while testing.</div>
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Prospecting — Leads/Calls/Sales · 70–80% of budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 1 — Adset</div><div class="h-detail">Angle A · Avatar X · $1–$25 test budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 2 — Adset</div><div class="h-detail">Angle B · Avatar X · $1–$25 test budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp" style="opacity:.55"><div class="h-label">Pack 3, 4, 5... — Adsets</div><div class="h-detail">Additional angle/avatar combos in parallel</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-retarg">
+      <div class="struct-header" onclick="toggleStruct('str-retarg')">
+        <span class="struct-badge" style="background:var(--retarg)">Retargeting</span>
+        <span class="struct-title">Warm Retargeting — Two adsets, two objectives</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Late Retargeting — Leads/Calls/Sales · ~3–5% of budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-retarg"><div class="h-label">Adset 1 — Lead Objective</div><div class="h-detail">Broad warm: website visitors, ad engagers, video viewers (no LAL)</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-retarg"><div class="h-label">Adset 2 — Appt Objective</div><div class="h-detail">Appointment-adjacent, high-intent actions taken</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-nurture">
+      <div class="struct-header" onclick="toggleStruct('str-nurture')">
+        <span class="struct-badge" style="background:var(--nurture)">Nurture</span>
+        <span class="struct-title">Hot Nurture — Booked appointments only, 4–6 ads always live</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Hot Nurture — Video Views + Engagement · ~$1/day</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-nurture"><div class="h-label">Adset</div><div class="h-detail">Audience: Booked appointments + Engaged prospects</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">4–6 creatives live at all times; 1–2 new videos/week</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span><span class="h-ad">Ad 5+</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-bonus">
+      <div class="struct-header" onclick="toggleStruct('str-bonus')">
+        <span class="struct-badge" style="background:var(--bonus)">Scaling</span>
+        <span class="struct-title">Cold Scaling — Bonus (launch when spend &gt; 2× CPM)</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Scaling — separate from testing campaign entirely</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-bonus"><div class="h-label">Adset 1 — Broad</div><div class="h-detail">Broad audience, proven winners only</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-bonus"><div class="h-label">Adset 2 — Winning LAL 1–5%</div><div class="h-detail">Lookalike from top converters (if data supports)</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-campaign" id="str-winner">
+      <div class="struct-header" onclick="toggleStruct('str-winner')">
+        <span class="struct-badge" style="background:var(--win)">Multiplier</span>
+        <span class="struct-title">Winning Ad Multiplier — new CBO pack from proven winner</span>
+        <span class="struct-toggle">▾</span>
+      </div>
+      <div class="struct-body">
+        <div class="h-note" style="margin-bottom:10px">Triggered when an ad achieves most spend at KPI. Not a standing campaign — a repeatable process.</div>
+        <div class="hierarchy">
+          <div class="h-level"><div class="h-node" style="background:var(--win-bg);border-color:var(--win-mid);color:var(--win-dark)"><div class="h-label">Input</div><div class="h-detail">Winning Ad #1 — identified by most spend at KPI</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-campaign"><div class="h-label">New CBO Pack Campaign</div><div class="h-detail">Launch all 4 variants together — CBO allocates budget to best performer</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1">
+            <div class="h-ads" style="margin-top:8px">
+              <span class="h-ad" style="background:#EFF6FF;border-color:#93C5FD;color:#1E3A8A">&#8722;3s trim</span>
+              <span class="h-ad" style="background:#EDE9FE;border-color:#C4B5FD;color:#4C1D95">&#8722;7s trim</span>
+              <span class="h-ad" style="background:#F0FDF4;border-color:#86EFAC;color:#14532D">&#43;3s hook</span>
+              <span class="h-ad" style="background:#FFF7ED;border-color:#FCD34D;color:#78350F">&#43;9s intro</span>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  const btn   = document.querySelector('[data-tab="' + id + '"]');
+  if (panel) panel.classList.add('active');
+  if (btn)   btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleStruct(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
