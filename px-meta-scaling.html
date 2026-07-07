@@ -241,7 +241,7 @@
     .main { padding:20px 14px 50px; }
     .variants-grid { grid-template-columns:1fr; }
   }
-/* Playbook switcher — global nav across the four PX playbooks */
+/* Playbook switcher: global nav across the four PX playbooks */
 .pb-switch { background:#0A0F1D; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:6px; padding:8px 20px; overflow-x:auto; scrollbar-width:none; }
 .pb-switch::-webkit-scrollbar { display:none; }
 .pb-switch-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#64748B; margin-right:8px; white-space:nowrap; }
@@ -259,7 +259,7 @@
 </head>
 <body>
 
-<!-- PLAYBOOK SWITCHER — links the four PX playbooks -->
+<!-- PLAYBOOK SWITCHER: links the four PX playbooks -->
 <div class="pb-switch">
   <span class="pb-switch-label">PX Playbooks</span>
   <a class="pb-tab" href="px-ad-creative-system.html">Ad Creative</a>
@@ -306,34 +306,34 @@
   <!-- OVERVIEW -->
   <div id="tab-overview" class="tab-panel active">
     <p class="h2">The full campaign ecosystem</p>
-    <p class="lead">PX structures paid media into distinct jobs-to-be-done. Start with pixel seasoning, run 4 core campaigns, add a lead magnet pipeline for long-term nurture, scale proven winners, and compound results with the Winning Ad Multiplier.</p>
+    <p class="lead">PX structures paid media into distinct jobs. Start with pixel seasoning, run 4 core campaigns, add a lead magnet pipeline for long-term nurture, scale proven winners, and compound results with the Winning Ad Multiplier.</p>
     <div class="ov-grid">
       <div class="ov-card ov-pixel"   onclick="switchTab('pixel')"><span class="ov-tag">Foundation</span><span class="ov-name">Pixel Seasoning</span><span class="ov-desc">Fire all standard events before launching. Teach the pixel what good looks like.</span></div>
       <div class="ov-card ov-tofu"    onclick="switchTab('tofu')"><span class="ov-tag">Cold · Stage 1</span><span class="ov-name">Cold TOFU</span><span class="ov-desc">Prepare the market to agree with your worldview before you ask for the call.</span></div>
       <div class="ov-card ov-prosp"   onclick="switchTab('prosp')"><span class="ov-tag">Cold · Stage 2</span><span class="ov-name">Cold Prospecting</span><span class="ov-desc">Primary revenue driver. Drive booked calls and appointments from cold audiences.</span></div>
       <div class="ov-card ov-retarg"  onclick="switchTab('retarg')"><span class="ov-tag">Warm · Stage 3</span><span class="ov-name">Warm Retargeting</span><span class="ov-desc">Re-engage and recover warm prospects who interacted but didn't convert.</span></div>
       <div class="ov-card ov-nurture" onclick="switchTab('nurture')"><span class="ov-tag">Hot · Stage 4</span><span class="ov-name">Hot Nurture</span><span class="ov-desc">Increase show rate and close rate for booked appointments at ~$1/day.</span></div>
-      <div class="ov-card ov-lm"      onclick="switchTab('lm')"><span class="ov-tag">Additional</span><span class="ov-name">Lead Magnet Pipeline</span><span class="ov-desc">Capture future buyers earlier. Many leads convert over 60–90 days via email nurture.</span></div>
-      <div class="ov-card ov-bonus"   onclick="switchTab('bonus')"><span class="ov-tag">Bonus · Spend &gt; 2× CPM</span><span class="ov-name">Cold Scaling</span><span class="ov-desc">Amplify proven winners only. Never test here — separate from the testing engine.</span></div>
+      <div class="ov-card ov-lm"      onclick="switchTab('lm')"><span class="ov-tag">Additional</span><span class="ov-name">Lead Magnet Pipeline</span><span class="ov-desc">Capture future buyers earlier. Many leads convert over 60&ndash;90 days via email nurture.</span></div>
+      <div class="ov-card ov-bonus"   onclick="switchTab('bonus')"><span class="ov-tag">Bonus · Spend &gt; 2&times; CPM</span><span class="ov-name">Cold Scaling</span><span class="ov-desc">Amplify proven winners only. Never test here. Keep it separate from the testing engine.</span></div>
       <div class="ov-card ov-win"     onclick="switchTab('winner')"><span class="ov-tag">Optimization</span><span class="ov-name">Winning Ad Multiplier</span><span class="ov-desc">Take your top-spend winner and create 4 hook variants. Launch in a new CBO pack.</span></div>
     </div>
     <div class="sec">How it all connects</div>
     <div class="grid-3">
-      <div class="card"><div class="card-title pixel">Start with the pixel</div><p style="font-size:13px;color:var(--ink2)">Before any campaign goes live, fire all standard Meta events. The pixel needs data to optimize. Don't promote until the data calls for it.</p></div>
-      <div class="card"><div class="card-title tofu">Season, then convert</div><p style="font-size:13px;color:var(--ink2)">TOFU prepares the market. Prospects who've seen authority content arrive at prospecting ads pre-warmed, lowering CPAs across the board.</p></div>
-      <div class="card"><div class="card-title retarg">Recover and compound</div><p style="font-size:13px;color:var(--ink2)">Retargeting captures everyone who bounced. At 3–5% of budget it often delivers the highest ROI by converting already-interested traffic.</p></div>
+      <div class="card"><div class="card-title pixel">Start with the pixel</div><p style="font-size:13px;color:var(--ink2)">Before any campaign goes live, fire all standard Meta events. The pixel needs data to optimize. Do not promote until the data calls for it.</p></div>
+      <div class="card"><div class="card-title tofu">Season, then convert</div><p style="font-size:13px;color:var(--ink2)">TOFU prepares the market. Prospects who have seen authority content arrive at prospecting ads pre-warmed, lowering CPAs across the board.</p></div>
+      <div class="card"><div class="card-title retarg">Recover and compound</div><p style="font-size:13px;color:var(--ink2)">Retargeting captures everyone who bounced. At 3&ndash;5% of budget it often delivers the highest ROI by converting already-interested traffic.</p></div>
       <div class="card"><div class="card-title nurture">Close from the inside</div><p style="font-size:13px;color:var(--ink2)">Hot Nurture runs to booked appointments only. The prospect arrives already sold. $1/day is the most asymmetric investment in the stack.</p></div>
-      <div class="card"><div class="card-title lm">Build long-term pipeline</div><p style="font-size:13px;color:var(--ink2)">Lead Magnet Pipeline captures future buyers at the research phase. Many won't book for 60–90 days — but they convert when nurtured correctly.</p></div>
-      <div class="card"><div class="card-title win">Multiply winners</div><p style="font-size:13px;color:var(--ink2)">Once an ad proves itself by spend at KPI, create 4 hook variants — trimmed and extended. Launch them in a new CBO pack and find the next winner.</p></div>
+      <div class="card"><div class="card-title lm">Build long-term pipeline</div><p style="font-size:13px;color:var(--ink2)">Lead Magnet Pipeline captures future buyers at the research phase. Many will not book for 60&ndash;90 days, but they convert when nurtured correctly.</p></div>
+      <div class="card"><div class="card-title win">Multiply winners</div><p style="font-size:13px;color:var(--ink2)">Once an ad proves itself by spend at KPI, create 4 hook variants, trimmed and extended. Launch them in a new CBO pack and find the next winner.</p></div>
     </div>
 
-    <div class="sec">Creative Launch Volume — the bridge to Ad Creative</div>
+    <div class="sec">Creative Launch Volume: the bridge to Ad Creative</div>
     <div class="notes-box"><strong>Where media buying meets creative</strong>
-      Each launch feeds the campaigns above with a standard set of asset packs. <em>What</em> goes inside each pack — the angles, hooks, sub-niches, and execution styles — lives in the <a href="px-ad-creative-system.html" style="color:var(--prosp);font-weight:600;text-decoration:underline">Ad Creative playbook &#8594;</a>
+      Each launch feeds the campaigns above with a standard set of asset packs. The angles, hooks, sub-niches, and execution styles that go inside each pack live in the <a href="px-ad-creative-system.html" style="color:var(--prosp);font-weight:600;text-decoration:underline">Ad Creative playbook &#8594;</a>
     </div>
     <div class="grid-3">
-      <div class="card"><div class="card-title tofu">1 Pack · Statics</div><p style="font-size:13px;color:var(--ink2)">Multi-angle testing. Fast and cheap — high creative volume Andromeda loves.</p></div>
-      <div class="card"><div class="card-title prosp">1 Pack · 10-Second Ads</div><p style="font-size:13px;color:var(--ink2)">Multi-angle testing. The angle-testing hack — quick to make and they convert.</p></div>
+      <div class="card"><div class="card-title tofu">1 Pack · Statics</div><p style="font-size:13px;color:var(--ink2)">Multi-angle testing. Fast, cheap, and high creative volume for the algorithm.</p></div>
+      <div class="card"><div class="card-title prosp">1 Pack · 10-Second Ads</div><p style="font-size:13px;color:var(--ink2)">Multi-angle testing. Quick to produce and they convert.</p></div>
       <div class="card"><div class="card-title retarg">2 Packs · Videos</div><p style="font-size:13px;color:var(--ink2)">One high-conviction angle per pack. Deeper execution once an angle proves out.</p></div>
     </div>
   </div>
@@ -342,18 +342,18 @@
   <div id="tab-pixel" class="tab-panel pixel">
     <div class="campaign-header header-pixel">
       <span class="badge" style="background:var(--pixel)">Foundation</span>
-      <div><h2 style="color:var(--pixel-dark)">Pixel Seasoning</h2><p>Before any campaign goes live, you need to teach the Meta pixel what good looks like. Fire all standard events and let the data accumulate before optimising deeper down the funnel.</p></div>
+      <div><h2 style="color:var(--pixel-dark)">Pixel Seasoning</h2><p>Before any campaign goes live, teach the Meta pixel what good looks like. Fire all standard events and let the data accumulate before optimizing deeper down the funnel.</p></div>
     </div>
-    <div class="callout slate"><strong>Core principle:</strong> The pixel optimises toward what it has seen. The more quality signals you feed it early, the faster and cheaper every subsequent campaign will perform. Never launch cold into a conversion objective without seasoning first.</div>
+    <div class="callout slate"><strong>Core principle:</strong> The pixel optimizes toward what it has seen. The more quality signals you feed it early, the faster and cheaper every subsequent campaign will perform. Never launch cold into a conversion objective without seasoning first.</div>
 
-    <div class="sec">Step 1 — Launch TOFU content first</div>
+    <div class="sec">Step 1: Launch TOFU content first</div>
     <div class="grid-2">
       <div class="card">
         <div class="card-title pixel">What to do</div>
         <ul class="info-list">
           <li>Launch TPF (Top of Funnel) content before any conversion campaign</li>
           <li>Run all funnel events across Meta and Facebook simultaneously</li>
-          <li>Let the pixel observe real user behavior before you ask it to optimise</li>
+          <li>Let the pixel observe real user behavior before you ask it to optimize</li>
           <li>Do not launch prospecting until pixel has meaningful data</li>
         </ul>
       </div>
@@ -361,17 +361,17 @@
         <div class="card-title pixel">Why it matters</div>
         <ul class="info-list">
           <li>Meta's algorithm needs signal volume to exit the learning phase</li>
-          <li>Optimising for Lead before Appointment is cheaper and faster to season</li>
+          <li>Optimizing for Lead before Appointment is cheaper and faster to season</li>
           <li>Each downstream event becomes more accurate as upstream events accumulate</li>
           <li>Prevents wasted spend during the learning phase of key campaigns</li>
         </ul>
       </div>
     </div>
 
-    <div class="sec">Step 2 — Fire all standard pixel events</div>
-    <p style="font-size:13px;color:var(--ink2);margin-bottom:16px">Run these events in order of ease — start broad, work toward the final conversion. Each event seeds the algorithm with increasingly qualified signal.</p>
+    <div class="sec">Step 2: Fire all standard pixel events</div>
+    <p style="font-size:13px;color:var(--ink2);margin-bottom:16px">Run these events in order of ease. Start broad and work toward the final conversion. Each event seeds the algorithm with increasingly qualified signal.</p>
     <div class="event-grid">
-      <div class="event-chip"><div class="ev-name">Lead <span class="priority-badge pb-optimize">Optimise first</span></div><div class="ev-note">Primary starting optimisation objective</div></div>
+      <div class="event-chip"><div class="ev-name">Lead <span class="priority-badge pb-optimize">Optimize first</span></div><div class="ev-note">Primary starting optimization objective</div></div>
       <div class="event-chip"><div class="ev-name">Contact</div><div class="ev-note">Inbound interest signals</div></div>
       <div class="event-chip"><div class="ev-name">Subscribe</div><div class="ev-note">List opt-in and email capture</div></div>
       <div class="event-chip"><div class="ev-name">Complete Registration</div><div class="ev-note">Form completions and sign-ups</div></div>
@@ -381,27 +381,27 @@
       <div class="event-chip"><div class="ev-name">Application</div><div class="ev-note">High-intent form submissions</div></div>
     </div>
 
-    <div class="sec">Step 3 — Optimisation progression</div>
-    <div class="callout slate"><strong>Rule:</strong> Optimise for Lead until there are enough data points to go deeper. Then progressively move the optimisation event further down the funnel as each stage accumulates 50+ conversions per week.</div>
+    <div class="sec">Step 3: Optimization progression</div>
+    <div class="callout slate"><strong>Rule:</strong> Optimize for Lead until there are enough data points to go deeper. Then progressively move the optimization event further down the funnel as each stage accumulates 50+ conversions per week.</div>
     <div class="grid-3">
       <div class="card" style="border-left:3px solid var(--pixel)">
         <div class="dg-label" style="margin-bottom:8px">Phase 1</div>
-        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimise for Lead</p>
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimize for Lead</p>
         <p style="font-size:13px;color:var(--ink2)">Start here. Broad signal, fastest to accumulate, cheapest to collect. Run until 50+ leads/week are firing consistently.</p>
       </div>
       <div class="card" style="border-left:3px solid var(--prosp)">
         <div class="dg-label" style="margin-bottom:8px">Phase 2</div>
-        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimise for Appointment</p>
-        <p style="font-size:13px;color:var(--ink2)">Move here once Lead is seasoned. The algorithm now has enough data to find people likely to book — not just submit a form.</p>
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimize for Appointment</p>
+        <p style="font-size:13px;color:var(--ink2)">Move here once Lead is seasoned. The algorithm now has enough data to find people likely to book, not just submit a form.</p>
       </div>
       <div class="card" style="border-left:3px solid var(--retarg)">
         <div class="dg-label" style="margin-bottom:8px">Phase 3</div>
-        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimise for Qualified Appt</p>
+        <p style="font-size:14px;font-weight:500;margin-bottom:6px">Optimize for Qualified Appt</p>
         <p style="font-size:13px;color:var(--ink2)">Move here when Appointment volume is strong. Now targeting the highest quality signal: vetted, sales-ready prospects.</p>
       </div>
     </div>
 
-    <div class="sec">Important warning — audience separation</div>
+    <div class="sec">Important warning: audience separation</div>
     <div class="callout red"><strong>Do not allow overlap:</strong> When the data calls for it, prospects being served ads should not appear in both Lead Gen and Core funnels simultaneously. Irrelevant leads should not be allowed to enter both the LG and Core Subsequent funnels. Separate exclusion audiences carefully at each transition point.</div>
   </div>
 
@@ -416,23 +416,23 @@
       <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Video Views (ThruPlay)</div></div>
       <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$8/day</div></div>
       <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Broad</div></div>
-      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch immediately, always on — start with 3–5 hero videos + 3–5 value videos</div></div>
-      <div class="dg-item"><div class="dg-label">Recommended Build</div><div class="dg-value">1–2 hero videos, 2–5 explainer/value videos per month</div></div>
-      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">3–5 new videos per month; repurpose organic content regularly</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch immediately, always on. Start with 3&ndash;5 hero videos + 3&ndash;5 value videos.</div></div>
+      <div class="dg-item"><div class="dg-label">Recommended Build</div><div class="dg-value">1&ndash;2 hero videos, 2&ndash;5 explainer/value videos per month</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">3&ndash;5 new videos per month; repurpose organic content regularly</div></div>
     </div>
     <div class="grid-3">
       <div class="card"><div class="card-title tofu">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-tofu">Cost per ThruPlay</span><span class="stat-chip chip-tofu">Watch %</span><span class="stat-chip chip-tofu">Audience growth</span><span class="stat-chip chip-tofu">Video retention</span><span class="stat-chip chip-tofu">Engagement rate</span></div></div>
       <div class="card"><div class="card-title tofu">Creative Types</div><ul class="info-list"><li>Selfie / authority talking head videos</li><li>Educational explainers and breakdowns</li><li>Thought leadership / rants</li><li>Split-testing hooks and formats</li><li>Brand awareness and testimonials</li></ul></div>
       <div class="card"><div class="card-title tofu">What it produces</div><ul class="info-list"><li>Seasons the feed with brand presence</li><li>Refines misconceptions pre-pitch</li><li>Agitates known problems without selling</li><li>Builds category authority</li><li>Creates familiarity before the sales ask</li></ul></div>
     </div>
-    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Long-term compounding layer. Post clearly and consistently — even as audience size grows, this maintains an always-on advertiser presence. Track CPV relative to benchmarks. Add new creatives when frequency exceeds threshold.</div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Long-term compounding layer. Post clearly and consistently. Even as audience size grows, this maintains an always-on advertiser presence. Track CPV relative to benchmarks. Add new creatives when frequency exceeds threshold.</div>
   </div>
 
   <!-- LEAD MAGNET -->
   <div id="tab-lm" class="tab-panel lm">
     <div class="campaign-header header-lm">
       <span class="badge" style="background:var(--lm)">Additional Campaign</span>
-      <div><h2 style="color:var(--lm-dark)">Lead Magnet Pipeline</h2><p>Capture future buyers earlier in the decision-making process and build a returnable email pipeline. Many leads convert over 60–90 days through capture and follow-up.</p></div>
+      <div><h2 style="color:var(--lm-dark)">Lead Magnet Pipeline</h2><p>Capture future buyers earlier in the decision-making process and build a returnable email pipeline. Many leads convert over 60&ndash;90 days through capture and follow-up.</p></div>
     </div>
     <div class="callout cyan"><strong>Core job:</strong> Reduce dependence on expensive direct leads by building a long-term pipeline of future buyers who are researching now but not yet ready to book. Nurture them until they are.</div>
     <div class="detail-grid">
@@ -440,13 +440,13 @@
       <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$8/day</div></div>
       <div class="dg-item"><div class="dg-label">Primary Audience</div><div class="dg-value">Cold Broad + Lookalikes</div></div>
       <div class="dg-item"><div class="dg-label">Secondary Audience</div><div class="dg-value">Retargeting audiences from ThruPlay (TOFU) engagement</div></div>
-      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">2–4 new creatives per week</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">2&ndash;4 new creatives per week</div></div>
       <div class="dg-item"><div class="dg-label">Ad Structure</div><div class="dg-value">Same adset/pack structure as Cold Prospecting</div></div>
     </div>
     <div class="grid-3">
       <div class="card"><div class="card-title lm">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-lm">CPL</span><span class="stat-chip chip-lm">Funnel conversion %</span><span class="stat-chip chip-lm">Leads loaded</span><span class="stat-chip chip-lm">Email open rate</span><span class="stat-chip chip-lm">Downstream bookings</span></div></div>
       <div class="card"><div class="card-title lm">Creative / Offer Types</div><ul class="info-list"><li>Lead guides and planning guides</li><li>Educational resources and toolkits</li><li>Calculators and assessment tools</li><li>"How to know if you're ready to book" formats</li><li>Quizzes and diagnostic tools</li></ul></div>
-      <div class="card"><div class="card-title lm">Why this exists</div><ul class="info-list"><li>Not everyone books on first exposure</li><li>60–90 day conversion window for many buyers</li><li>Builds email list independent of Meta</li><li>Lowers overall CAC by warming pipeline</li><li>Creates retargeting pool from TOFU viewers</li></ul></div>
+      <div class="card"><div class="card-title lm">Why this exists</div><ul class="info-list"><li>Not everyone books on first exposure</li><li>60&ndash;90 day conversion window for many buyers</li><li>Builds email list independent of Meta</li><li>Lowers overall CAC by warming pipeline</li><li>Creates retargeting pool from TOFU viewers</li></ul></div>
     </div>
     <div class="notes-box"><strong>Notes / Scaling Logic</strong>Scale CPL spend once funnel conversion metrics are proven. This campaign feeds directly into warm retargeting and eventually into hot nurture as leads progress. Existing leads already inside the funnel must be excluded.</div>
     <div class="exclude-box"><strong>Exclude from targeting</strong> Existing leads already inside the lead magnet funnel</div>
@@ -458,32 +458,32 @@
       <span class="badge" style="background:var(--prosp)">Cold · Prospecting</span>
       <div><h2 style="color:var(--prosp-dark)">Cold: Prospecting</h2><p>The primary revenue driver. Directly advertise booked calls and appointments from qualified interested prospects. Majority of budget lives here.</p></div>
     </div>
-    <div class="callout green"><strong>Core job:</strong> Generate booked calls, consultations, and immediate buying decisions. Primary scaling engine — majority of budget and testing volume should happen here.</div>
+    <div class="callout green"><strong>Core job:</strong> Generate booked calls, consultations, and immediate buying decisions. This is the primary scaling engine. Majority of budget and testing volume should happen here.</div>
     <div class="detail-grid">
       <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads / Booked Calls / Appointment Dimensions</div></div>
-      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">70–80% of total account budget</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">70&ndash;80% of total account budget</div></div>
       <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Broad + Lookalikes + Demographic Dimensions</div></div>
-      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch immediately; start with creative leadership — test fast</div></div>
-      <div class="dg-item"><div class="dg-label">Recommended Launch Volume</div><div class="dg-value">2–3 test packs, 3–4 variations per pack, one new pack per week</div></div>
-      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">2–3 new ads per week depending on spend volume</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch immediately. Start with creative leadership and test fast.</div></div>
+      <div class="dg-item"><div class="dg-label">Recommended Launch Volume</div><div class="dg-value">2&ndash;3 test packs, 3&ndash;4 variations per pack, one new pack per week</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">2&ndash;3 new ads per week depending on spend volume</div></div>
     </div>
     <div class="grid-3">
       <div class="card"><div class="card-title prosp">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-prosp">CAC</span><span class="stat-chip chip-prosp">CPC</span><span class="stat-chip chip-prosp">CPL</span><span class="stat-chip chip-prosp">Total leads</span><span class="stat-chip chip-prosp">Lead rate</span><span class="stat-chip chip-prosp">Hook hold %</span></div></div>
       <div class="card"><div class="card-title prosp">Creative Types</div><ul class="info-list"><li>UGC (User Generated Content)</li><li>Direct response / founder scripts</li><li>Ambassador / influencer formats</li><li>Case study lead ads</li></ul></div>
-      <div class="card"><div class="card-title prosp">Creative Goal</div><ul class="info-list"><li>Strictly conversion — booked calls only</li><li>Each pack = one angle + avatar combo</li><li>Test format, style, hook variations within pack</li><li>Winners from here go to Cold Scaling + Winning Ad Multiplier</li></ul></div>
+      <div class="card"><div class="card-title prosp">Creative Goal</div><ul class="info-list"><li>Strictly conversion: booked calls only</li><li>Each pack = one angle + avatar combo</li><li>Test format, style, hook variations within pack</li><li>Winners from here go to Cold Scaling + Winning Ad Multiplier</li></ul></div>
     </div>
     <div class="sec">The Pack System</div>
     <div class="callout green">Do not run a single-ad pack AND a multi-ad pack for the same angle simultaneously while testing. Each pack = one specific angle + avatar combination.</div>
     <div class="card" style="margin-bottom:20px">
       <div class="card-title prosp">How packs work</div>
-      <p style="font-size:13px;color:var(--ink2);margin-bottom:14px">Adsets are organised as packs — each targeting a specific angle/avatar combo. Budget testing starts at $1–$25 per pack. Variations within a pack can differ by format, style, or hook.</p>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:14px">Adsets are organized as packs, each targeting a specific angle/avatar combo. Budget testing starts at $1&ndash;$25 per pack. Variations within a pack can differ by format, style, or hook.</p>
       <div class="pack-grid">
-        <div class="pack-card"><div class="pack-name">Pack 1 — Angle A / Avatar X</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div>
-        <div class="pack-card"><div class="pack-name">Pack 2 — Angle B / Avatar X</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div>
-        <div class="pack-card"><div class="pack-name">Pack 3 — Angle A / Avatar Y</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div>
+        <div class="pack-card"><div class="pack-name">Pack 1: Angle A / Avatar X</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div>
+        <div class="pack-card"><div class="pack-name">Pack 2: Angle B / Avatar X</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div>
+        <div class="pack-card"><div class="pack-name">Pack 3: Angle A / Avatar Y</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div>
       </div>
     </div>
-    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Primary scaling engine. Majority of budget and testing volume lives here. Winners move into Cold Scaling and feed the Winning Ad Multiplier. Continually refresh with new packs — never stop testing.</div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Primary scaling engine. Majority of budget and testing volume lives here. Winners move into Cold Scaling and feed the Winning Ad Multiplier. Continually refresh with new packs. Never stop testing.</div>
     <div class="exclude-box"><strong>Exclude from targeting</strong> Existing customers · Current post-opportunity leads</div>
   </div>
 
@@ -491,23 +491,23 @@
   <div id="tab-retarg" class="tab-panel retarg">
     <div class="campaign-header header-retarg">
       <span class="badge" style="background:var(--retarg)">Warm · Retargeting</span>
-      <div><h2 style="color:var(--retarg-dark)">Warm: Retargeting</h2><p>Re-engage prospects who are warmed up and ready to convert. Recover lost conversions, maximise conversion efficiency, and extract maximum value from existing traffic.</p></div>
+      <div><h2 style="color:var(--retarg-dark)">Warm: Retargeting</h2><p>Re-engage prospects who are warmed up and ready to convert. Recover lost conversions, maximize conversion efficiency, and extract maximum value from existing traffic.</p></div>
     </div>
     <div class="callout amber"><strong>Core job:</strong> Increase booked call rates, reduce wasted traffic budget, and eliminate buying hesitation for people already aware of the brand. Often the highest ROI campaign in the account.</div>
     <div class="detail-grid">
       <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads / Booked Calls / Appointment Dimensions</div></div>
-      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~3–5% of total account spend</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~3&ndash;5% of total account spend</div></div>
       <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Website visitors, social engagers, lead magnet openers, landing page visitors</div></div>
-      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">After 3–6 weeks of brand launch + 30+ days of traffic exposure</div></div>
-      <div class="dg-item"><div class="dg-label">Recommended Launch Volume</div><div class="dg-value">2–3 launch adsets; 2–3 organic traffic adsets</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">After 3&ndash;6 weeks of brand launch + 30+ days of traffic exposure</div></div>
+      <div class="dg-item"><div class="dg-label">Recommended Launch Volume</div><div class="dg-value">2&ndash;3 launch adsets; 2&ndash;3 organic traffic adsets</div></div>
       <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">Refresh monthly</div></div>
     </div>
     <div class="grid-3">
       <div class="card"><div class="card-title retarg">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-retarg">CAC</span><span class="stat-chip chip-retarg">CPL</span><span class="stat-chip chip-retarg">Conversion rate</span><span class="stat-chip chip-retarg">Frequency</span><span class="stat-chip chip-retarg">ROAS</span></div></div>
       <div class="card"><div class="card-title retarg">Creative Types</div><ul class="info-list"><li>Testimonials and social proof</li><li>FAQ and objection handling</li><li>Urgency-based booking ads</li><li>Case study creatives</li></ul></div>
-      <div class="card"><div class="card-title retarg">Two Adset Structure</div><ul class="info-list"><li><strong>Adset 1 (Lead obj):</strong> Broad warm — website, ad engagers, video viewers; no LAL</li><li><strong>Adset 2 (Appt obj):</strong> Appointment-adjacent, high-intent action takers</li></ul></div>
+      <div class="card"><div class="card-title retarg">Two Adset Structure</div><ul class="info-list"><li><strong>Adset 1 (Lead obj):</strong> Broad warm: website, ad engagers, video viewers; no LAL</li><li><strong>Adset 2 (Appt obj):</strong> Appointment-adjacent, high-intent action takers</li></ul></div>
     </div>
-    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Often the highest ROI campaign as traffic volume increases. Scale retargeting budget proportionally as prospecting spend grows. Watch frequency — if it spikes, refresh creative before cutting budget.</div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Often the highest ROI campaign as traffic volume increases. Scale retargeting budget proportionally as prospecting spend grows. Watch frequency. If it spikes, refresh creative before cutting budget.</div>
     <div class="exclude-box"><strong>Exclude from targeting</strong> Booked appointments · Existing customers</div>
   </div>
 
@@ -517,21 +517,21 @@
       <span class="badge" style="background:var(--nurture)">Hot · Nurture</span>
       <div><h2 style="color:var(--nurture-dark)">Hot: Nurture</h2><p>Increase show rate and close rate. The prospect should arrive on the call having already seen your credibility, process, and social proof. Close the close before the call starts.</p></div>
     </div>
-    <div class="callout pink"><strong>Core job:</strong> Increase trust-based outcomes, reduce objection handling by the sales team, and improve appointment quality. Must launch with a 2–3 day head start before the appointment date.</div>
+    <div class="callout pink"><strong>Core job:</strong> Increase trust-based outcomes, reduce objection handling by the sales team, and improve appointment quality. Must launch with a 2&ndash;3 day head start before the appointment date.</div>
     <div class="detail-grid">
       <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Video Views + Engagement (ThruPlay)</div></div>
       <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$1/day</div></div>
       <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Booked calls + Engaged prospects</div></div>
-      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch with confirmed appointments — must have 2–3 day head start minimum</div></div>
-      <div class="dg-item"><div class="dg-label">Content Maintained</div><div class="dg-value">4–6 pieces of content live at all times</div></div>
-      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">1–2 new videos per week</div></div>
+      <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Launch with confirmed appointments. Must have 2&ndash;3 day head start minimum.</div></div>
+      <div class="dg-item"><div class="dg-label">Content Maintained</div><div class="dg-value">4&ndash;6 pieces of content live at all times</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">1&ndash;2 new videos per week</div></div>
     </div>
     <div class="grid-3">
       <div class="card"><div class="card-title nurture">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-nurture">Show rate</span><span class="stat-chip chip-nurture">Close rate</span><span class="stat-chip chip-nurture">Sales velocity</span><span class="stat-chip chip-nurture">Cost per ThruPlay</span><span class="stat-chip chip-nurture">Watch %</span></div></div>
       <div class="card"><div class="card-title nurture">Creative Types</div><ul class="info-list"><li>Personality / founder story content</li><li>Process walk-throughs</li><li>FAQ / objection handling videos</li><li>Client results and case studies</li><li>Social proof and testimonials</li></ul></div>
       <div class="card"><div class="card-title nurture">Creative Goal</div><ul class="info-list"><li>Build credibility, trust, and confidence before the close</li><li>Disarm objections the sales team hears most</li><li>Show the process ahead of time</li><li>Reinforce the decision to show up and engage</li></ul></div>
     </div>
-    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Dramatically asymmetric ROI versus budget. A $1/day campaign that moves show rate by 10% outperforms almost any other investment in the account. Never cut this campaign — it's insurance on every booked call.</div>
+    <div class="notes-box"><strong>Notes / Scaling Logic</strong>Dramatically asymmetric ROI versus budget. A $1/day campaign that moves show rate by 10% outperforms almost any other investment in the account. Never cut this campaign. It is insurance on every booked call.</div>
     <div class="exclude-box"><strong>Exclude from targeting</strong> Existing clients and customers</div>
   </div>
 
@@ -539,30 +539,30 @@
   <div id="tab-bonus" class="tab-panel bonus">
     <div class="campaign-header header-bonus">
       <span class="badge" style="background:var(--bonus)">Bonus Campaign</span>
-      <div><h2 style="color:var(--bonus-dark)">Cold Scaling</h2><p>Unlock proven creatives horizontally and vertically to move media spend towards exponential results. Separate from the testing engine — never test here.</p></div>
+      <div><h2 style="color:var(--bonus-dark)">Cold Scaling</h2><p>Unlock proven creatives horizontally and vertically to move media spend toward stronger results. Keep this separate from the testing engine. Never test here.</p></div>
     </div>
     <div class="trigger-bar">
-      <div class="trigger-icon">⚡</div>
-      <p><strong>Launch trigger:</strong> When spend exceeds 2× CPM in the core prospecting campaign — winners are proven, data is reliable, and the algorithm has enough signal to scale efficiently.</p>
+      <div class="trigger-icon">&#9889;</div>
+      <p><strong>Launch trigger:</strong> When spend exceeds 2&times; CPM in the core prospecting campaign. At this point, winners are proven, data is reliable, and the algorithm has enough signal to scale efficiently.</p>
     </div>
     <div class="callout purple"><strong>Core job:</strong> Remove human error and projection by letting the algorithm drive proven creative at scale. Drives higher volume and cost efficiency on high-performing ads without disrupting the testing pipeline.</div>
     <div class="detail-grid">
       <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Leads / Booked Calls / Appointment Dimensions</div></div>
-      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">Scales inside 470+ CPM threshold — start with high-performing responsive audiences</div></div>
-      <div class="dg-item"><div class="dg-label">Audience 1</div><div class="dg-value">Broad targeting — same as prospecting</div></div>
-      <div class="dg-item"><div class="dg-label">Audience 2</div><div class="dg-value">Winning Lookalikes 1–5% (if data supports)</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">Scales inside 470+ CPM threshold. Start with high-performing responsive audiences.</div></div>
+      <div class="dg-item"><div class="dg-label">Audience 1</div><div class="dg-value">Broad targeting, same as prospecting</div></div>
+      <div class="dg-item"><div class="dg-label">Audience 2</div><div class="dg-value">Winning Lookalikes 1&ndash;5% (if data supports)</div></div>
       <div class="dg-item"><div class="dg-label">Launch Timing</div><div class="dg-value">Only after winning packs are operationally proven inside core prospecting</div></div>
-      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">Add ads based on frequency and performance data only — not by schedule</div></div>
+      <div class="dg-item"><div class="dg-label">Creative Cadence</div><div class="dg-value">Add ads based on frequency and performance data only, not by schedule</div></div>
     </div>
     <div class="grid-2">
       <div class="card"><div class="card-title bonus">Success Metrics</div><div class="stat-row"><span class="stat-chip chip-bonus">CPM efficiency</span><span class="stat-chip chip-bonus">ROAS</span><span class="stat-chip chip-bonus">Conversion rate</span><span class="stat-chip chip-bonus">Speed efficiency</span></div></div>
-      <div class="card"><div class="card-title bonus">The creative rule</div><ul class="info-list"><li>Strictly winning packs only — no new creative testing</li><li>Only high-performing ads from existing campaign data</li><li>Add creatives based on frequency/performance, not schedule</li><li>Never introduce unproven angles into this campaign</li></ul></div>
+      <div class="card"><div class="card-title bonus">The creative rule</div><ul class="info-list"><li>Strictly winning packs only. No new creative testing.</li><li>Only high-performing ads from existing campaign data</li><li>Add creatives based on frequency/performance, not schedule</li><li>Never introduce unproven angles into this campaign</li></ul></div>
     </div>
     <div class="card" style="margin-bottom:16px">
       <div class="card-title bonus">Adset Structure</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
-        <div><p style="font-size:12px;font-weight:600;color:var(--bonus-dark);margin-bottom:8px">Adset 1 — Broad Targeting</p><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div>
-        <div><p style="font-size:12px;font-weight:600;color:var(--bonus-dark);margin-bottom:8px">Adset 2 — Winning LAL 1–5%</p><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div>
+        <div><p style="font-size:12px;font-weight:600;color:var(--bonus-dark);margin-bottom:8px">Adset 1: Broad Targeting</p><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div>
+        <div><p style="font-size:12px;font-weight:600;color:var(--bonus-dark);margin-bottom:8px">Adset 2: Winning LAL 1&ndash;5%</p><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div>
       </div>
     </div>
     <div class="notes-box"><strong>Notes / Scaling Logic</strong>Completely separate from the testing engine. Never test here. Use only proven winners. Budget decisions should always respect the primary phase of optimization first. Scaling prematurely pollutes the algorithm and wastes spend on unvalidated creative.</div>
@@ -572,9 +572,9 @@
   <div id="tab-winner" class="tab-panel win">
     <div class="campaign-header header-win">
       <span class="badge" style="background:var(--win)">Optimization Framework</span>
-      <div><h2 style="color:var(--win-dark)">Winning Ad Multiplier</h2><p>Once an ad proves itself by achieving the most spend at KPI, don't just scale the budget — multiply it. Create 4 hook variants from the winning ad and launch them in a new CBO pack to find your next winner.</p></div>
+      <div><h2 style="color:var(--win-dark)">Winning Ad Multiplier</h2><p>Once an ad proves itself by achieving the most spend at KPI, do not just scale the budget. Multiply it. Create 4 hook variants from the winning ad and launch them in a new CBO pack to find your next winner.</p></div>
     </div>
-    <div class="callout teal"><strong>Core principle:</strong> Identify your winning ad by most spend at KPI. Then systematically create shorter and longer hook variations. Each variant tests a different entry point into the same proven message — without rebuilding the ad from scratch.</div>
+    <div class="callout teal"><strong>Core principle:</strong> Identify your winning ad by most spend at KPI. Then systematically create shorter and longer hook variations. Each variant tests a different entry point into the same proven message, without rebuilding the ad from scratch.</div>
 
     <div class="sec">The Process</div>
     <div class="winner-visual">
@@ -592,12 +592,12 @@
         <div class="variant-card vc-trim-lg">
           <div class="vc-type">&#8722;7 sec</div>
           <div class="vc-label">Trim deeper</div>
-          <div class="vc-desc">Remove the first 7 seconds. A more aggressive cut — drops further into the content where the message is already warm. Works well when the original hook is soft.</div>
+          <div class="vc-desc">Remove the first 7 seconds. This is a more aggressive cut that drops further into the content where the message is already warm. Works well when the original hook is soft.</div>
         </div>
         <div class="variant-card vc-extend-sm">
           <div class="vc-type">&#43;3 sec</div>
           <div class="vc-label">Add a new hook</div>
-          <div class="vc-desc">Add a brand new 3-second hook to the front of the existing ad. The body of the ad stays identical — only the entry point changes. Test a different pattern interrupt or opening line.</div>
+          <div class="vc-desc">Add a brand new 3-second hook to the front of the existing ad. The body of the ad stays identical. Only the entry point changes. Test a different pattern interrupt or opening line.</div>
         </div>
         <div class="variant-card vc-extend-lg">
           <div class="vc-type">&#43;9 sec</div>
@@ -614,9 +614,9 @@
 
     <div class="sec">Why it works</div>
     <div class="grid-3">
-      <div class="card"><div class="card-title win">Proven body, new entry</div><p style="font-size:13px;color:var(--ink2)">The middle and end of the ad is already validated — it converted. You're only testing different ways to hook the viewer in. Lower risk than creating new ads from scratch.</p></div>
-      <div class="card"><div class="card-title win">Hook is the highest leverage point</div><p style="font-size:13px;color:var(--ink2)">The first 3 seconds determine whether someone keeps watching. A winner with 3 different hooks can find 3× the audience who respond to different patterns of interruption.</p></div>
-      <div class="card"><div class="card-title win">CBO does the work</div><p style="font-size:13px;color:var(--ink2)">Launching all 4 variants into a new CBO pack lets Meta's algorithm find which hook version performs best. No manual budget splitting — the winning hook self-identifies.</p></div>
+      <div class="card"><div class="card-title win">Proven body, new entry</div><p style="font-size:13px;color:var(--ink2)">The middle and end of the ad is already validated. It converted. You are only testing different ways to hook the viewer in. Lower risk than creating new ads from scratch.</p></div>
+      <div class="card"><div class="card-title win">Hook is the highest leverage point</div><p style="font-size:13px;color:var(--ink2)">The first 3 seconds determine whether someone keeps watching. A winner with 3 different hooks can find 3&times; the audience who respond to different patterns of interruption.</p></div>
+      <div class="card"><div class="card-title win">CBO does the work</div><p style="font-size:13px;color:var(--ink2)">Launching all 4 variants into a new CBO pack lets Meta's algorithm find which hook version performs best. No manual budget splitting. The winning hook self-identifies.</p></div>
     </div>
 
     <div class="sec">When to trigger this</div>
@@ -625,8 +625,8 @@
         <div class="card-title win">Trigger signals</div>
         <ul class="info-list">
           <li>Ad has the highest spend of any creative in the account at or below KPI</li>
-          <li>Ad has been running long enough to have statistical confidence (typically 7–14 days)</li>
-          <li>Frequency is rising — need fresh entry points for the same audience</li>
+          <li>Ad has been running long enough to have statistical confidence (typically 7&ndash;14 days)</li>
+          <li>Frequency is rising. You need fresh entry points for the same audience.</li>
           <li>You want to scale the message without simply raising the budget</li>
         </ul>
       </div>
@@ -634,9 +634,9 @@
         <div class="card-title win">What to do next</div>
         <ul class="info-list">
           <li>Identify the Winning Ad #1 by most spend at KPI</li>
-          <li>Create all 4 variants (±3s, ±7s/9s) from the same source file</li>
+          <li>Create all 4 variants (&plusmn;3s, &plusmn;7s/9s) from the same source file</li>
           <li>Launch all variants in a dedicated new CBO pack</li>
-          <li>Let it run for 7–14 days before making decisions</li>
+          <li>Let it run for 7&ndash;14 days before making decisions</li>
           <li>The new winner becomes the next input to the multiplier process</li>
         </ul>
       </div>
@@ -646,17 +646,17 @@
   <!-- STRUCTURE -->
   <div id="tab-structure" class="tab-panel">
     <p class="h2">Campaign Structure at a Glance</p>
-    <p class="lead">Every campaign follows a Campaign → Adset → Ads hierarchy. Structure varies by campaign based on audience temperature, objective, and testing needs. Prefer the whole picture in one view? Open the full visual map.</p>
+    <p class="lead">Every campaign follows a Campaign > Adset > Ads hierarchy. Structure varies by campaign based on audience temperature, objective, and testing needs. Prefer the whole picture in one view? Open the full visual map.</p>
     <div style="margin:-8px 0 24px"><a class="hero-map" href="https://link.excalidraw.com/l/A403qDUZDJv/7g0s81HDplN" target="_blank" rel="noopener">&#128506; Open the full visual map &#8599;</a></div>
 
     <div class="struct-campaign open" id="str-pixel">
       <div class="struct-header" onclick="toggleStruct('str-pixel')">
         <span class="struct-badge" style="background:var(--pixel)">Pixel</span>
-        <span class="struct-title">Pixel Seasoning — fire before any campaign launches</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Pixel Seasoning: fire before any campaign launches</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
-        <div class="h-note">Not a Meta campaign — a pre-launch checklist. Fire all standard events and run TOFU content before launching any conversion objective.</div>
+        <div class="h-note">Not a Meta campaign. This is a pre-launch checklist. Fire all standard events and run TOFU content before launching any conversion objective.</div>
         <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:7px">
           <span class="stat-chip chip-pixel">Lead</span><span class="stat-chip chip-pixel">Contact</span><span class="stat-chip chip-pixel">Subscribe</span><span class="stat-chip chip-pixel">Complete Registration</span><span class="stat-chip chip-pixel">Schedule</span><span class="stat-chip chip-pixel">Appointment</span><span class="stat-chip chip-pixel">Qualified Appointment</span><span class="stat-chip chip-pixel">Application</span>
         </div>
@@ -666,14 +666,14 @@
     <div class="struct-campaign" id="str-tofu">
       <div class="struct-header" onclick="toggleStruct('str-tofu')">
         <span class="struct-badge" style="background:var(--tofu)">TOFU</span>
-        <span class="struct-title">Cold Top of Funnel — always on, broad, 10+ ads</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Cold Top of Funnel: always on, broad, 10+ ads</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold TOFU — Video Views (ThruPlay) · ~$8/day</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-tofu"><div class="h-label">Adset</div><div class="h-detail">Audience: Broad · Allow Meta to optimise</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">10+ ads — wide creative variety, always refreshing</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span><span class="h-ad">Ad 5+</span></div></div></div>
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold TOFU, Video Views (ThruPlay) · ~$8/day</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-tofu"><div class="h-label">Adset</div><div class="h-detail">Audience: Broad · Allow Meta to optimize</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">10+ ads, wide creative variety, always refreshing</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span><span class="h-ad">Ad 5+</span></div></div></div>
         </div>
       </div>
     </div>
@@ -681,16 +681,16 @@
     <div class="struct-campaign" id="str-lm">
       <div class="struct-header" onclick="toggleStruct('str-lm')">
         <span class="struct-badge" style="background:var(--lm)">Lead Magnet</span>
-        <span class="struct-title">Lead Magnet Pipeline — same pack structure as prospecting</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Lead Magnet Pipeline: same pack structure as prospecting</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
         <div class="h-note" style="margin-bottom:10px">Adset structure mirrors Cold Prospecting packs. Audience pulls from cold broad/LAL and TOFU ThruPlay retargeting pools.</div>
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Lead Magnet Pipeline — Leads objective · ~$8/day</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-lm"><div class="h-label">Pack 1 — Cold Broad/LAL</div><div class="h-detail">Lead magnet creative — angle A offer type</div></div></div>
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Lead Magnet Pipeline, Leads objective · ~$8/day</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-lm"><div class="h-label">Pack 1: Cold Broad/LAL</div><div class="h-detail">Lead magnet creative, angle A offer type</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-lm"><div class="h-label">Pack 2 — TOFU Retargeting</div><div class="h-detail">ThruPlay viewers from TOFU campaign</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-lm"><div class="h-label">Pack 2: TOFU Retargeting</div><div class="h-detail">ThruPlay viewers from TOFU campaign</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
         </div>
       </div>
@@ -699,18 +699,18 @@
     <div class="struct-campaign" id="str-prosp">
       <div class="struct-header" onclick="toggleStruct('str-prosp')">
         <span class="struct-badge" style="background:var(--prosp)">Prospecting</span>
-        <span class="struct-title">Cold Prospecting — Pack System (primary testing engine)</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Cold Prospecting: Pack System (primary testing engine)</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
         <div class="h-note" style="margin-bottom:10px">Never run single + multi-ad pack on the same angle simultaneously while testing.</div>
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Prospecting — Leads/Calls/Sales · 70–80% of budget</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 1 — Adset</div><div class="h-detail">Angle A · Avatar X · $1–$25 test budget</div></div></div>
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Prospecting, Leads/Calls/Sales · 70&ndash;80% of budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 1, Adset</div><div class="h-detail">Angle A · Avatar X · $1&ndash;$25 test budget</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 2 — Adset</div><div class="h-detail">Angle B · Avatar X · $1–$25 test budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 2, Adset</div><div class="h-detail">Angle B · Avatar X · $1&ndash;$25 test budget</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp" style="opacity:.55"><div class="h-label">Pack 3, 4, 5... — Adsets</div><div class="h-detail">Additional angle/avatar combos in parallel</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp" style="opacity:.55"><div class="h-label">Pack 3, 4, 5..., Adsets</div><div class="h-detail">Additional angle/avatar combos in parallel</div></div></div>
         </div>
       </div>
     </div>
@@ -718,15 +718,15 @@
     <div class="struct-campaign" id="str-retarg">
       <div class="struct-header" onclick="toggleStruct('str-retarg')">
         <span class="struct-badge" style="background:var(--retarg)">Retargeting</span>
-        <span class="struct-title">Warm Retargeting — Two adsets, two objectives</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Warm Retargeting: two adsets, two objectives</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Late Retargeting — Leads/Calls/Sales · ~3–5% of budget</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-retarg"><div class="h-label">Adset 1 — Lead Objective</div><div class="h-detail">Broad warm: website visitors, ad engagers, video viewers (no LAL)</div></div></div>
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Late Retargeting, Leads/Calls/Sales · ~3&ndash;5% of budget</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-retarg"><div class="h-label">Adset 1, Lead Objective</div><div class="h-detail">Broad warm: website visitors, ad engagers, video viewers (no LAL)</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-retarg"><div class="h-label">Adset 2 — Appt Objective</div><div class="h-detail">Appointment-adjacent, high-intent actions taken</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-retarg"><div class="h-label">Adset 2, Appt Objective</div><div class="h-detail">Appointment-adjacent, high-intent actions taken</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
         </div>
       </div>
@@ -735,14 +735,14 @@
     <div class="struct-campaign" id="str-nurture">
       <div class="struct-header" onclick="toggleStruct('str-nurture')">
         <span class="struct-badge" style="background:var(--nurture)">Nurture</span>
-        <span class="struct-title">Hot Nurture — Booked appointments only, 4–6 ads always live</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Hot Nurture: booked appointments only, 4&ndash;6 ads always live</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Hot Nurture — Video Views + Engagement · ~$1/day</div></div></div>
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Hot Nurture, Video Views + Engagement · ~$1/day</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-nurture"><div class="h-label">Adset</div><div class="h-detail">Audience: Booked appointments + Engaged prospects</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">4–6 creatives live at all times; 1–2 new videos/week</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span><span class="h-ad">Ad 5+</span></div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-note">4&ndash;6 creatives live at all times; 1&ndash;2 new videos/week</div><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span><span class="h-ad">Ad 5+</span></div></div></div>
         </div>
       </div>
     </div>
@@ -750,15 +750,15 @@
     <div class="struct-campaign" id="str-bonus">
       <div class="struct-header" onclick="toggleStruct('str-bonus')">
         <span class="struct-badge" style="background:var(--bonus)">Scaling</span>
-        <span class="struct-title">Cold Scaling — Bonus (launch when spend &gt; 2× CPM)</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Cold Scaling: Bonus (launch when spend &gt; 2&times; CPM)</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Scaling — separate from testing campaign entirely</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-bonus"><div class="h-label">Adset 1 — Broad</div><div class="h-detail">Broad audience, proven winners only</div></div></div>
+          <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Scaling, separate from testing campaign entirely</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-bonus"><div class="h-label">Adset 1, Broad</div><div class="h-detail">Broad audience, proven winners only</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-bonus"><div class="h-label">Adset 2 — Winning LAL 1–5%</div><div class="h-detail">Lookalike from top converters (if data supports)</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-bonus"><div class="h-label">Adset 2, Winning LAL 1&ndash;5%</div><div class="h-detail">Lookalike from top converters (if data supports)</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad winner">Winning Pack #1</span><span class="h-ad winner">Winning Pack #2</span><span class="h-ad winner">Winning Pack #3+</span></div></div></div>
         </div>
       </div>
@@ -767,14 +767,14 @@
     <div class="struct-campaign" id="str-winner">
       <div class="struct-header" onclick="toggleStruct('str-winner')">
         <span class="struct-badge" style="background:var(--win)">Multiplier</span>
-        <span class="struct-title">Winning Ad Multiplier — new CBO pack from proven winner</span>
-        <span class="struct-toggle">▾</span>
+        <span class="struct-title">Winning Ad Multiplier: new CBO pack from proven winner</span>
+        <span class="struct-toggle">&#9662;</span>
       </div>
       <div class="struct-body">
-        <div class="h-note" style="margin-bottom:10px">Triggered when an ad achieves most spend at KPI. Not a standing campaign — a repeatable process.</div>
+        <div class="h-note" style="margin-bottom:10px">Triggered when an ad achieves most spend at KPI. Not a standing campaign. This is a repeatable process.</div>
         <div class="hierarchy">
-          <div class="h-level"><div class="h-node" style="background:var(--win-bg);border-color:var(--win-mid);color:var(--win-dark)"><div class="h-label">Input</div><div class="h-detail">Winning Ad #1 — identified by most spend at KPI</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-campaign"><div class="h-label">New CBO Pack Campaign</div><div class="h-detail">Launch all 4 variants together — CBO allocates budget to best performer</div></div></div>
+          <div class="h-level"><div class="h-node" style="background:var(--win-bg);border-color:var(--win-mid);color:var(--win-dark)"><div class="h-label">Input</div><div class="h-detail">Winning Ad #1, identified by most spend at KPI</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-campaign"><div class="h-label">New CBO Pack Campaign</div><div class="h-detail">Launch all 4 variants together. CBO allocates budget to best performer.</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1">
             <div class="h-ads" style="margin-top:8px">
               <span class="h-ad" style="background:#EFF6FF;border-color:#93C5FD;color:#1E3A8A">&#8722;3s trim</span>
