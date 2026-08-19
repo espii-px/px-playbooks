@@ -293,6 +293,12 @@
   ul.ck-list .why { display:block; font-size:12.5px; color:var(--ink3); margin-top:3px; }
   ul.ck-list .set { color:var(--ink); font-weight:600; }
   .ck-phase .callout, .ck-phase .tbl-wrap, .ck-phase pre.snippet { margin-top:14px; }
+  .ck.is-complete { border-color:var(--ck-accent); }
+  .ck-flag { display:none; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; background:var(--ck-accent); padding:3px 8px; border-radius:4px; flex-shrink:0; }
+  .ck.is-complete .ck-flag { display:inline-block; }
+  .ck-done { display:none; align-items:center; gap:10px; margin-top:24px; padding:14px 18px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--ck-accent); color:var(--ink2); font-size:13.5px; }
+  .ck.is-complete .ck-done { display:flex; }
+  .ck-done strong { color:var(--ink); }
   .ck-pointer { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 18px; margin-top:14px; font-size:13px; color:var(--ink2); }
   .ck-pointer strong { color:var(--ink); }
   .jump { display:inline-flex; align-items:center; gap:7px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--border); padding:8px 15px; border-radius:20px; text-decoration:none; cursor:pointer; }
@@ -314,14 +320,10 @@
 .hero-map:hover { filter:brightness(1.06); }
 </style>
 <style>
-  /* standalone page: anchor nav in place of the playbook tab strip */
-  .anchor-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
-  .anchor-nav::-webkit-scrollbar { display:none; }
-  .anchor-nav a { flex:0 0 auto; padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); text-decoration:none; white-space:nowrap; display:flex; align-items:center; gap:7px; border-bottom:3px solid transparent; }
-  .anchor-nav a:hover { color:var(--ink); border-color:var(--border); }
-  .anchor-nav .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  /* standalone page: one runbook per view, with progress on the tab itself */
   .hero p.hero-sub { color:#94A3B8; font-size:15px; max-width:600px; margin:0 auto; }
-  [id] { scroll-margin-top:60px; }
+  .nav-count { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--ink3); background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2px 9px; margin-left:4px; font-variant-numeric:tabular-nums; }
+  .nav-count.is-complete { color:#fff; background:var(--prosp); border-color:var(--prosp); }
   .standalone-foot { max-width:1100px; margin:0 auto; padding:0 24px 64px; font-size:13px; color:var(--ink3); }
 </style>
 </head>
@@ -330,24 +332,20 @@
 <div class="hero">
   <p class="hero-label">Persuasion Experience &middot; Meta Advertising</p>
   <h1>Launch <span>Checklists</span></h1>
-  <p class="hero-sub">Everything needed to build a PX campaign by hand in Ads Manager, plus the naming standard that goes with it. Work top to bottom and tick as you go. Progress saves in this browser, so you can stop and come back.</p>
+  <p class="hero-sub">Everything needed to build a PX campaign by hand in Ads Manager, plus the naming standard that goes with it. Pick a runbook, work top to bottom, tick as you go. Progress saves in this browser, so you can stop and come back.</p>
 </div>
 
-<nav class="anchor-nav">
-  <a href="#prospecting"><span class="dot" style="background:var(--prosp)"></span>Prospecting launch</a>
-  <a href="#nurture"><span class="dot" style="background:var(--nurture)"></span>Nurture launch</a>
-  <a href="#naming"><span class="dot" style="background:var(--ink2)"></span>Naming standard</a>
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="prosp" onclick="switchTab('prosp')"><span class="dot" style="background:var(--prosp)"></span>Prospecting launch<span class="nav-count" data-nav-count="prosp-launch"></span></button>
+  <button class="tab-btn" data-tab="nurture" onclick="switchTab('nurture')"><span class="dot" style="background:var(--nurture)"></span>Nurture launch<span class="nav-count" data-nav-count="nurture-launch"></span></button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="naming" onclick="switchTab('naming')"><span class="dot" style="background:var(--ink2)"></span>Naming standard</button>
 </nav>
 
 <main class="main">
 
+  <div id="tab-prosp" class="tab-panel prosp active">
 
-<div class="grid-2">
-      <div class="ov-card ov-prosp" onclick="document.getElementById('ck-prosp').classList.add('open');document.getElementById('ck-prosp').scrollIntoView({behavior:'smooth',block:'start'})"><span class="ov-tag">Cold &middot; Prospecting</span><span class="ov-name">Manual prospecting launch</span><span class="ov-desc">50 steps, 8 phases. Campaign, packs, ads, URL parameters, and every AI toggle.</span></div>
-      <div class="ov-card ov-nurture" onclick="document.getElementById('ck-nurture').classList.add('open');document.getElementById('ck-nurture').scrollIntoView({behavior:'smooth',block:'start'})"><span class="ov-tag">Hot &middot; Nurture</span><span class="ov-name">Pre-call nurture launch</span><span class="ov-desc">50 steps, 7 phases. Audiences, ThruPlay, and the measurement decision before you walk away.</span></div>
-    </div>
-
-    <div class="prosp" id="prospecting">
     <div class="sec">Launch Checklist: building a prospecting campaign by hand</div>
     <div class="callout red"><strong>Meta's defaults are not our defaults.</strong> Advantage+ audience, Advantage+ placements, every creative enhancement, and multi-advertiser ads are switched <strong>on</strong> when you create a campaign by hand. The launcher turns every one of them off. If you skip nothing else here, do not skip phases 3, 5, and 6.</div>
 
@@ -536,16 +534,17 @@
             </tbody>
           </table>
         </div>
-        <a class="jump" href="#naming">&#9998; Full naming standard &#8594;</a>
+        <a class="jump" onclick="switchTab('naming')">&#9998; Full naming standard &#8594;</a>
       </div>
     </div>
-    </div>
+      </div>
 
-    <div class="nurture" id="nurture">
+  <div id="tab-nurture" class="tab-panel nurture">
+
     <div class="sec">Launch Checklist: pre-call nurture</div>
     <div class="callout red"><strong>How this one fails: nobody can tell whether it worked.</strong> There is no conversion event, so there is no cost per result to look at and no ROAS. A campaign like this can run for a year on the strength of feeling like a good idea. Phase 7 forces the measurement decision before launch, not after.</div>
 
-    <div class="ck ck-nurture" id="ck-nurture" data-ck-key="nurture-launch">
+    <div class="ck ck-nurture open" id="ck-nurture" data-ck-key="nurture-launch">
       <div class="ck-head" onclick="toggleStruct('ck-nurture')">
         <span class="ck-badge">Runbook</span>
         <span class="ck-title">Pre-call nurture launch: audiences, ThruPlay, and the measurement decision</span>
@@ -765,10 +764,9 @@
         </table>
       </div>
     </div>
-    </div>
-  
+      </div>
 
-  <div id="naming" class="pixel">
+  <div id="tab-naming" class="tab-panel pixel">
 
     <div class="campaign-header header-pixel">
       <span class="badge" style="background:var(--pixel)">Reference</span>
@@ -931,6 +929,7 @@ px_emptysurgeryslot_static_pain_augA_hook01</code></pre>
       Someone reading a name should immediately know which client it is for, which creative concept it is, how it was produced, which strategic angle it belongs to, which sprint it came from, and which hook variation they are looking at. Nothing else needs to be opened to find that out. Once this is consistent, the same vocabulary carries into Meta, ClickUp, Canva and reporting, and we can answer which angles work across clients rather than guessing per account.
     </div>
     </div>
+
 </main>
 
 <p class="standalone-foot">PX internal &middot; if a setting is not covered here, ask before you publish. Do not guess a Concept or a Primary Angle.</p>
@@ -958,7 +957,23 @@ document.querySelectorAll('[data-ck-key]').forEach(function (wrap) {
   var totalEl = wrap.querySelector('[data-ck-total]');
   if (totalEl) totalEl.textContent = boxes.length;
 
-  function count() { if (doneEl) doneEl.textContent = boxes.filter(function (b) { return b.checked; }).length; }
+  var flag = document.createElement('span');
+  flag.className = 'ck-flag';
+  flag.textContent = 'Complete';
+  var counter = wrap.querySelector('.ck-count');
+  if (counter) counter.parentNode.insertBefore(flag, counter);
+
+  var banner = document.createElement('div');
+  banner.className = 'ck-done';
+  banner.innerHTML = '<strong>Done.</strong> Every step on this runbook is ticked.';
+  var body = wrap.querySelector('.ck-body');
+  if (body) body.appendChild(banner);
+
+  function count() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    if (doneEl) doneEl.textContent = n;
+    wrap.classList.toggle('is-complete', boxes.length > 0 && n === boxes.length);
+  }
   function save() {
     var state = {};
     boxes.forEach(function (b) { if (b.checked) state[b.id] = 1; });
@@ -981,6 +996,28 @@ document.querySelectorAll('[data-ck-key]').forEach(function (wrap) {
   load();
 });
 
+</script>
+<script>
+// Mirror each runbook's progress onto its tab, so you can see what is finished
+// without opening it.
+(function () {
+  function sync() {
+    document.querySelectorAll('.ck[data-ck-key]').forEach(function (wrap) {
+      var badge = document.querySelector('[data-nav-count="' + wrap.getAttribute('data-ck-key') + '"]');
+      if (!badge) return;
+      var total = wrap.querySelectorAll('input[type=checkbox]').length;
+      var done = wrap.querySelectorAll('input[type=checkbox]:checked').length;
+      var complete = total > 0 && done === total;
+      badge.textContent = complete ? '\u2713 done' : done + '/' + total;
+      badge.classList.toggle('is-complete', complete);
+    });
+  }
+  document.addEventListener('change', sync);
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-ck-reset]')) setTimeout(sync, 0);
+  });
+  sync();
+})();
 </script>
 </body>
 </html>

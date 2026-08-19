@@ -293,6 +293,12 @@
   ul.ck-list .why { display:block; font-size:12.5px; color:var(--ink3); margin-top:3px; }
   ul.ck-list .set { color:var(--ink); font-weight:600; }
   .ck-phase .callout, .ck-phase .tbl-wrap, .ck-phase pre.snippet { margin-top:14px; }
+  .ck.is-complete { border-color:var(--ck-accent); }
+  .ck-flag { display:none; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; background:var(--ck-accent); padding:3px 8px; border-radius:4px; flex-shrink:0; }
+  .ck.is-complete .ck-flag { display:inline-block; }
+  .ck-done { display:none; align-items:center; gap:10px; margin-top:24px; padding:14px 18px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--ck-accent); color:var(--ink2); font-size:13.5px; }
+  .ck.is-complete .ck-done { display:flex; }
+  .ck-done strong { color:var(--ink); }
   .ck-pointer { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 18px; margin-top:14px; font-size:13px; color:var(--ink2); }
   .ck-pointer strong { color:var(--ink); }
   .jump { display:inline-flex; align-items:center; gap:7px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--border); padding:8px 15px; border-radius:20px; text-decoration:none; cursor:pointer; }
@@ -1478,7 +1484,23 @@ document.querySelectorAll('[data-ck-key]').forEach(function (wrap) {
   var totalEl = wrap.querySelector('[data-ck-total]');
   if (totalEl) totalEl.textContent = boxes.length;
 
-  function count() { if (doneEl) doneEl.textContent = boxes.filter(function (b) { return b.checked; }).length; }
+  var flag = document.createElement('span');
+  flag.className = 'ck-flag';
+  flag.textContent = 'Complete';
+  var counter = wrap.querySelector('.ck-count');
+  if (counter) counter.parentNode.insertBefore(flag, counter);
+
+  var banner = document.createElement('div');
+  banner.className = 'ck-done';
+  banner.innerHTML = '<strong>Done.</strong> Every step on this runbook is ticked.';
+  var body = wrap.querySelector('.ck-body');
+  if (body) body.appendChild(banner);
+
+  function count() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    if (doneEl) doneEl.textContent = n;
+    wrap.classList.toggle('is-complete', boxes.length > 0 && n === boxes.length);
+  }
   function save() {
     var state = {};
     boxes.forEach(function (b) { if (b.checked) state[b.id] = 1; });
