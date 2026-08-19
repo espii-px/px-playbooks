@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PX Launch Checklists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tofu:        #2563EB; --tofu-bg:    #EFF6FF; --tofu-mid:   #93C5FD; --tofu-dark:  #1E40AF;
+    --lm:          #0891B2; --lm-bg:      #ECFEFF; --lm-mid:     #67E8F9; --lm-dark:    #164E63;
+    --prosp:       #059669; --prosp-bg:   #ECFDF5; --prosp-mid:  #6EE7B7; --prosp-dark: #064E3B;
+    --retarg:      #D97706; --retarg-bg:  #FFFBEB; --retarg-mid: #FCD34D; --retarg-dark:#92400E;
+    --nurture:     #DB2777; --nurture-bg: #FDF2F8; --nurture-mid:#F9A8D4; --nurture-dark:#831843;
+    --bonus:       #7C3AED; --bonus-bg:   #F5F3FF; --bonus-mid:  #C4B5FD; --bonus-dark: #4C1D95;
+    --pixel:       #475569; --pixel-bg:   #F1F5F9; --pixel-mid:  #CBD5E1; --pixel-dark: #1E293B;
+    --win:         #0F766E; --win-bg:     #F0FDFA; --win-mid:    #99F6E4; --win-dark:   #134E4A;
+    --ink:  #0F172A; --ink2: #334155; --ink3: #64748B;
+    --surface: #F8FAFC; --border: #E2E8F0; --white: #FFFFFF;
+    --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: #fff; padding: 56px 40px 48px; text-align: center; }
+  .hero-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #94A3B8; margin-bottom: 12px; }
+  .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px,5vw,46px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+  .hero h1 span { color: #93C5FD; }
+  .hero p { color: #94A3B8; font-size: 15px; max-width: 560px; margin: 0 auto 36px; }
+  .funnel-wrap { max-width: 920px; margin: 0 auto; }
+  .funnel-strip { display: flex; justify-content: center; gap: 0; }
+  .funnel-seg { flex:1; position:relative; padding:12px 10px 12px 24px; cursor:pointer; transition:filter .2s; text-align:left; border:none; background:none; color:inherit; }
+  .funnel-seg:first-child { padding-left:16px; border-radius:8px 0 0 8px; }
+  .funnel-seg:last-child  { border-radius:0 8px 8px 0; }
+  .funnel-seg:hover { filter:brightness(1.08); }
+  .funnel-seg .seg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.75; margin-bottom:2px; }
+  .funnel-seg .seg-name  { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; line-height:1.2; }
+  .funnel-seg::after { content:''; position:absolute; right:-14px; top:0; width:0; height:0; border-top:23px solid transparent; border-bottom:23px solid transparent; z-index:2; }
+  .seg-tofu    { background:var(--tofu);    color:#fff; }
+  .seg-prosp   { background:var(--prosp);   color:#fff; }
+  .seg-retarg  { background:var(--retarg);  color:#fff; }
+  .seg-nurture { background:var(--nurture); color:#fff; }
+  .seg-tofu::after    { border-left:14px solid var(--tofu); }
+  .seg-prosp::after   { border-left:14px solid var(--prosp); }
+  .seg-retarg::after  { border-left:14px solid var(--retarg); }
+  .add-campaigns { display:flex; justify-content:center; gap:8px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+  .add-chip { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; cursor:pointer; border:1px solid; transition:filter .2s; }
+  .add-chip:hover { filter:brightness(1.08); }
+  .chip-lm     { background:var(--lm);    color:#fff; border-color:var(--lm); }
+  .chip-bonus  { background:var(--bonus); color:#fff; border-color:var(--bonus); }
+  .chip-pixel  { background:var(--pixel); color:#fff; border-color:var(--pixel); }
+  .chip-win    { background:var(--win);   color:#fff; border-color:var(--win); }
+
+  /* NAV */
+  .tabs-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
+  .tabs-nav::-webkit-scrollbar { display:none; }
+  .tab-btn { flex:0 0 auto; padding:12px 16px; border:none; border-bottom:3px solid transparent; background:none; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); cursor:pointer; white-space:nowrap; transition:color .2s,border-color .2s; display:flex; align-items:center; gap:6px; }
+  .tab-btn .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .tab-btn.active { color:var(--ink); }
+  .tab-btn[data-tab="overview"].active   { border-color:var(--ink2);    color:var(--ink); }
+  .tab-btn[data-tab="pixel"].active      { border-color:var(--pixel);   color:var(--pixel-dark); }
+  .tab-btn[data-tab="tofu"].active       { border-color:var(--tofu);    color:var(--tofu-dark); }
+  .tab-btn[data-tab="lm"].active         { border-color:var(--lm);      color:var(--lm-dark); }
+  .tab-btn[data-tab="prosp"].active      { border-color:var(--prosp);   color:var(--prosp-dark); }
+  .tab-btn[data-tab="retarg"].active     { border-color:var(--retarg);  color:var(--retarg-dark); }
+  .tab-btn[data-tab="nurture"].active    { border-color:var(--nurture); color:var(--nurture-dark); }
+  .tab-btn[data-tab="bonus"].active      { border-color:var(--bonus);   color:var(--bonus-dark); }
+  .tab-btn[data-tab="winner"].active     { border-color:var(--win);     color:var(--win-dark); }
+  .tab-btn[data-tab="structure"].active  { border-color:var(--ink2);    color:var(--ink); }
+  .tab-divider { width:1px; background:var(--border); margin:8px 0; flex-shrink:0; }
+
+  /* MAIN */
+  .main { max-width:1100px; margin:0 auto; padding:36px 24px 80px; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* CAMPAIGN HEADER */
+  .campaign-header { display:flex; align-items:flex-start; gap:18px; margin-bottom:28px; padding:24px 28px; border-radius:var(--r-lg); border:1px solid; }
+  .campaign-header .badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:5px 10px; border-radius:4px; flex-shrink:0; margin-top:3px; color:#fff; }
+  .campaign-header h2 { font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; margin-bottom:6px; line-height:1.2; }
+  .campaign-header p { font-size:14px; color:var(--ink2); max-width:680px; }
+  .header-pixel   { background:var(--pixel-bg);   border-color:var(--pixel-mid); }
+  .header-tofu    { background:var(--tofu-bg);    border-color:var(--tofu-mid); }
+  .header-lm      { background:var(--lm-bg);      border-color:var(--lm-mid); }
+  .header-prosp   { background:var(--prosp-bg);   border-color:var(--prosp-mid); }
+  .header-retarg  { background:var(--retarg-bg);  border-color:var(--retarg-mid); }
+  .header-nurture { background:var(--nurture-bg); border-color:var(--nurture-mid); }
+  .header-bonus   { background:var(--bonus-bg);   border-color:var(--bonus-mid); }
+  .header-win     { background:var(--win-bg);     border-color:var(--win-mid); }
+
+  /* GRIDS */
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-bottom:20px; }
+  .grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-bottom:20px; }
+
+  /* CARDS */
+  .card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
+  .card-title { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .card-title::before { content:''; display:inline-block; width:3px; height:13px; border-radius:2px; flex-shrink:0; }
+  .pixel   .card-title::before { background:var(--pixel); }
+  .tofu    .card-title::before { background:var(--tofu); }
+  .lm      .card-title::before { background:var(--lm); }
+  .prosp   .card-title::before { background:var(--prosp); }
+  .retarg  .card-title::before { background:var(--retarg); }
+  .nurture .card-title::before { background:var(--nurture); }
+  .bonus   .card-title::before { background:var(--bonus); }
+  .win     .card-title::before { background:var(--win); }
+
+  /* CHIPS */
+  .stat-row { display:flex; flex-wrap:wrap; gap:7px; }
+  .stat-chip { font-size:12px; padding:5px 11px; border-radius:20px; font-weight:500; border:1px solid; }
+  .chip-pixel   { background:var(--pixel-bg);   color:var(--pixel-dark);   border-color:var(--pixel-mid); }
+  .chip-tofu    { background:var(--tofu-bg);    color:var(--tofu-dark);    border-color:var(--tofu-mid); }
+  .chip-lm      { background:var(--lm-bg);      color:var(--lm-dark);      border-color:var(--lm-mid); }
+  .chip-prosp   { background:var(--prosp-bg);   color:var(--prosp-dark);   border-color:var(--prosp-mid); }
+  .chip-retarg  { background:var(--retarg-bg);  color:var(--retarg-dark);  border-color:var(--retarg-mid); }
+  .chip-nurture { background:var(--nurture-bg); color:var(--nurture-dark); border-color:var(--nurture-mid); }
+  .chip-bonus   { background:var(--bonus-bg);   color:var(--bonus-dark);   border-color:var(--bonus-mid); }
+  .chip-win     { background:var(--win-bg);     color:var(--win-dark);     border-color:var(--win-mid); }
+
+  /* LIST */
+  .info-list { list-style:none; }
+  .info-list li { padding:7px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--ink2); display:flex; align-items:flex-start; gap:7px; }
+  .info-list li:last-child { border-bottom:none; }
+  .info-list li::before { content:'→'; font-size:11px; color:var(--ink3); flex-shrink:0; margin-top:2px; }
+
+  /* CALLOUT */
+  .callout { border-radius:var(--r-md); padding:14px 18px; font-size:13px; margin-bottom:14px; border-left:3px solid; }
+  .callout.slate  { background:var(--pixel-bg); border-color:var(--pixel);   color:var(--pixel-dark); }
+  .callout.blue   { background:#EFF6FF;          border-color:var(--tofu);    color:#1E3A8A; }
+  .callout.cyan   { background:#ECFEFF;          border-color:var(--lm);      color:#164E63; }
+  .callout.green  { background:#ECFDF5;          border-color:var(--prosp);   color:#064E3B; }
+  .callout.amber  { background:#FFFBEB;          border-color:var(--retarg);  color:#78350F; }
+  .callout.pink   { background:#FDF2F8;          border-color:var(--nurture); color:#701A75; }
+  .callout.purple { background:#F5F3FF;          border-color:var(--bonus);   color:#3B0764; }
+  .callout.teal   { background:var(--win-bg);    border-color:var(--win);     color:var(--win-dark); }
+  .callout.red    { background:#FEF2F2;          border-color:#EF4444;        color:#991B1B; }
+
+  /* SECTION LABEL */
+  .sec { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin:32px 0 16px; color:var(--ink); border-bottom:2px solid var(--border); padding-bottom:8px; }
+
+  /* DETAIL GRID */
+  .detail-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-bottom:20px; }
+  .dg-item { background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 16px; }
+  .dg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-bottom:5px; }
+  .dg-value { font-size:13px; color:var(--ink2); }
+
+  /* NOTES / EXCLUDE */
+  .notes-box { border-radius:var(--r-md); background:var(--surface); border:1px solid var(--border); padding:16px 20px; font-size:13px; color:var(--ink2); margin-bottom:14px; }
+  .notes-box strong { font-family:'Space Grotesk',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--ink3); display:block; margin-bottom:5px; }
+  .exclude-box { background:#FFF7ED; border:1px solid #FED7AA; border-radius:var(--r-md); padding:12px 16px; font-size:13px; color:#92400E; margin-top:8px; }
+  .exclude-box strong { font-family:'Space Grotesk',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:3px; }
+
+  /* OVERVIEW */
+  .ov-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-bottom:28px; }
+  .ov-card { border-radius:var(--r-lg); padding:18px; border:1px solid; cursor:pointer; transition:transform .15s,box-shadow .15s; }
+  .ov-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.08); }
+  .ov-tag  { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.7; display:block; margin-bottom:4px; }
+  .ov-name { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; line-height:1.2; display:block; margin-bottom:5px; }
+  .ov-desc { font-size:12px; line-height:1.5; opacity:.8; }
+  .ov-pixel   { background:var(--pixel-bg);   border-color:var(--pixel-mid);   color:var(--pixel-dark); }
+  .ov-tofu    { background:var(--tofu-bg);    border-color:var(--tofu-mid);    color:var(--tofu-dark); }
+  .ov-lm      { background:var(--lm-bg);      border-color:var(--lm-mid);      color:var(--lm-dark); }
+  .ov-prosp   { background:var(--prosp-bg);   border-color:var(--prosp-mid);   color:var(--prosp-dark); }
+  .ov-retarg  { background:var(--retarg-bg);  border-color:var(--retarg-mid);  color:var(--retarg-dark); }
+  .ov-nurture { background:var(--nurture-bg); border-color:var(--nurture-mid); color:var(--nurture-dark); }
+  .ov-bonus   { background:var(--bonus-bg);   border-color:var(--bonus-mid);   color:var(--bonus-dark); }
+  .ov-win     { background:var(--win-bg);     border-color:var(--win-mid);     color:var(--win-dark); }
+
+  .h2   { font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; margin-bottom:9px; }
+  .lead { font-size:14px; color:var(--ink2); line-height:1.7; margin-bottom:26px; max-width:680px; }
+
+  /* PIXEL EVENTS LIST */
+  .event-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px; margin:12px 0 20px; }
+  .event-chip { background:var(--white); border:1px solid var(--pixel-mid); border-radius:var(--r-md); padding:10px 14px; }
+  .event-chip .ev-name { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--pixel-dark); margin-bottom:3px; }
+  .event-chip .ev-note { font-size:11px; color:var(--ink3); }
+  .priority-badge { display:inline-block; font-size:10px; font-weight:600; font-family:'Space Grotesk',sans-serif; padding:2px 7px; border-radius:3px; margin-left:6px; vertical-align:middle; }
+  .pb-optimize { background:#DBEAFE; color:#1E40AF; }
+  .pb-seed { background:#D1FAE5; color:#065F46; }
+
+  /* WINNING AD MULTIPLIER */
+  .winner-visual { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:28px 24px; margin-bottom:20px; }
+  .winning-ad-box { background:var(--win); color:#fff; border-radius:var(--r-md); padding:16px 20px; text-align:center; width:160px; margin:0 auto 0; }
+  .winning-ad-box .wab-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.8; margin-bottom:4px; }
+  .winning-ad-box .wab-name  { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; }
+  .variants-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px; }
+  .variant-card { border-radius:var(--r-md); padding:16px 18px; border:1px solid; }
+  .variant-card .vc-type { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
+  .variant-card .vc-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+  .variant-card .vc-desc { font-size:13px; line-height:1.5; }
+  .vc-trim-sm  { background:#EFF6FF; border-color:#93C5FD; color:#1E3A8A; }
+  .vc-trim-lg  { background:#EDE9FE; border-color:#C4B5FD; color:#4C1D95; }
+  .vc-extend-sm{ background:#F0FDF4; border-color:#86EFAC; color:#14532D; }
+  .vc-extend-lg{ background:#FFF7ED; border-color:#FCD34D; color:#78350F; }
+  .cbo-badge { display:inline-block; background:var(--win); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:.08em; padding:4px 10px; border-radius:4px; margin-top:8px; }
+
+  /* TRIGGER BAR */
+  .trigger-bar { display:flex; align-items:center; gap:14px; background:var(--bonus-bg); border:1px solid var(--bonus-mid); border-radius:var(--r-md); padding:14px 18px; margin-bottom:18px; }
+  .trigger-icon { width:34px; height:34px; background:var(--bonus); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:15px; color:#fff; font-weight:700; }
+  .trigger-bar p { font-size:13px; color:var(--bonus-dark); }
+
+  /* STRUCTURE */
+  .struct-campaign { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); margin-bottom:16px; overflow:hidden; }
+  .struct-header { display:flex; align-items:center; gap:12px; padding:16px 22px; cursor:pointer; user-select:none; }
+  .struct-header:hover { background:var(--surface); }
+  .struct-badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:4px; flex-shrink:0; color:#fff; }
+  .struct-title { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; flex:1; }
+  .struct-toggle { font-size:16px; color:var(--ink3); transition:transform .2s; flex-shrink:0; }
+  .struct-campaign.open .struct-toggle { transform:rotate(180deg); }
+  .struct-body { display:none; padding:0 22px 22px; }
+  .struct-campaign.open .struct-body { display:block; }
+  .hierarchy { display:flex; flex-direction:column; }
+  .h-level { display:flex; align-items:stretch; }
+  .h-indent { width:30px; flex-shrink:0; position:relative; }
+  .h-indent::before { content:''; position:absolute; left:14px; top:0; bottom:0; width:1px; background:var(--border); }
+  .h-indent::after  { content:''; position:absolute; left:14px; top:50%; width:12px; height:1px; background:var(--border); }
+  .h-node { margin:3px 0; flex:1; border-radius:var(--r-sm); padding:9px 13px; font-size:12px; border:1px solid; }
+  .h-node .h-label  { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:2px; }
+  .h-node .h-detail { opacity:.75; }
+  .h-campaign      { background:var(--ink);       border-color:var(--ink);        color:#fff; }
+  .h-adset-tofu    { background:var(--tofu-bg);   border-color:var(--tofu-mid);   color:var(--tofu-dark); }
+  .h-adset-lm      { background:var(--lm-bg);     border-color:var(--lm-mid);     color:var(--lm-dark); }
+  .h-adset-prosp   { background:var(--prosp-bg);  border-color:var(--prosp-mid);  color:var(--prosp-dark); }
+  .h-adset-retarg  { background:var(--retarg-bg); border-color:var(--retarg-mid); color:var(--retarg-dark); }
+  .h-adset-nurture { background:var(--nurture-bg);border-color:var(--nurture-mid);color:var(--nurture-dark); }
+  .h-adset-bonus   { background:var(--bonus-bg);  border-color:var(--bonus-mid);  color:var(--bonus-dark); }
+  .h-ads  { display:flex; flex-wrap:wrap; gap:5px; margin:5px 0 3px; }
+  .h-ad   { font-size:11px; padding:3px 9px; border-radius:4px; border:1px solid var(--border); background:var(--surface); color:var(--ink3); font-family:'Space Grotesk',sans-serif; font-weight:500; }
+  .h-ad.winner { background:#ECFDF5; border-color:var(--prosp-mid); color:var(--prosp-dark); }
+  .h-note { font-size:11px; color:var(--ink3); background:var(--surface); border-radius:var(--r-sm); padding:6px 10px; margin:5px 0; font-style:italic; }
+  .pack-grid { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .pack-card { border:1px solid var(--border); border-radius:var(--r-md); padding:11px 14px; background:var(--surface); min-width:150px; }
+  .pack-card .pack-name { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:var(--prosp-dark); margin-bottom:5px; }
+
+  @media (max-width:600px) {
+    .hero { padding:36px 18px 30px; }
+    .funnel-strip { flex-wrap:wrap; }
+    .funnel-seg::after { display:none; }
+    .main { padding:20px 14px 50px; }
+    .variants-grid { grid-template-columns:1fr; }
+  }
+
+  /* CODE, FORMULA, TABLES */
+  code, .mono { font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:.86em; background:var(--surface); border:1px solid var(--border); color:var(--ink2); padding:.1em .38em; border-radius:4px; }
+  pre.snippet { font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:12px; line-height:1.75; background:var(--ink); color:#E2E8F0; padding:14px 17px; border-radius:var(--r-md); overflow-x:auto; margin:12px 0 18px; white-space:pre-wrap; word-break:break-word; }
+  pre.snippet code { background:none; border:none; color:inherit; padding:0; font-size:inherit; }
+  .formula { font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:clamp(11px,2vw,14px); font-weight:600; background:var(--pixel-bg); border:1px solid var(--pixel-mid); color:var(--pixel-dark); padding:14px 17px; border-radius:var(--r-md); margin:12px 0 16px; overflow-x:auto; white-space:nowrap; }
+  .tbl-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:var(--r-md); margin:12px 0 20px; background:var(--white); }
+  table.tbl { border-collapse:collapse; width:100%; font-size:13px; }
+  table.tbl th, table.tbl td { padding:9px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; color:var(--ink2); }
+  table.tbl th { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); background:var(--surface); white-space:nowrap; }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl td code { white-space:nowrap; }
+  .val-off { color:#B91C1C; font-weight:700; }
+  .val-on  { color:#047857; font-weight:700; }
+  .sub { color:var(--ink3); font-size:12px; }
+
+  /* CHECKLIST */
+  .ck { --ck-accent:var(--ink2); background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; margin-bottom:16px; }
+  .ck.ck-prosp   { --ck-accent:var(--prosp); }
+  .ck.ck-nurture { --ck-accent:var(--nurture); }
+  .ck-head { display:flex; align-items:center; gap:12px; padding:16px 22px; cursor:pointer; user-select:none; }
+  .ck-head:hover { background:var(--surface); }
+  .ck-badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:4px; flex-shrink:0; color:#fff; background:var(--ck-accent); }
+  .ck-title { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; flex:1; }
+  .ck-count { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .ck-count b { color:var(--ck-accent); }
+  .ck-toggle { font-size:16px; color:var(--ink3); transition:transform .2s; flex-shrink:0; }
+  .ck.open .ck-toggle { transform:rotate(180deg); }
+  .ck-body { display:none; padding:0 22px 26px; }
+  .ck.open .ck-body { display:block; }
+  .ck-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; font-size:12px; color:var(--ink3); border-top:1px solid var(--border); padding-top:14px; }
+  .ck-meta b { color:var(--ink2); font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-right:4px; }
+  .ck-reset { margin-left:auto; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:var(--ink3); background:var(--white); border:1px solid var(--border); border-radius:20px; padding:5px 13px; cursor:pointer; }
+  .ck-reset:hover { color:var(--ink); border-color:var(--ink3); }
+  .ck-phase { display:grid; grid-template-columns:34px 1fr; gap:0 14px; padding-top:24px; }
+  .ck-num { width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:#fff; background:var(--ck-accent); }
+  .ck-phase h4 { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:var(--ink); margin-bottom:5px; }
+  .ck-lead { font-size:13px; color:var(--ink3); margin-bottom:10px; max-width:660px; }
+  .ck-where { display:inline-block; font-family:'SFMono-Regular',Consolas,Menlo,monospace; font-size:11px; color:var(--ink3); background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); padding:5px 10px; margin-bottom:10px; }
+  ul.ck-list { list-style:none; display:flex; flex-direction:column; gap:1px; }
+  ul.ck-list li { display:grid; grid-template-columns:18px 1fr; gap:10px; padding:7px 8px; border-radius:var(--r-sm); align-items:start; }
+  ul.ck-list li:hover { background:var(--surface); }
+  ul.ck-list input[type=checkbox] { appearance:none; -webkit-appearance:none; width:16px; height:16px; margin:3px 0 0; border:1.5px solid #CBD5E1; border-radius:4px; background:var(--white); cursor:pointer; display:grid; place-content:center; transition:background .12s,border-color .12s; }
+  ul.ck-list input[type=checkbox]:hover { border-color:var(--ck-accent); }
+  ul.ck-list input[type=checkbox]::after { content:''; width:8px; height:8px; transform:scale(0); background:var(--white); transition:transform .12s ease; clip-path:polygon(14% 46%,0 60%,39% 100%,100% 22%,86% 8%,39% 70%); }
+  ul.ck-list input[type=checkbox]:checked { background:var(--ck-accent); border-color:var(--ck-accent); }
+  ul.ck-list input[type=checkbox]:checked::after { transform:scale(1); }
+  ul.ck-list label { font-size:13.5px; color:var(--ink2); cursor:pointer; }
+  ul.ck-list li:has(input:checked) label { color:var(--ink3); text-decoration:line-through; text-decoration-color:#CBD5E1; }
+  ul.ck-list .why { display:block; font-size:12.5px; color:var(--ink3); margin-top:3px; }
+  ul.ck-list .set { color:var(--ink); font-weight:600; }
+  .ck-phase .callout, .ck-phase .tbl-wrap, .ck-phase pre.snippet { margin-top:14px; }
+  .ck-pointer { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 18px; margin-top:14px; font-size:13px; color:var(--ink2); }
+  .ck-pointer strong { color:var(--ink); }
+  .jump { display:inline-flex; align-items:center; gap:7px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--border); padding:8px 15px; border-radius:20px; text-decoration:none; cursor:pointer; }
+  .jump:hover { border-color:var(--ink3); }
+
+/* Playbook switcher: global nav across the four PX playbooks */
+.pb-switch { background:#0A0F1D; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:6px; padding:8px 20px; overflow-x:auto; scrollbar-width:none; }
+.pb-switch::-webkit-scrollbar { display:none; }
+.pb-switch-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#64748B; margin-right:8px; white-space:nowrap; }
+.pb-tab { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#94A3B8; text-decoration:none; padding:5px 13px; border-radius:20px; white-space:nowrap; transition:background .2s,color .2s; }
+.pb-tab:hover { color:#fff; background:rgba(255,255,255,.07); }
+.pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
+.pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
+.pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+.pb-tab.map { color:#93C5FD; background:rgba(147,197,253,.1); margin-left:auto; }
+.pb-tab.map:hover { color:#fff; background:rgba(147,197,253,.22); }
+/* Hero visual-map link */
+.hero-map { display:inline-flex; align-items:center; gap:7px; margin-top:2px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#0F172A; background:#93C5FD; padding:8px 16px; border-radius:20px; text-decoration:none; transition:filter .2s; }
+.hero-map:hover { filter:brightness(1.06); }
+</style>
+<style>
+  /* standalone page: anchor nav in place of the playbook tab strip */
+  .anchor-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
+  .anchor-nav::-webkit-scrollbar { display:none; }
+  .anchor-nav a { flex:0 0 auto; padding:13px 18px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); text-decoration:none; white-space:nowrap; display:flex; align-items:center; gap:7px; border-bottom:3px solid transparent; }
+  .anchor-nav a:hover { color:var(--ink); border-color:var(--border); }
+  .anchor-nav .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .hero p.hero-sub { color:#94A3B8; font-size:15px; max-width:600px; margin:0 auto; }
+  [id] { scroll-margin-top:60px; }
+  .standalone-foot { max-width:1100px; margin:0 auto; padding:0 24px 64px; font-size:13px; color:var(--ink3); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="hero-label">Persuasion Experience &middot; Meta Advertising</p>
+  <h1>Launch <span>Checklists</span></h1>
+  <p class="hero-sub">Everything needed to build a PX campaign by hand in Ads Manager, plus the naming standard that goes with it. Work top to bottom and tick as you go. Progress saves in this browser, so you can stop and come back.</p>
+</div>
+
+<nav class="anchor-nav">
+  <a href="#prospecting"><span class="dot" style="background:var(--prosp)"></span>Prospecting launch</a>
+  <a href="#nurture"><span class="dot" style="background:var(--nurture)"></span>Nurture launch</a>
+  <a href="#naming"><span class="dot" style="background:var(--ink2)"></span>Naming standard</a>
+</nav>
+
+<main class="main">
+
+
+<div class="grid-2">
+      <div class="ov-card ov-prosp" onclick="document.getElementById('ck-prosp').classList.add('open');document.getElementById('ck-prosp').scrollIntoView({behavior:'smooth',block:'start'})"><span class="ov-tag">Cold &middot; Prospecting</span><span class="ov-name">Manual prospecting launch</span><span class="ov-desc">50 steps, 8 phases. Campaign, packs, ads, URL parameters, and every AI toggle.</span></div>
+      <div class="ov-card ov-nurture" onclick="document.getElementById('ck-nurture').classList.add('open');document.getElementById('ck-nurture').scrollIntoView({behavior:'smooth',block:'start'})"><span class="ov-tag">Hot &middot; Nurture</span><span class="ov-name">Pre-call nurture launch</span><span class="ov-desc">50 steps, 7 phases. Audiences, ThruPlay, and the measurement decision before you walk away.</span></div>
+    </div>
+
+    <div class="prosp" id="prospecting">
+    <div class="sec">Launch Checklist: building a prospecting campaign by hand</div>
+    <div class="callout red"><strong>Meta's defaults are not our defaults.</strong> Advantage+ audience, Advantage+ placements, every creative enhancement, and multi-advertiser ads are switched <strong>on</strong> when you create a campaign by hand. The launcher turns every one of them off. If you skip nothing else here, do not skip phases 3, 5, and 6.</div>
+
+    <div class="ck ck-prosp open" id="ck-prosp" data-ck-key="prosp-launch">
+      <div class="ck-head" onclick="toggleStruct('ck-prosp')">
+        <span class="ck-badge">Runbook</span>
+        <span class="ck-title">Manual prospecting launch: every setting, in order</span>
+        <span class="ck-count"><b data-ck-done>0</b> / <span data-ck-total>0</span></span>
+        <span class="ck-toggle">&#9662;</span>
+      </div>
+      <div class="ck-body">
+        <div class="ck-meta">
+          <span><b>Use when</b> no launcher, or a one-off</span>
+          <span><b>Time</b> ~15 min for the first ad set</span>
+          <button type="button" class="ck-reset" data-ck-reset>Reset checklist</button>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">1</div></div>
+          <div>
+            <h4>Before you open Ads Manager</h4>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl1a"><label for="pl1a">Angles and copy approved, creative exported and downloaded</label></li>
+              <li><input type="checkbox" id="pl1b"><label for="pl1b">You have the client's <span class="set">ad account, Page, and pixel ID</span> confirmed<span class="why">Confirm you are in the right ad account before you click anything. Check the account name in the top bar.</span></label></li>
+              <li><input type="checkbox" id="pl1c"><label for="pl1c">Pixel is firing a <span class="set">Lead</span> event, verified in Events Manager<span class="why">The ad set optimizes for this event. If it is not firing, the campaign cannot optimize.</span></label></li>
+              <li><input type="checkbox" id="pl1d"><label for="pl1d">Pack numbers, concepts, and primary angles decided in advance<span class="why">Do not guess a concept or a primary angle at build time. Ask before naming.</span></label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">2</div></div>
+          <div>
+            <h4>Campaign level</h4>
+            <p class="ck-where">New campaign &#8594; Buying type: Auction</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl2a"><label for="pl2a">Objective: <span class="set">Leads</span></label></li>
+              <li><input type="checkbox" id="pl2b"><label for="pl2b">Name follows <code>PX | Offer/Funnel | Stage | Objective | Launch Date</code>, e.g. <code>PX | GLP | PRSP | Lead | 2026 August</code><span class="why">Launch Date is the month and year the campaign first went live, written out. Never a sprint name, and never rename it next month: the date records the launch, not today.</span></label></li>
+              <li><input type="checkbox" id="pl2c"><label for="pl2c">Special ad category: <span class="set">None</span>, unless the client is credit, employment, housing, or another regulated category<span class="why">Getting this wrong is a compliance problem, not a performance one. If unsure, ask before publishing.</span></label></li>
+              <li><input type="checkbox" id="pl2d"><label for="pl2d">Advantage campaign budget (CBO): <span class="val-on">ON</span><span class="why">Budget lives at campaign level, not ad set level.</span></label></li>
+              <li><input type="checkbox" id="pl2e"><label for="pl2e">Daily budget set, and you have checked the decimal place</label></li>
+              <li><input type="checkbox" id="pl2f"><label for="pl2f">Bid strategy: <span class="set">Highest volume</span><span class="why">This is the UI name for lowest cost without a cap. No bid cap, no cost cap.</span></label></li>
+              <li><input type="checkbox" id="pl2g"><label for="pl2g">Campaign left <span class="set">paused</span> until everything is built and reviewed</label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">3</div></div>
+          <div>
+            <h4>Ad set level: one ad set per pack</h4>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl3a"><label for="pl3a">Name is <code>PX | Pack ## | Concept | Primary Angle | Creative Type</code><span class="why">e.g. <code>PX | Pack 01 | It's Not Your Fault | Emotional | Video</code>. <span class="set">Pack is second, immediately after PX, and zero-padded</span> so ad sets sort numerically in Ads Manager.</span></label></li>
+              <li><input type="checkbox" id="pl3b"><label for="pl3b">This ad set is <span class="set">one Pack, one Concept, one Primary Angle, one Creative Type</span><span class="why">Avatar is no longer carried in Meta naming. It still decides who the copy is written for, and targeting stays broad either way.</span></label></li>
+              <li><input type="checkbox" id="pl3c"><label for="pl3c">Video and Image are in <span class="set">separate packs</span><span class="why">Formats never share a pack. Mixing them makes the test unreadable.</span></label></li>
+              <li><input type="checkbox" id="pl3d"><label for="pl3d">Conversion location: <span class="set">Website</span></label></li>
+              <li><input type="checkbox" id="pl3e"><label for="pl3e">Pixel selected, performance goal: <span class="set">Maximise number of conversions</span>, conversion event: <span class="set">Lead</span></label></li>
+              <li><input type="checkbox" id="pl3f"><label for="pl3f"><span class="val-off">Advantage+ audience: OFF</span><span class="why">Defaults to ON. Expand the Audience section and switch to original audience options, or your targeting below is only a suggestion.</span></label></li>
+              <li><input type="checkbox" id="pl3g"><label for="pl3g">Location set (default <span class="set">United States</span>)</label></li>
+              <li><input type="checkbox" id="pl3h"><label for="pl3h">Age range set, confirm both ends<span class="why">Setting only a minimum gives you "30+" and pulls in expensive 65+ inventory.</span></label></li>
+              <li><input type="checkbox" id="pl3i"><label for="pl3i">Gender set if the angle calls for it, otherwise All</label></li>
+              <li><input type="checkbox" id="pl3j"><label for="pl3j">Detailed targeting left empty unless the brief specifies it<span class="why">PX default is broad. Interests narrow delivery and raise CPM, and no name anywhere carries a targeting descriptor.</span></label></li>
+              <li><input type="checkbox" id="pl3k"><label for="pl3k">Placements: <span class="set">Manual</span>, <span class="val-off">Audience Network unticked</span>, everything else <span class="val-on">left on</span><span class="why">Defaults to Advantage+ placements, which includes Audience Network. That is the only one we drop. Reels and Stories stay on, always.</span></label></li>
+              <li><input type="checkbox" id="pl3l"><label for="pl3l">No ad set budget entered, CBO handles it at campaign level</label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">4</div></div>
+          <div>
+            <h4>Ad level: copy and creative</h4>
+            <p class="ck-where">One ad per hook</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl4a"><label for="pl4a">Ad name follows <code>Concept | Execution Style | Primary Angle | Sprint | Hook ##</code><span class="why">e.g. <code>It's Not Your Fault | Talking Head | Emotional | Aug-A | Hook 01</code>. No PX prefix at ad level. Sprint is the production batch and is what ties the ad back to the file in Frame.io.</span></label></li>
+              <li><input type="checkbox" id="pl4b"><label for="pl4b">Correct Facebook Page and Instagram account selected</label></li>
+              <li><input type="checkbox" id="pl4c"><label for="pl4c">Creative uploaded, correct file for this hook</label></li>
+              <li><input type="checkbox" id="pl4d"><label for="pl4d">Primary text pasted, <span class="set">emoji intact</span> and paragraph breaks preserved<span class="why">Paste into a plain text editor first if copying from Docs. Rich paste can carry hidden characters.</span></label></li>
+              <li><input type="checkbox" id="pl4e"><label for="pl4e"><span class="set">All headline options entered</span>, not just the first<span class="why">Up to five. This is the step most often half-done.</span></label></li>
+              <li><input type="checkbox" id="pl4f"><label for="pl4f">Call to action set (PX default: <span class="set">Learn more</span>)</label></li>
+              <li><input type="checkbox" id="pl4g"><label for="pl4g">Website URL is the correct landing page</label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">5</div></div>
+          <div>
+            <h4>URL parameters, do not skip</h4>
+            <p class="ck-where">Ad level &#8594; Tracking &#8594; URL parameters</p>
+            <p class="ck-lead">The launcher sets this automatically. By hand it is one field that is very easy to miss, and missing it silently breaks attribution for the entire campaign. Paste this exactly:</p>
+            <pre class="snippet"><code>utm_source=fb&amp;utm_medium={{adset.name}}&amp;utm_campaign={{campaign.name}}&amp;utm_content={{ad.name}}&amp;campaign_id={{campaign.id}}&amp;adset_id={{adset.id}}&amp;ad_id={{ad.id}}</code></pre>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl5a"><label for="pl5a">Pasted into <span class="set">URL parameters</span> on every ad<span class="why">Per ad. It does not inherit from the ad set or the campaign.</span></label></li>
+              <li><input type="checkbox" id="pl5b"><label for="pl5b">The double curly braces survived the paste<span class="why">Those are Meta's dynamic macros. If they came through as literal text, attribution will be useless.</span></label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">6</div></div>
+          <div>
+            <h4>Turn the AI features off</h4>
+            <p class="ck-lead">Every one of these defaults to on. This is the phase that gets skipped, and the consequence is real: Meta rewrites copy, crops video, adds filters, and generates text over your creative. It is what makes ads look synthetic and draw "AI scam" comments.</p>
+            <p class="ck-where">Ad level &#8594; expand every section, they are collapsed by default</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl6a"><label for="pl6a"><span class="val-off">Standard enhancements: OFF</span></label></li>
+              <li><input type="checkbox" id="pl6b"><label for="pl6b"><span class="val-off">Text improvements / text optimisation: OFF</span><span class="why">This one rewrites your headline and primary text.</span></label></li>
+              <li><input type="checkbox" id="pl6c"><label for="pl6c"><span class="val-off">Image and video enhancements: OFF</span>, brightness and contrast, filters, auto-crop, animation</label></li>
+              <li><input type="checkbox" id="pl6d"><label for="pl6d"><span class="val-off">Add site links / site extensions: OFF</span></label></li>
+              <li><input type="checkbox" id="pl6e"><label for="pl6e"><span class="val-off">Show destination blurbs / summaries: OFF</span></label></li>
+              <li><input type="checkbox" id="pl6f"><label for="pl6f"><span class="val-off">Music: OFF</span></label></li>
+              <li><input type="checkbox" id="pl6g"><label for="pl6g"><span class="val-off">Multi-advertiser ads: OFF</span><span class="why">Separate toggle from the enhancements. Easy to miss.</span></label></li>
+              <li><input type="checkbox" id="pl6h"><label for="pl6h">Tick <span class="set">"Ad includes media created or edited with AI"</span> where it genuinely applies</label></li>
+            </ul>
+            <div class="callout red"><strong>You cannot fix this after the fact.</strong> Once an ad is live, switching enhancements off does not work. The API accepts the change and silently ignores it. The only remedy is rebuilding the creative from scratch and swapping the ad onto it, which resets learning. Get it right before you publish.</div>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">7</div></div>
+          <div>
+            <h4>Review before publishing</h4>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl7a"><label for="pl7a">Duplicate an ad set to build the rest, then edit each one<span class="why">Faster, and duplicating carries your enhancement settings across. Building each from scratch is where inconsistency creeps in.</span></label></li>
+              <li><input type="checkbox" id="pl7b"><label for="pl7b">Every ad set has the same targeting, placements, and optimisation event</label></li>
+              <li><input type="checkbox" id="pl7c"><label for="pl7c">Every ad has URL parameters, all headlines, and enhancements off</label></li>
+              <li><input type="checkbox" id="pl7d"><label for="pl7d">Names spot-checked, they become your report labels and cannot be cleanly fixed later</label></li>
+              <li><input type="checkbox" id="pl7e"><label for="pl7e">Budget checked one final time</label></li>
+              <li><input type="checkbox" id="pl7f"><label for="pl7f">Published</label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">8</div></div>
+          <div>
+            <h4>After publishing</h4>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="pl8a"><label for="pl8a">All ads cleared review and are delivering</label></li>
+              <li><input type="checkbox" id="pl8b"><label for="pl8b">Click one live ad and confirm the landing page loads with UTM parameters in the URL<span class="why">The only real proof that tracking works. Do this once per launch.</span></label></li>
+              <li><input type="checkbox" id="pl8c"><label for="pl8c">A test lead fires the Lead event in Events Manager</label></li>
+              <li><input type="checkbox" id="pl8d"><label for="pl8d">Re-open one ad and confirm enhancements are still off<span class="why">Meta sometimes re-enables these on publish. Check, do not assume.</span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title prosp">Settings reference</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:4px">If a setting is not on this list, leave it at Meta's default.</p>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Level</th><th>Setting</th><th>PX value</th></tr></thead>
+            <tbody>
+              <tr><td>Campaign</td><td>Objective</td><td>Leads</td></tr>
+              <tr><td>Campaign</td><td>Special ad category</td><td>None (unless regulated)</td></tr>
+              <tr><td>Campaign</td><td>Advantage campaign budget</td><td class="val-on">ON</td></tr>
+              <tr><td>Campaign</td><td>Bid strategy</td><td>Highest volume</td></tr>
+              <tr><td>Ad set</td><td>Conversion location</td><td>Website</td></tr>
+              <tr><td>Ad set</td><td>Conversion event</td><td>Lead</td></tr>
+              <tr><td>Ad set</td><td>Advantage+ audience</td><td class="val-off">OFF</td></tr>
+              <tr><td>Ad set</td><td>Detailed targeting</td><td>Empty (broad)</td></tr>
+              <tr><td>Ad set</td><td>Placements</td><td>Manual, Audience Network off, everything else on</td></tr>
+              <tr><td>Ad</td><td>Call to action</td><td>Learn more</td></tr>
+              <tr><td>Ad</td><td>All creative enhancements</td><td class="val-off">OFF</td></tr>
+              <tr><td>Ad</td><td>Multi-advertiser ads</td><td class="val-off">OFF</td></tr>
+              <tr><td>Ad</td><td>URL parameters</td><td>Required, see phase 5</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title prosp">The five most common manual-launch errors</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>#</th><th>Error</th><th>Consequence</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>URL parameters left blank</td><td>No attribution for the whole campaign</td></tr>
+              <tr><td>2</td><td>Advantage+ audience left on</td><td>Your targeting is ignored</td></tr>
+              <tr><td>3</td><td>Creative enhancements left on</td><td>Meta alters the creative, unfixable once live</td></tr>
+              <tr><td>4</td><td>Only headline 1 filled in</td><td>Loses rotation and testing</td></tr>
+              <tr><td>5</td><td>Pack not second, or not zero-padded</td><td>Ad sets sort wrong in every report</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <a class="jump" href="#naming">&#9998; Full naming standard &#8594;</a>
+      </div>
+    </div>
+    </div>
+
+    <div class="nurture" id="nurture">
+    <div class="sec">Launch Checklist: pre-call nurture</div>
+    <div class="callout red"><strong>How this one fails: nobody can tell whether it worked.</strong> There is no conversion event, so there is no cost per result to look at and no ROAS. A campaign like this can run for a year on the strength of feeling like a good idea. Phase 7 forces the measurement decision before launch, not after.</div>
+
+    <div class="ck ck-nurture" id="ck-nurture" data-ck-key="nurture-launch">
+      <div class="ck-head" onclick="toggleStruct('ck-nurture')">
+        <span class="ck-badge">Runbook</span>
+        <span class="ck-title">Pre-call nurture launch: audiences, ThruPlay, and the measurement decision</span>
+        <span class="ck-count"><b data-ck-done>0</b> / <span data-ck-total>0</span></span>
+        <span class="ck-toggle">&#9662;</span>
+      </div>
+      <div class="ck-body">
+        <div class="ck-meta">
+          <span><b>Use when</b> steady lead flow and a booking-to-call gap</span>
+          <span><b>Time</b> ~20 min, plus audience build</span>
+          <button type="button" class="ck-reset" data-ck-reset>Reset checklist</button>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">1</div></div>
+          <div>
+            <h4>Build the audiences</h4>
+            <p class="ck-where">Audiences &#8594; Create audience &#8594; Custom audience</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu1a"><label for="nu1a">Source is the <span class="set">pixel Lead event</span>, or a CRM customer list if the client syncs one<span class="why">A CRM list is better where it exists. It knows who actually booked and who already had the call, which the pixel does not.</span></label></li>
+              <li><input type="checkbox" id="nu1b"><label for="nu1b">Audience set to <span class="set">30 days of the primary conversion event</span>, usually Lead</label></li>
+              <li><input type="checkbox" id="nu1c"><label for="nu1c">Exclusion audience built: <span class="set">closed and won customers</span><span class="why">Paying to sell someone who already bought is the most obvious waste in the account, and clients notice it.</span></label></li>
+              <li><input type="checkbox" id="nu1d"><label for="nu1d">This nurture audience is <span class="set">excluded from the cold prospecting campaign</span><span class="why">Otherwise the two campaigns bid against each other for the same people and you pay twice.</span></label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">2</div></div>
+          <div>
+            <h4>Campaign level</h4>
+            <p class="ck-where">New campaign &#8594; Buying type: Auction</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu2a"><label for="nu2a">Objective: <span class="set">Awareness &#8594; Video views</span><span class="why">Not Traffic. Traffic optimises for the cheapest click, which buys you accidental taps. Video views optimises for people who actually watch.</span></label></li>
+              <li><input type="checkbox" id="nu2b"><label for="nu2b">Name follows <code>PX | Offer/Funnel | NURT | Views | Launch Date</code>, e.g. <code>PX | Medical | NURT | Views | 2026 August</code><span class="why">Stage is <code>NURT</code> for nurture, not <code>PRSP</code> and not plain <code>RT</code>. That token is how every report separates nurture spend from cold and from other retargeting.</span></label></li>
+              <li><input type="checkbox" id="nu2c"><label for="nu2c">Special ad category: <span class="set">None</span>, unless the client is a regulated category<span class="why">If it is regulated, your custom audience options are restricted too. Check before building the audience, not after.</span></label></li>
+              <li><input type="checkbox" id="nu2d"><label for="nu2d">Advantage campaign budget (CBO): <span class="val-on">ON</span></label></li>
+              <li><input type="checkbox" id="nu2e"><label for="nu2e">Daily budget set, and the decimal place checked<span class="why">These budgets are small. A misplaced decimal is proportionally far more damaging here than on a cold campaign.</span></label></li>
+              <li><input type="checkbox" id="nu2f"><label for="nu2f">Bid strategy: <span class="set">Highest volume</span></label></li>
+              <li><input type="checkbox" id="nu2g"><label for="nu2g">Campaign left <span class="set">paused</span> until everything is built and reviewed</label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">3</div></div>
+          <div>
+            <h4>Ad set level</h4>
+            <p class="ck-lead">Nurture does not use packs. The structure is <strong>one ad set per audience segment</strong>, with as many ads inside it as you have assets. Packs exist to keep cold tests readable, and nothing here is a test: the objective is views, and the job is coverage of a segment.</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu3a"><label for="nu3a">Name is <code>PX | Audience Segment | Purpose | Video</code>, e.g. <code>PX | All Leads 30D | Pre-Call Nurture | Video</code><span class="why">No pack, no avatar. The segment is what varies between ad sets here, so the segment is what the name carries.</span></label></li>
+              <li><input type="checkbox" id="nu3b"><label for="nu3b">Performance goal: <span class="set">Maximise ThruPlay views</span><span class="why">ThruPlay is 15 seconds or a complete view. 2-second continuous is the cheaper, emptier metric.</span></label></li>
+              <li><input type="checkbox" id="nu3c"><label for="nu3c">Audience: the custom audience from phase 1, with exclusions applied</label></li>
+              <li><input type="checkbox" id="nu3d"><label for="nu3d"><span class="val-off">Advantage+ audience: OFF</span><span class="why">Critical here. On a retargeting ad set this quietly turns your defined pool into a "suggestion" and spends the budget on strangers.</span></label></li>
+              <li><input type="checkbox" id="nu3e"><label for="nu3e">Detailed targeting left empty, age and gender left wide<span class="why">The audience is already the targeting. Layering demographics on top of a small warm pool only shrinks it further.</span></label></li>
+              <li><input type="checkbox" id="nu3f"><label for="nu3f">Placements: <span class="set">Manual</span>, <span class="val-off">Audience Network unticked</span>, everything else <span class="val-on">left on</span><span class="why">Reels and Stories stay on. PX never turns them off, on any campaign. Audience Network is the only placement we drop.</span></label></li>
+              <li><input type="checkbox" id="nu3g"><label for="nu3g">No ad set budget entered, CBO handles it</label></li>
+            </ul>
+            <div class="callout pink"><strong>If frequency runs away:</strong> ThruPlay has no frequency cap. If the same people are seeing the ad eight times a day, the fix is not a lower budget, it is a different objective. Rebuild as <strong>Reach with a frequency cap</strong> of roughly one impression every two days. Reach trades watch time for even coverage, which is the better trade once the pool is small and the window is short.</div>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">4</div></div>
+          <div>
+            <h4>Ad level: creative, copy, and the link</h4>
+            <p class="ck-lead">Video only is leaving three assets on the table. Primary text, headline, and a destination all cost nothing on a ThruPlay objective and none of them affect how Meta optimises. Add all three.</p>
+            <p class="ck-where">One ad per asset, load the ad set up</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu4a"><label for="nu4a">Ad name follows <code>Concept | Execution Style | Primary Angle | Sprint | Hook ##</code><span class="why">e.g. <code>Ninety Day Result | Client Interview | Proof | Aug-A | Hook 01</code>. Same ad naming as every other PX campaign.</span></label></li>
+              <li><input type="checkbox" id="nu4b"><label for="nu4b">The set covers <span class="set">all four doubts</span>: Proof, Authority, Objection, Explainer<span class="why">A prospect stalls for one of four reasons: they doubt it works, they doubt you, they have a specific objection, or they do not understand the mechanism. Cover all four before adding a fifth proof video. Volume is good here, but not at the cost of coverage.</span></label></li>
+              <li><input type="checkbox" id="nu4c"><label for="nu4c">Primary text added, <span class="set">one or two lines</span><span class="why">Not cold-ad copy. These people already raised their hand. Long problem-agitation copy reads as though the brand forgot who they are.</span></label></li>
+              <li><input type="checkbox" id="nu4d"><label for="nu4d">Copy is written in recognition, not introduction<span class="why">"Before your call, this is what the first 90 days looked like" lands. "Are you struggling with X?" tells them you have no idea they are already in your funnel.</span></label></li>
+              <li><input type="checkbox" id="nu4e"><label for="nu4e">Headline added, carrying the destination promise</label></li>
+              <li><input type="checkbox" id="nu4f"><label for="nu4f">Link added, and it is the <span class="set">right destination for this audience</span><span class="why">A blended pool goes to the proof or results page. See the destination table below. Never send a booked prospect to the booking page.</span></label></li>
+              <li><input type="checkbox" id="nu4g"><label for="nu4g">Call to action set to <span class="set">Learn more</span>, not Book now<span class="why">Book now is wrong for anyone who already booked, and the blended pool contains them.</span></label></li>
+              <li><input type="checkbox" id="nu4h"><label for="nu4h">Correct Facebook Page and Instagram account selected</label></li>
+            </ul>
+            <p class="ck-where" style="margin-top:14px">URL parameters, every ad</p>
+            <pre class="snippet"><code>utm_source=fb&amp;utm_medium={{adset.name}}&amp;utm_campaign={{campaign.name}}&amp;utm_content={{ad.name}}&amp;campaign_id={{campaign.id}}&amp;adset_id={{adset.id}}&amp;ad_id={{ad.id}}</code></pre>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu4i"><label for="nu4i">Pasted into <span class="set">URL parameters</span> on every ad, curly braces intact<span class="why">More important here than on a cold campaign. Clicks are one of the only signals this campaign produces, and untagged clicks are invisible.</span></label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">5</div></div>
+          <div>
+            <h4>Turn the AI features off</h4>
+            <p class="ck-lead">Same as every PX launch, and it matters more on this one. The entire point of a proof campaign is that a real person is talking. Meta's enhancements crop the frame, add filters, and rewrite the words, which is precisely what makes a testimonial stop reading as real.</p>
+            <p class="ck-where">Ad level &#8594; expand every section, they are collapsed by default</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu5a"><label for="nu5a"><span class="val-off">Standard enhancements: OFF</span></label></li>
+              <li><input type="checkbox" id="nu5b"><label for="nu5b"><span class="val-off">Text improvements / text optimisation: OFF</span></label></li>
+              <li><input type="checkbox" id="nu5c"><label for="nu5c"><span class="val-off">Image and video enhancements: OFF</span>, brightness, filters, auto-crop, animation</label></li>
+              <li><input type="checkbox" id="nu5d"><label for="nu5d"><span class="val-off">Add site links / site extensions: OFF</span></label></li>
+              <li><input type="checkbox" id="nu5e"><label for="nu5e"><span class="val-off">Show destination blurbs / summaries: OFF</span></label></li>
+              <li><input type="checkbox" id="nu5f"><label for="nu5f"><span class="val-off">Music: OFF</span><span class="why">Meta laying a stock track under a client testimonial is the single fastest way to make it look fabricated.</span></label></li>
+              <li><input type="checkbox" id="nu5g"><label for="nu5g"><span class="val-off">Multi-advertiser ads: OFF</span><span class="why">Non-negotiable on this campaign specifically. Leaving it on invites competitors into the exact ad unit you built to keep them out of.</span></label></li>
+              <li><input type="checkbox" id="nu5h"><label for="nu5h">Tick <span class="set">"Ad includes media created or edited with AI"</span> only where it genuinely applies</label></li>
+            </ul>
+            <div class="callout red"><strong>You cannot fix this after the fact.</strong> Once an ad is live, switching enhancements off does not work. The API accepts the change and silently ignores it. The only remedy is rebuilding the creative and swapping the ad onto it, which resets learning. Get it right before you publish.</div>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">6</div></div>
+          <div>
+            <h4>Review before publishing</h4>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu6a"><label for="nu6a">Audience size confirmed one last time in the ad set</label></li>
+              <li><input type="checkbox" id="nu6b"><label for="nu6b">Exclusions actually attached to the ad set, not just created in Audience Manager<span class="why">Building an exclusion audience and forgetting to apply it is the most common miss in this whole build.</span></label></li>
+              <li><input type="checkbox" id="nu6c"><label for="nu6c">Every ad has URL parameters, primary text, headline, link, and enhancements off</label></li>
+              <li><input type="checkbox" id="nu6d"><label for="nu6d">Every link opened and checked, on mobile<span class="why">Most of this audience is on a phone. A results page that needs pinch-zoom wastes the impression.</span></label></li>
+              <li><input type="checkbox" id="nu6e"><label for="nu6e">Names spot-checked against the naming standard</label></li>
+              <li><input type="checkbox" id="nu6f"><label for="nu6f">Budget checked one final time</label></li>
+              <li><input type="checkbox" id="nu6g"><label for="nu6g">Published</label></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ck-phase">
+          <div><div class="ck-num">7</div></div>
+          <div>
+            <h4>Decide now how you will know it worked</h4>
+            <p class="ck-lead">Do this before you walk away, not in three months when someone asks what the nurture campaign is doing. With no conversion event there is no number in Ads Manager that answers the question. The answer lives in the CRM.</p>
+            <ul class="ck-list">
+              <li><input type="checkbox" id="nu7a"><label for="nu7a">Baseline written down <span class="set">today</span>: current show rate and close rate<span class="why">You cannot reconstruct this later. Write the two numbers and the date somewhere permanent.</span></label></li>
+              <li><input type="checkbox" id="nu7b"><label for="nu7b">Review date set, at least <span class="set">one full sales cycle out</span></label></li>
+              <li><input type="checkbox" id="nu7c"><label for="nu7c">Primary measure agreed: <span class="set">show rate</span>, then close rate<span class="why">Show rate moves first and is the cleanest read. If people are turning up to calls they used to skip, the campaign is doing its job.</span></label></li>
+              <li><input type="checkbox" id="nu7d"><label for="nu7d">A <span class="set">holdout</span> considered, if volume allows<span class="why">Exclude a random slice of leads from the audience and compare. It is the only way to prove causation rather than argue about it. Needs real volume to mean anything.</span></label></li>
+              <li><input type="checkbox" id="nu7e"><label for="nu7e">Frequency checked after 72 hours<span class="why">This is the number most likely to be wrong on day one. See the Reach fallback in phase 3.</span></label></li>
+              <li><input type="checkbox" id="nu7f"><label for="nu7f">All ads cleared review and are delivering</label></li>
+              <li><input type="checkbox" id="nu7g"><label for="nu7g">One live ad clicked through, landing page loads with UTMs in the URL</label></li>
+              <li><input type="checkbox" id="nu7h"><label for="nu7h">Re-open one ad and confirm enhancements are still off<span class="why">Meta sometimes re-enables these on publish. Check, do not assume.</span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">Nurture reference</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title nurture">The four decisions, settled</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Question</th><th>Answer</th><th>Because</th></tr></thead>
+          <tbody>
+            <tr><td>Bookers only, or all leads?</td><td><strong>All leads, 30 days, bookers included</strong>, as one segment.</td><td>The proof content works for both groups. Split into separate ad sets only when a segment is big enough to fill on its own.</td></tr>
+            <tr><td>Add a link, or stay video only?</td><td><strong>Add a link.</strong></td><td>It costs nothing on a ThruPlay objective, gives a warm prospect somewhere to go, and produces the only engagement signal this campaign generates.</td></tr>
+            <tr><td>Add text and headline?</td><td><strong>Both, kept short.</strong></td><td>Most of the feed is watched on mute. Two lines of text carry the message to everyone who scrolls past without sound.</td></tr>
+            <tr><td>Where does the link go?</td><td><strong>Proof or results page</strong> for a blended pool.</td><td>It is the one destination that is correct whether or not a call is already booked.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title nurture">Destination by audience</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Audience</th><th>Send them to</th><th>Never send them to</th></tr></thead>
+            <tbody>
+              <tr><td>Blended: all leads including bookers</td><td>Results or case studies page, with a booking CTA sitting on it</td><td>Booking page directly</td></tr>
+              <tr><td>Booked a call</td><td>"Prepare for your call": what to expect, who they are meeting, relevant case studies</td><td>Booking page. It invites a double booking and signals you do not know they already booked.</td></tr>
+              <tr><td>Lead, has not booked</td><td>Booking page</td><td>A long read that defers the one action you want</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title nurture">Creative slots</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:4px">Four reasons a warm prospect stalls. One asset each, minimum.</p>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Slot</th><th>The doubt it answers</th><th>Typical execution</th></tr></thead>
+            <tbody>
+              <tr><td><code>Proof</code></td><td>"Does this actually work?"</td><td>Client interview, before and after, result walkthrough</td></tr>
+              <tr><td><code>Authority</code></td><td>"Are these people credible?"</td><td>Founder talking head, credentials, press, scale</td></tr>
+              <tr><td><code>Objection</code></td><td>"Yes, but my situation is different"</td><td>Direct answer to the objection the sales team hears most</td></tr>
+              <tr><td><code>Explainer</code></td><td>"I do not really understand what happens"</td><td>Mechanism, process walkthrough, what the first 30 days look like</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title nurture">How this differs from a cold launch</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Setting</th><th>Cold prospecting</th><th>Pre-call nurture</th></tr></thead>
+          <tbody>
+            <tr><td>Objective</td><td>Leads</td><td>Video views, ThruPlay</td></tr>
+            <tr><td>Stage token</td><td><code>PRSP</code></td><td><code>NURT</code></td></tr>
+            <tr><td>Audience</td><td>Broad, no interests</td><td>Custom audience is the targeting</td></tr>
+            <tr><td>Ad set structure</td><td>One per pack</td><td>One per audience segment, no packs</td></tr>
+            <tr><td>Ads per ad set</td><td>One per hook, kept readable</td><td>As many as you have, it is not a test</td></tr>
+            <tr><td>Copy length</td><td>Full story, problem first</td><td>One or two lines, recognition first</td></tr>
+            <tr><td>Read the result from</td><td>Cost per lead</td><td>Show rate and close rate in the CRM</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title nurture">The five most common errors on this build</div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>#</th><th>Error</th><th>Consequence</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Bookers-only audience, too small to deliver</td><td>Campaign stalls or buys a handful of people at triple CPM</td></tr>
+            <tr><td>2</td><td>Advantage+ audience left on</td><td>Your warm pool is treated as a suggestion and the budget reaches strangers</td></tr>
+            <tr><td>3</td><td>Exclusions built but never attached to the ad set</td><td>You advertise to existing customers</td></tr>
+            <tr><td>4</td><td>Multi-advertiser ads left on</td><td>Competitors appear inside the unit you built to shut them out</td></tr>
+            <tr><td>5</td><td>No baseline written down before launch</td><td>The campaign becomes unfalsifiable and runs forever</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+  
+
+  <div id="naming" class="pixel">
+
+    <div class="campaign-header header-pixel">
+      <span class="badge" style="background:var(--pixel)">Reference</span>
+      <div><h2 style="color:var(--pixel-dark)">Naming Standard</h2><p>One convention across Meta and Frame.io. Anyone opening Ads Manager should immediately see what offer is being advertised, which creative pack, which concept and primary angle are being tested, which creative type, which hook, and how to find the matching file in Frame.</p></div>
+    </div>
+
+    <div class="callout slate"><strong>Locked.</strong> The Meta convention below is the current SOP and replaces every earlier version. Field order is settled: do not re-litigate it. Names become report labels and cannot be cleanly fixed later.</div>
+
+    <div class="sec">Meta: the three levels</div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title pixel">1. Campaign</div>
+      <div class="formula">PX | Offer/Funnel | Stage | Objective | Launch Date</div>
+      <pre class="snippet"><code>PX | GLP | PRSP | Lead | 2026 August
+PX | Medical | PRSP | Lead | 2026 August
+PX | Medical | NURT | Views | 2026 August</code></pre>
+      <ul class="info-list">
+        <li>Launch Date is the <strong>month and year of the original launch</strong>, written out (<code>2026 August</code>, not <code>2026 AUG</code>).</li>
+        <li><strong>Never a sprint name in a campaign.</strong> Campaigns run for months.</li>
+        <li><strong>Do not rename campaigns every month.</strong> The date records when it launched, not the current month.</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title pixel">2. Ad set, one creative pack</div>
+      <div class="formula">PX | Pack ## | Concept | Primary Angle | Creative Type</div>
+      <pre class="snippet"><code>PX | Pack 01 | It's Not Your Fault | Emotional | Video
+PX | Pack 02 | Pizza Oven | Mechanism | Video
+PX | Pack 04 | Before &amp; After | Proof | Image</code></pre>
+      <ul class="info-list">
+        <li><strong>Pack is second, immediately after PX, and zero-padded</strong> so ad sets sort numerically in Ads Manager.</li>
+        <li><strong>Avatar and sub-niche are not in the name.</strong> Avatar stays central to creative strategy, it is just not carried in Meta naming.</li>
+        <li>Concept and Primary Angle sit here so winning combinations are identifiable.</li>
+        <li>Creative Type is <code>Video</code> or <code>Image</code>. <strong>Never mixed in one pack.</strong></li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title pixel">3. Ad</div>
+      <div class="formula">Concept | Execution Style | Primary Angle | Sprint | Hook ##</div>
+      <pre class="snippet"><code>It's Not Your Fault | Talking Head | Emotional | Aug-A | Hook 01
+Pizza Oven | B-Roll Voiceover | Mechanism | Aug-A | Hook 01</code></pre>
+      <ul class="info-list">
+        <li>No <code>PX</code> prefix at ad level.</li>
+        <li><strong>Sprint</strong> identifies the production batch (<code>Aug-A</code>, <code>Aug-B</code>).</li>
+        <li><strong>Execution Style</strong> is how it was produced, and it lives only at ad level.</li>
+        <li><strong>Hook</strong> is the individual opening variation, zero-padded.</li>
+        <li>Ad names should closely match the Frame.io filename.</li>
+      </ul>
+    </div>
+
+    <div class="sec">The fields that get confused</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Field</th><th>What it is</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Offer / Funnel</td><td>The offer or funnel being promoted</td><td>GLP, Medical, Auto, Remodeling</td></tr>
+          <tr><td>Stage</td><td>Campaign stage</td><td><code>PRSP</code> prospecting, <code>RT</code> retargeting, <code>NURT</code> nurture</td></tr>
+          <tr><td>Concept</td><td>The creative idea, the thing you would say to describe it in a sentence</td><td>It's Not Your Fault, Pizza Oven, Clinic Tour, Banks Don't Get Healthcare</td></tr>
+          <tr><td>Primary Angle</td><td>The strategic messaging category. One per asset, the one it leads with.</td><td>Emotional, Mechanism, Proof, Pattern Interrupt</td></tr>
+          <tr><td>Execution Style</td><td>Production format. Ad level only.</td><td>Talking Head, B-Roll Voiceover, AI Narrator</td></tr>
+          <tr><td>Pack</td><td>The creative batch. Second in the ad set name, always zero-padded.</td><td>Pack 01, Pack 02</td></tr>
+          <tr><td>Creative Type</td><td>Format. Never mixed in one pack.</td><td>Video, Image</td></tr>
+          <tr><td>Sprint</td><td>Production batch. Ad level and Frame only, never in a campaign name.</td><td>Aug-A, Aug-B</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout red"><strong>Hard rules.</strong> Do not guess a Concept or a Primary Angle if it is unclear, ask before naming. Video and Image never share a pack. No targeting descriptors such as "Broad" anywhere: broad is the default and carries no information. If a creative fits several angles, pick the primary strategic one.</div>
+
+    <div class="notes-box"><strong>Gotcha: creative names must be unique account-wide</strong>
+      Ad set and ad names do not have to be unique, but creative objects do. Two offers running the same Concept, Angle, Type, and Pack will collide on the creative object. Prefix the offer on the <em>creative</em> label only. Creative names are not governed by this standard.
+    </div>
+
+    <div class="sec">Frame.io: the filename</div>
+    <p class="lead">Rename every finished ad to this. Lowercase throughout, underscores between sections, no spaces. One filename, read left to right, should answer every question anyone has about an asset.</p>
+    <div class="formula">client_concept_executionstyle_angle_sprint_hook</div>
+    <pre class="snippet"><code>acmeauto_pizzaoven_brollvoiceover_contrarian_augA_hook01
+harbor_pizzaoven_brollvoiceover_proprietarysystem_augA_hook02
+harbor_clinictour_talkinghead_proof_augA_hook01
+northside_fraudfeeling_talkinghead_pain_augB_hook03
+px_emptysurgeryslot_static_pain_augA_hook01</code></pre>
+
+    <div class="callout red"><strong>Three rules that get broken.</strong> <strong>Hooks are zero padded</strong>, <code>hook01</code> and never <code>hook1</code>: without the zero, hook10 sorts between hook1 and hook2 in every file browser and every report. <strong>No version numbers</strong>, no <code>v2</code>, <code>v3</code>, <code>final</code>, <code>FINAL2</code>: Frame already tracks version history, and a filename that carries a version stops matching its Meta ad the moment it is revised. <strong>If you are unsure of the Concept or the Angle, leave it for the strategy lead.</strong> A guessed angle is worse than a missing one, because it silently corrupts what we think is working.</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title pixel">Folder structure</div>
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:4px">Inside each client offer, split the Finished Ads folder by creative type. Video and Static never mix, in Frame or in Meta.</p>
+        <pre class="snippet"><code>Client Name
+&#9492;&#9472;&#9472; Offer            (if the client runs more than one)
+    &#9492;&#9472;&#9472; Finished Ads
+        &#9500;&#9472;&#9472; Video
+        &#9492;&#9472;&#9472; Static</code></pre>
+        <p style="font-size:13px;color:var(--ink3)">If a client does not use one of those formats yet, leave it out. Add it when the first asset needs it.</p>
+      </div>
+      <div class="card">
+        <div class="card-title pixel">Client, execution style, sprint, hook</div>
+        <ul class="info-list">
+          <li><strong>Client:</strong> short identifier, lowercase, no spaces. One token per client. A client running two offers gets two identifiers, e.g. <code>acmeauto</code> and <code>acmeresto</code>. A bare client token that could mean either offer is ambiguous and should not be used.</li>
+          <li><strong>Execution style:</strong> <code>talkinghead</code> · <code>brollvoiceover</code> · <code>ugc</code> · <code>interview</code> · <code>nativenews</code> · <code>carousel</code> · <code>static</code></li>
+          <li><strong>Sprint:</strong> the production sprint, <code>julA</code>, <code>julB</code>, <code>augA</code>. Written <code>Aug-A</code> in a Meta ad name.</li>
+          <li><strong>Hook:</strong> the opening variation, always two digits. <code>hook01</code> · <code>hook02</code> · <code>hook03</code></li>
+        </ul>
+        <div class="exclude-box"><strong>Naming a still asset</strong> Frame uses <code>static</code> as the execution style. Meta's Creative Type token for the same asset is <code>Image</code>.</div>
+      </div>
+    </div>
+
+    <div class="sec">Angle values</div>
+    <p class="lead">Use only these values in a Frame filename. They are the exact options in the ClickUp Messaging field, so a filename and its task always agree. One angle per asset. If a creative genuinely fits two, pick the primary one, the message it leads with.</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Value</th><th>The message</th></tr></thead>
+        <tbody>
+          <tr><td><code>burningquestion</code></td><td>Opens on the question the prospect is already asking</td></tr>
+          <tr><td><code>contrarian</code></td><td>Against what the market believes</td></tr>
+          <tr><td><code>directtooffer</code></td><td>Straight to the offer, no setup</td></tr>
+          <tr><td><code>factsstats</code></td><td>Led by a number or a study</td></tr>
+          <tr><td><code>gainbenefit</code></td><td>What they get</td></tr>
+          <tr><td><code>humor</code></td><td>Comedy carries the message</td></tr>
+          <tr><td><code>new</code></td><td>Newness or novelty of the mechanism</td></tr>
+          <tr><td><code>pain</code></td><td>What it costs them today</td></tr>
+          <tr><td><code>proof</code></td><td>Results, testimonial, case study</td></tr>
+          <tr><td><code>proprietarysystem</code></td><td>Our named mechanism or process</td></tr>
+          <tr><td><code>status</code></td><td>How they are seen by peers</td></tr>
+          <tr><td><code>storynews</code></td><td>Narrative or news framing</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">How Frame lines up with Meta</div>
+    <p class="lead">The Frame filename is the source. The Meta ad name is built from five of its parts, in the same order, with the client dropped because the campaign already carries it.</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Frame filename</th><th>Meta ad name</th></tr></thead>
+        <tbody>
+          <tr><td><code>northside_fraudfeeling_talkinghead_pain_augB_hook03</code></td><td><code>Fraud Feeling | Talking Head | Pain | Aug-B | Hook 03</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Part</th><th>Frame</th><th>Meta</th></tr></thead>
+        <tbody>
+          <tr><td>Client</td><td>In the filename</td><td>In the campaign name</td></tr>
+          <tr><td>Offer / funnel</td><td>In the folder path</td><td>In the campaign name</td></tr>
+          <tr><td>Concept</td><td class="val-on">Yes</td><td class="val-on">Yes, ad set and ad</td></tr>
+          <tr><td>Execution style</td><td class="val-on">Yes</td><td class="val-on">Yes, ad level only</td></tr>
+          <tr><td>Angle</td><td class="val-on">Yes</td><td class="val-on">Yes, ad set and ad</td></tr>
+          <tr><td>Sprint</td><td class="val-on">Yes</td><td class="val-on">Yes, ad level only. <span class="val-off">Never</span> in a campaign name.</td></tr>
+          <tr><td>Hook</td><td class="val-on">Yes</td><td class="val-on">Yes, ad level</td></tr>
+          <tr><td>Pack</td><td>Not in the filename</td><td class="val-on">Yes, ad set only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout slate"><strong>Nurture and retargeting.</strong> They do not use packs and they are not tests, so their ad sets are named by audience segment instead: <code>PX | Audience Segment | Purpose | Video</code>. Everything else in this standard applies to them unchanged.</div>
+
+    <div class="notes-box"><strong>The point</strong>
+      Someone reading a name should immediately know which client it is for, which creative concept it is, how it was produced, which strategic angle it belongs to, which sprint it came from, and which hook variation they are looking at. Nothing else needs to be opened to find that out. Once this is consistent, the same vocabulary carries into Meta, ClickUp, Canva and reporting, and we can answer which angles work across clients rather than guessing per account.
+    </div>
+    </div>
+</main>
+
+<p class="standalone-foot">PX internal &middot; if a setting is not covered here, ask before you publish. Do not guess a Concept or a Primary Angle.</p>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  const btn   = document.querySelector('[data-tab="' + id + '"]');
+  if (panel) panel.classList.add('active');
+  if (btn)   btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleStruct(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+// Checklists: persist ticks per checklist, count progress, reset.
+document.querySelectorAll('[data-ck-key]').forEach(function (wrap) {
+  var storeKey = 'px-meta-scaling-' + wrap.getAttribute('data-ck-key');
+  var boxes = Array.prototype.slice.call(wrap.querySelectorAll('input[type=checkbox]'));
+  var doneEl = wrap.querySelector('[data-ck-done]');
+  var totalEl = wrap.querySelector('[data-ck-total]');
+  if (totalEl) totalEl.textContent = boxes.length;
+
+  function count() { if (doneEl) doneEl.textContent = boxes.filter(function (b) { return b.checked; }).length; }
+  function save() {
+    var state = {};
+    boxes.forEach(function (b) { if (b.checked) state[b.id] = 1; });
+    try { localStorage.setItem(storeKey, JSON.stringify(state)); } catch (e) {}
+  }
+  function load() {
+    var state = {};
+    try { state = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch (e) {}
+    boxes.forEach(function (b) { b.checked = !!state[b.id]; });
+    count();
+  }
+
+  boxes.forEach(function (b) { b.addEventListener('change', function () { save(); count(); }); });
+  var reset = wrap.querySelector('[data-ck-reset]');
+  if (reset) reset.addEventListener('click', function (e) {
+    e.stopPropagation();
+    boxes.forEach(function (b) { b.checked = false; });
+    save(); count();
+  });
+  load();
+});
+
+</script>
+</body>
+</html>
