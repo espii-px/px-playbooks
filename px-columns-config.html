@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PX Custom Columns Config</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tofu:        #2563EB; --tofu-bg:    #EFF6FF; --tofu-mid:   #93C5FD; --tofu-dark:  #1E40AF;
+    --lm:          #0891B2; --lm-bg:      #ECFEFF; --lm-mid:     #67E8F9; --lm-dark:    #164E63;
+    --prosp:       #059669; --prosp-bg:   #ECFDF5; --prosp-mid:  #6EE7B7; --prosp-dark: #064E3B;
+    --retarg:      #D97706; --retarg-bg:  #FFFBEB; --retarg-mid: #FCD34D; --retarg-dark:#92400E;
+    --nurture:     #DB2777; --nurture-bg: #FDF2F8; --nurture-mid:#F9A8D4; --nurture-dark:#831843;
+    --bonus:       #7C3AED; --bonus-bg:   #F5F3FF; --bonus-mid:  #C4B5FD; --bonus-dark: #4C1D95;
+    --pixel:       #475569; --pixel-bg:   #F1F5F9; --pixel-mid:  #CBD5E1; --pixel-dark: #1E293B;
+    --win:         #0F766E; --win-bg:     #F0FDFA; --win-mid:    #99F6E4; --win-dark:   #134E4A;
+    --ink:  #0F172A; --ink2: #334155; --ink3: #64748B;
+    --surface: #F8FAFC; --border: #E2E8F0; --white: #FFFFFF;
+    --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: #fff; padding: 52px 40px 44px; text-align: center; }
+  .hero-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #94A3B8; margin-bottom: 12px; }
+  .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px,5vw,46px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+  .hero h1 span { color: #93C5FD; }
+  .hero p.hero-sub { color: #94A3B8; font-size: 15px; max-width: 640px; margin: 0 auto 30px; }
+  .hero-back { display:inline-flex; align-items:center; gap:7px; margin-top:26px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#0F172A; background:#93C5FD; padding:8px 16px; border-radius:20px; text-decoration:none; transition:filter .2s; }
+  .hero-back:hover { filter:brightness(1.06); }
+
+  /* READ ORDER STRIP */
+  .funnel-wrap { max-width: 940px; margin: 0 auto; }
+  .funnel-strip { display: flex; justify-content: center; gap: 0; }
+  .funnel-seg { flex:1; position:relative; padding:12px 10px 12px 24px; cursor:pointer; transition:filter .2s; text-align:left; border:none; background:none; color:inherit; }
+  .funnel-seg:first-child { padding-left:16px; border-radius:8px 0 0 8px; }
+  .funnel-seg:last-child  { border-radius:0 8px 8px 0; }
+  .funnel-seg:hover { filter:brightness(1.08); }
+  .funnel-seg .seg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.75; margin-bottom:2px; }
+  .funnel-seg .seg-name  { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; line-height:1.2; }
+  .funnel-seg::after { content:''; position:absolute; right:-14px; top:0; width:0; height:0; border-top:23px solid transparent; border-bottom:23px solid transparent; z-index:2; }
+  .seg-1 { background:var(--pixel);   color:#fff; } .seg-1::after { border-left:14px solid var(--pixel); }
+  .seg-2 { background:var(--tofu);    color:#fff; } .seg-2::after { border-left:14px solid var(--tofu); }
+  .seg-3 { background:var(--lm);      color:#fff; } .seg-3::after { border-left:14px solid var(--lm); }
+  .seg-4 { background:var(--prosp);   color:#fff; } .seg-4::after { border-left:14px solid var(--prosp); }
+  .seg-5 { background:var(--retarg);  color:#fff; } .seg-5::after { border-left:14px solid var(--retarg); }
+  .seg-6 { background:var(--win);     color:#fff; }
+
+  /* NAV */
+  .tabs-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
+  .tabs-nav::-webkit-scrollbar { display:none; }
+  .tab-btn { flex:0 0 auto; padding:12px 16px; border:none; border-bottom:3px solid transparent; background:none; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); cursor:pointer; white-space:nowrap; transition:color .2s,border-color .2s; display:flex; align-items:center; gap:6px; }
+  .tab-btn .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .tab-btn.active { color:var(--ink); }
+  .tab-btn[data-tab="overview"].active { border-color:var(--ink2);   color:var(--ink); }
+  .tab-btn[data-tab="preset"].active   { border-color:var(--tofu);   color:var(--tofu-dark); }
+  .tab-btn[data-tab="metrics"].active  { border-color:var(--lm);     color:var(--lm-dark); }
+  .tab-btn[data-tab="build"].active    { border-color:var(--prosp);  color:var(--prosp-dark); }
+  .tab-btn[data-tab="reading"].active  { border-color:var(--win);    color:var(--win-dark); }
+  .tab-divider { width:1px; background:var(--border); margin:8px 0; flex-shrink:0; }
+  .nav-count { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--ink3); background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2px 9px; margin-left:4px; font-variant-numeric:tabular-nums; }
+  .nav-count.is-complete { color:#fff; background:var(--prosp); border-color:var(--prosp); }
+
+  /* MAIN */
+  .main { max-width:1100px; margin:0 auto; padding:36px 24px 80px; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+  .h2   { font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; margin-bottom:9px; }
+  .lead { font-size:14px; color:var(--ink2); line-height:1.7; margin-bottom:26px; max-width:720px; }
+  .sec { font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; margin:32px 0 16px; color:var(--ink); border-bottom:2px solid var(--border); padding-bottom:8px; }
+
+  /* PAGE HEADER BLOCK */
+  .campaign-header { display:flex; align-items:flex-start; gap:18px; margin-bottom:28px; padding:24px 28px; border-radius:var(--r-lg); border:1px solid; }
+  .campaign-header .badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:5px 10px; border-radius:4px; flex-shrink:0; margin-top:3px; color:#fff; }
+  .campaign-header h2 { font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700; margin-bottom:6px; line-height:1.2; }
+  .campaign-header p { font-size:14px; color:var(--ink2); max-width:700px; }
+  .header-tofu  { background:var(--tofu-bg);  border-color:var(--tofu-mid); }
+  .header-lm    { background:var(--lm-bg);    border-color:var(--lm-mid); }
+  .header-prosp { background:var(--prosp-bg); border-color:var(--prosp-mid); }
+  .header-win   { background:var(--win-bg);   border-color:var(--win-mid); }
+  .header-pixel { background:var(--pixel-bg); border-color:var(--pixel-mid); }
+
+  /* CARDS + GRIDS */
+  .grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-bottom:20px; }
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-bottom:20px; }
+  .card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 22px; }
+  .card-title { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .card-title::before { content:''; display:inline-block; width:3px; height:13px; border-radius:2px; flex-shrink:0; background:var(--ink3); }
+  .tofu  .card-title::before { background:var(--tofu); }
+  .lm    .card-title::before { background:var(--lm); }
+  .prosp .card-title::before { background:var(--prosp); }
+  .win   .card-title::before { background:var(--win); }
+  .pixel .card-title::before { background:var(--pixel); }
+
+  /* LIST */
+  .info-list { list-style:none; }
+  .info-list li { padding:7px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--ink2); display:flex; align-items:flex-start; gap:7px; }
+  .info-list li:last-child { border-bottom:none; }
+  .info-list li::before { content:'\2192'; font-size:11px; color:var(--ink3); flex-shrink:0; margin-top:2px; }
+
+  /* CALLOUT */
+  .callout { border-radius:var(--r-md); padding:14px 18px; font-size:13px; margin-bottom:14px; border-left:3px solid; }
+  .callout.slate  { background:var(--pixel-bg); border-color:var(--pixel);   color:var(--pixel-dark); }
+  .callout.blue   { background:#EFF6FF;         border-color:var(--tofu);    color:#1E3A8A; }
+  .callout.cyan   { background:#ECFEFF;         border-color:var(--lm);      color:#164E63; }
+  .callout.green  { background:#ECFDF5;         border-color:var(--prosp);   color:#064E3B; }
+  .callout.amber  { background:#FFFBEB;         border-color:var(--retarg);  color:#78350F; }
+  .callout.teal   { background:var(--win-bg);   border-color:var(--win);     color:var(--win-dark); }
+  .callout.red    { background:#FEF2F2;         border-color:#EF4444;        color:#991B1B; }
+
+  /* OVERVIEW CARDS */
+  .ov-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:28px; }
+  .ov-card { border-radius:var(--r-lg); padding:18px; border:1px solid; cursor:pointer; transition:transform .15s,box-shadow .15s; }
+  .ov-card:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.08); }
+  .ov-tag  { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.7; display:block; margin-bottom:4px; }
+  .ov-name { font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; line-height:1.2; display:block; margin-bottom:5px; }
+  .ov-desc { font-size:12px; line-height:1.5; opacity:.8; }
+  .ov-tofu  { background:var(--tofu-bg);  border-color:var(--tofu-mid);  color:var(--tofu-dark); }
+  .ov-lm    { background:var(--lm-bg);    border-color:var(--lm-mid);    color:var(--lm-dark); }
+  .ov-prosp { background:var(--prosp-bg); border-color:var(--prosp-mid); color:var(--prosp-dark); }
+  .ov-win   { background:var(--win-bg);   border-color:var(--win-mid);   color:var(--win-dark); }
+
+  /* CODE + TABLES */
+  code, .mono { font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:.86em; background:var(--surface); border:1px solid var(--border); color:var(--ink2); padding:.1em .38em; border-radius:4px; }
+  .formula { font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:clamp(11px,2vw,14px); font-weight:600; background:var(--pixel-bg); border:1px solid var(--pixel-mid); color:var(--pixel-dark); padding:14px 17px; border-radius:var(--r-md); margin:12px 0 16px; overflow-x:auto; white-space:nowrap; }
+  .tbl-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:var(--r-md); margin:12px 0 20px; background:var(--white); }
+  table.tbl { border-collapse:collapse; width:100%; font-size:13px; }
+  table.tbl th, table.tbl td { padding:9px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; color:var(--ink2); }
+  table.tbl th { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); background:var(--surface); white-space:nowrap; }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl td code { white-space:nowrap; }
+  table.tbl td.num { font-variant-numeric:tabular-nums; color:var(--ink3); width:34px; }
+  table.tbl td.colname { color:var(--ink); font-weight:600; white-space:nowrap; }
+  .sub { color:var(--ink3); font-size:12px; }
+
+  /* TAGS */
+  .tag { display:inline-block; font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:3px; vertical-align:middle; margin-left:6px; }
+  .tag-add  { background:#D1FAE5; color:#065F46; }
+  .tag-move { background:#DBEAFE; color:#1E40AF; }
+  .tag-out  { background:#FEE2E2; color:#991B1B; }
+  .tag-fix  { background:#FEF3C7; color:#92400E; }
+  .tag-cust { background:#F5F3FF; color:#4C1D95; }
+
+  /* BLOCK HEADER inside preset tab */
+  .blk { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:18px 22px 6px; margin-bottom:16px; }
+  .blk-head { display:flex; align-items:center; gap:12px; margin-bottom:4px; }
+  .blk-num { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:#fff; flex-shrink:0; }
+  .blk h4 { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; }
+  .blk-q { font-size:13px; color:var(--ink3); margin:0 0 8px 38px; }
+  .b1 .blk-num { background:var(--pixel); } .b2 .blk-num { background:var(--tofu); }
+  .b3 .blk-num { background:var(--lm); }    .b4 .blk-num { background:var(--nurture); }
+  .b5 .blk-num { background:var(--prosp); } .b6 .blk-num { background:var(--retarg); }
+  .b7 .blk-num { background:var(--win); }
+
+  /* CHECKLIST */
+  .ck { --ck-accent:var(--prosp); background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; margin-bottom:16px; }
+  .ck-head { display:flex; align-items:center; gap:12px; padding:16px 22px; cursor:pointer; user-select:none; }
+  .ck-head:hover { background:var(--surface); }
+  .ck-badge { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:4px; flex-shrink:0; color:#fff; background:var(--ck-accent); }
+  .ck-title { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; flex:1; }
+  .ck-count { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:var(--ink3); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .ck-count b { color:var(--ck-accent); }
+  .ck-toggle { font-size:16px; color:var(--ink3); transition:transform .2s; flex-shrink:0; }
+  .ck.open .ck-toggle { transform:rotate(180deg); }
+  .ck-body { display:none; padding:0 22px 26px; }
+  .ck.open .ck-body { display:block; }
+  .ck-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; font-size:12px; color:var(--ink3); border-top:1px solid var(--border); padding-top:14px; }
+  .ck-meta b { color:var(--ink2); font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-right:4px; }
+  .ck-reset { margin-left:auto; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; color:var(--ink3); background:var(--white); border:1px solid var(--border); border-radius:20px; padding:5px 13px; cursor:pointer; }
+  .ck-reset:hover { color:var(--ink); border-color:var(--ink3); }
+  .ck-phase { display:grid; grid-template-columns:34px 1fr; gap:0 14px; padding-top:24px; }
+  .ck-num { width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:#fff; background:var(--ck-accent); }
+  .ck-phase h4 { font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:var(--ink); margin-bottom:5px; }
+  .ck-lead { font-size:13px; color:var(--ink3); margin-bottom:10px; max-width:680px; }
+  .ck-where { display:inline-block; font-family:'SFMono-Regular',Consolas,Menlo,monospace; font-size:11px; color:var(--ink3); background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm); padding:5px 10px; margin-bottom:10px; }
+  ul.ck-list { list-style:none; display:flex; flex-direction:column; gap:1px; }
+  ul.ck-list li { display:grid; grid-template-columns:18px 1fr; gap:10px; padding:7px 8px; border-radius:var(--r-sm); align-items:start; }
+  ul.ck-list li:hover { background:var(--surface); }
+  ul.ck-list input[type=checkbox] { appearance:none; -webkit-appearance:none; width:16px; height:16px; margin:3px 0 0; border:1.5px solid #CBD5E1; border-radius:4px; background:var(--white); cursor:pointer; display:grid; place-content:center; transition:background .12s,border-color .12s; }
+  ul.ck-list input[type=checkbox]:hover { border-color:var(--ck-accent); }
+  ul.ck-list input[type=checkbox]::after { content:''; width:8px; height:8px; transform:scale(0); background:var(--white); transition:transform .12s ease; clip-path:polygon(14% 46%,0 60%,39% 100%,100% 22%,86% 8%,39% 70%); }
+  ul.ck-list input[type=checkbox]:checked { background:var(--ck-accent); border-color:var(--ck-accent); }
+  ul.ck-list input[type=checkbox]:checked::after { transform:scale(1); }
+  ul.ck-list label { font-size:13.5px; color:var(--ink2); cursor:pointer; }
+  ul.ck-list li:has(input:checked) label { color:var(--ink3); text-decoration:line-through; text-decoration-color:#CBD5E1; }
+  ul.ck-list .why { display:block; font-size:12.5px; color:var(--ink3); margin-top:3px; }
+  ul.ck-list .set { color:var(--ink); font-weight:600; }
+  .ck-phase .callout, .ck-phase .tbl-wrap, .ck-phase .formula { margin-top:14px; }
+  .ck.is-complete { border-color:var(--ck-accent); }
+  .ck-flag { display:none; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#fff; background:var(--ck-accent); padding:3px 8px; border-radius:4px; flex-shrink:0; }
+  .ck.is-complete .ck-flag { display:inline-block; }
+  .ck-done { display:none; align-items:center; gap:10px; margin-top:24px; padding:14px 18px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--ck-accent); color:var(--ink2); font-size:13.5px; }
+  .ck.is-complete .ck-done { display:flex; }
+  .ck-done strong { color:var(--ink); }
+
+  .standalone-foot { max-width:1100px; margin:0 auto; padding:0 24px 64px; font-size:13px; color:var(--ink3); }
+
+  @media (max-width:600px) {
+    .hero { padding:36px 18px 30px; }
+    .funnel-strip { flex-wrap:wrap; }
+    .funnel-seg::after { display:none; }
+    .main { padding:20px 14px 50px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="hero-label">Persuasion Experience &middot; Meta Advertising</p>
+  <h1>Custom <span>Columns</span> Config</h1>
+  <p class="hero-sub">The PX reporting view for Ads Manager. One saved preset that reads the funnel left to right, so the column you stop at is the thing that is actually broken. Build it once per ad account, then never argue about what to look at again.</p>
+  <div class="funnel-wrap">
+    <div class="funnel-strip">
+      <button class="funnel-seg seg-1" onclick="switchTab('preset')"><span class="seg-label">Block 1</span><span class="seg-name">Spend</span></button>
+      <button class="funnel-seg seg-2" onclick="switchTab('preset')"><span class="seg-label">Block 2</span><span class="seg-name">Outcome</span></button>
+      <button class="funnel-seg seg-3" onclick="switchTab('preset')"><span class="seg-label">Block 3</span><span class="seg-name">Funnel rates</span></button>
+      <button class="funnel-seg seg-4" onclick="switchTab('preset')"><span class="seg-label">Block 4</span><span class="seg-name">Creative</span></button>
+      <button class="funnel-seg seg-5" onclick="switchTab('preset')"><span class="seg-label">Block 5</span><span class="seg-name">Traffic</span></button>
+      <button class="funnel-seg seg-6" onclick="switchTab('preset')"><span class="seg-label">Block 6</span><span class="seg-name">Delivery</span></button>
+    </div>
+  </div>
+  <a class="hero-back" href="px-meta-scaling.html">&#8592; The PX Meta Scaling System</a>
+</div>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')"><span class="dot" style="background:#94A3B8"></span>Overview</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="preset"  onclick="switchTab('preset')"><span class="dot" style="background:var(--tofu)"></span>The Preset</button>
+  <button class="tab-btn" data-tab="metrics" onclick="switchTab('metrics')"><span class="dot" style="background:var(--lm)"></span>Custom Metrics</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="build"   onclick="switchTab('build')"><span class="dot" style="background:var(--prosp)"></span>Build It<span class="nav-count" data-nav-count="columns-build"></span></button>
+  <button class="tab-btn" data-tab="reading" onclick="switchTab('reading')"><span class="dot" style="background:var(--win)"></span>Reading It</button>
+</nav>
+
+<div class="main">
+
+<!-- ===================== OVERVIEW ===================== -->
+<div id="tab-overview" class="tab-panel active">
+  <p class="h2">One view, read in one direction</p>
+  <p class="lead">Ads Manager ships with columns built for reporting, not for deciding. This preset replaces them with a fixed order that follows the funnel: what it cost, what it produced, where people dropped, and why. You read left to right and stop at the first number that is broken. That number owns the problem, and everything to the right of it is a symptom.</p>
+
+  <div class="ov-grid">
+    <div class="ov-card ov-tofu"  onclick="switchTab('preset')"><span class="ov-tag">Reference</span><span class="ov-name">The Preset</span><span class="ov-desc">Every column in order, grouped into six blocks, with the question each one answers.</span></div>
+    <div class="ov-card ov-lm"    onclick="switchTab('metrics')"><span class="ov-tag">Formulas</span><span class="ov-name">Custom Metrics</span><span class="ov-desc">The seven PX metrics that do not exist in Ads Manager, and the exact formula for each.</span></div>
+    <div class="ov-card ov-prosp" onclick="switchTab('build')"><span class="ov-tag">Runbook</span><span class="ov-name">Build It</span><span class="ov-desc">Interactive checklist to stand the preset up in a new ad account, in order, without guessing.</span></div>
+    <div class="ov-card ov-win"   onclick="switchTab('reading')"><span class="ov-tag">Decisions</span><span class="ov-name">Reading It</span><span class="ov-desc">The diagnostic ladder. Which column to trust first, and what each break actually means.</span></div>
+  </div>
+
+  <div class="sec">Two presets, not one</div>
+  <p class="lead">The full diagnostic set is close to thirty columns wide. That is the right amount of detail for a weekly review and the wrong amount for a daily pacing check, where the horizontal scroll costs more than the data is worth. Save two.</p>
+
+  <div class="grid-2">
+    <div class="card prosp">
+      <div class="card-title">PX &#124; SCAN</div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:10px;">Daily. Eleven columns, no horizontal scroll on a laptop. Answers one question: is anything on fire.</p>
+      <ul class="info-list">
+        <li>Off/On, Name, Budget, Amount spent</li>
+        <li>Results, Cost per result, Cost per appointment</li>
+        <li>Lead &rarr; Schedule %, Unique outbound CTR</li>
+        <li>CPM, Frequency</li>
+      </ul>
+    </div>
+    <div class="card tofu">
+      <div class="card-title">PX &#124; DIAG</div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:10px;">Weekly, and any time SCAN shows a problem. The full set. Answers the second question: where exactly it broke.</p>
+      <ul class="info-list">
+        <li>Everything in SCAN, plus the full funnel rate block</li>
+        <li>Creative diagnostics, thumbstop and hold</li>
+        <li>The whole click and landing page chain</li>
+        <li>Cost per click on both denominators</li>
+      </ul>
+    </div>
+  </div>
+  <p class="lead">Ecommerce accounts get a third, <code>PX | ECOM</code>, which is DIAG with the lead block swapped for Purchases, Cost per purchase, Purchase ROAS and AOV. Do not carry purchase columns on a lead generation account.</p>
+
+  <div class="sec">Recommended changes to the current config</div>
+  <p class="lead">These are the adjustments to the config as it runs today. Each one either fixes something that reads wrong or removes something that costs screen width without paying for it.</p>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Change</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="colname">Format Thumbstop as a percentage <span class="tag tag-fix">Fix</span></td><td>It currently renders as a bare number, so a 24% hook rate shows as <code>24.03</code> sitting next to Hold at <code>16.13%</code>. Two rates, two formats, in adjacent columns. Set it to Percentage with two decimals in the metric builder.</td></tr>
+        <tr><td class="colname">Add Unique link clicks <span class="tag tag-add">Add</span></td><td>It is the denominator of both Click &rarr; Lead % and Click &rarr; Schedule %, and it is not on screen. Today those two ratios cannot be checked by hand against any visible column, which is how a broken custom metric survives for months.</td></tr>
+        <tr><td class="colname">Add Frequency, next to CPM <span class="tag tag-add">Add</span></td><td>A rising CPM has two very different causes: auction pressure or a burnt audience. Frequency is what tells them apart, and this is a scaling playbook. Fatigue is the failure mode that shows up first when budget goes up.</td></tr>
+        <tr><td class="colname">Add Leads and Cost per lead as fixed columns <span class="tag tag-add">Add</span></td><td>Results is relative to each campaign's optimization event, so one row reads Website Lead, the next reads Website Schedule. A mixed list cannot be sorted or summed on it honestly. Fixed event columns make rows comparable.</td></tr>
+        <tr><td class="colname">Put Thumbstop before Hold <span class="tag tag-move">Move</span></td><td>They are sequential moments in the same video, three seconds then the hold. Reading them out of order breaks the ladder, because a weak hold only means something once the thumbstop is healthy.</td></tr>
+        <tr><td class="colname">Move Purchases and Cost per purchase out <span class="tag tag-out">Out</span></td><td>On a lead generation account both columns are empty on every row and sit at the far right, past two screens of scroll. They belong in <code>PX | ECOM</code>.</td></tr>
+        <tr><td class="colname">Split into SCAN and DIAG <span class="tag tag-add">Add</span></td><td>A daily check that requires horizontal scrolling does not get done daily. Splitting the preset is the difference between a system and a screenshot.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout amber"><strong>Do not change a custom metric's formula quietly.</strong> Every historical read of that column was made on the old definition. If a formula has to change, change it in every ad account on the same day and note the date, otherwise a month over month comparison silently compares two different metrics.</div>
+
+  <div class="sec">Scope</div>
+  <div class="grid-3">
+    <div class="card"><div class="card-title">Applies to</div><ul class="info-list"><li>Every PX lead generation ad account</li><li>Campaign, ad set and ad level</li><li>Any buyer, any client</li></ul></div>
+    <div class="card"><div class="card-title">Owned by</div><ul class="info-list"><li>The buyer on the account</li><li>Rebuilt from this page, not copied by eye</li><li>Checked on account handover</li></ul></div>
+    <div class="card"><div class="card-title">Rebuild when</div><ul class="info-list"><li>A new ad account is opened</li><li>The preset is missing from the dropdown</li><li>A pixel event is renamed</li></ul></div>
+  </div>
+</div>
+
+<!-- ===================== THE PRESET ===================== -->
+<div id="tab-preset" class="tab-panel">
+  <div class="campaign-header header-tofu">
+    <span class="badge" style="background:var(--tofu)">Reference</span>
+    <div>
+      <h2>PX &#124; DIAG, column by column</h2>
+      <p>Twenty nine columns in six blocks. The order is the point: each block is a step further down the funnel, so a problem announces itself by the block it appears in. Build them in this order and do not resort the view by anything other than Amount spent.</p>
+    </div>
+  </div>
+
+  <div class="blk b1">
+    <div class="blk-head"><span class="blk-num">1</span><h4>Spend</h4></div>
+    <p class="blk-q">Is this thing running, and is it running at the size we told it to?</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Column</th><th>What it answers</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td class="colname">Off / On</td><td>Delivery state. First thing to check when a row shows no data at all.</td></tr>
+          <tr><td class="num">2</td><td class="colname">Name</td><td>Campaign, ad set or ad name. The naming standard does the work here, so the name alone tells you the pack, the funnel stage and the launch date.</td></tr>
+          <tr><td class="num">3</td><td class="colname">Budget</td><td>What it was told to spend.</td></tr>
+          <tr><td class="num">4</td><td class="colname">Amount spent</td><td>What it actually spent. A large gap against budget is a delivery problem, and no metric to the right of it can be trusted until that is fixed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk b2">
+    <div class="blk-head"><span class="blk-num">2</span><h4>Outcome</h4></div>
+    <p class="blk-q">What did the money buy, and what did each one cost?</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Column</th><th>What it answers</th></tr></thead>
+        <tbody>
+          <tr><td class="num">5</td><td class="colname">Results</td><td>The campaign's own optimization event. Useful per row, not comparable across rows that optimise for different events.</td></tr>
+          <tr><td class="num">6</td><td class="colname">Cost per result</td><td>The headline efficiency number, on the campaign's own terms.</td></tr>
+          <tr><td class="num">7</td><td class="colname">Leads <span class="tag tag-add">Add</span></td><td>The fixed lead event, the same definition on every row. This is the column you sort on.</td></tr>
+          <tr><td class="num">8</td><td class="colname">Cost per lead <span class="tag tag-add">Add</span></td><td>Comparable cost per lead across the whole account, regardless of what each campaign optimises for.</td></tr>
+          <tr><td class="num">9</td><td class="colname">Appointments scheduled</td><td>The event that actually pays. Leads are inventory, appointments are revenue.</td></tr>
+          <tr><td class="num">10</td><td class="colname">Cost per appointment</td><td>The number the client cares about. Everything else on this page exists to explain this one.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk b3">
+    <div class="blk-head"><span class="blk-num">3</span><h4>Funnel rates</h4></div>
+    <p class="blk-q">Between the click and the booked call, which step is leaking?</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Column</th><th>What it answers</th></tr></thead>
+        <tbody>
+          <tr><td class="num">11</td><td class="colname">LP CONV % <span class="tag tag-cust">Custom</span></td><td>Of the people who reached the page, how many converted. This is the landing page's score, not the ad's.</td></tr>
+          <tr><td class="num">12</td><td class="colname">Click &rarr; Lead % <span class="tag tag-cust">Custom</span></td><td>Click to lead, end to end. Falls when either the ad promises the wrong thing or the page fails to deliver it.</td></tr>
+          <tr><td class="num">13</td><td class="colname">Click &rarr; Schedule % <span class="tag tag-cust">Custom</span></td><td>Click all the way to a booked appointment. The truest single measure of an ad set.</td></tr>
+          <tr><td class="num">14</td><td class="colname">Lead &rarr; Schedule % <span class="tag tag-cust">Custom</span></td><td>Lead quality. Two ad sets at the same cost per lead can differ by half on this, and it is the difference between a good account and a bad one.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk b4">
+    <div class="blk-head"><span class="blk-num">4</span><h4>Creative</h4></div>
+    <p class="blk-q">Did the creative stop the scroll, and did it hold?</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Column</th><th>What it answers</th></tr></thead>
+        <tbody>
+          <tr><td class="num">15</td><td class="colname">Thumbstop (hook) <span class="tag tag-cust">Custom</span> <span class="tag tag-move">Move</span></td><td>Share of impressions that produced a three second play. This is the first three seconds being graded, nothing else.</td></tr>
+          <tr><td class="num">16</td><td class="colname">Hold <span class="tag tag-cust">Custom</span></td><td>Of the people the hook stopped, how many stayed to a ThruPlay. Read it only after the thumbstop, because holding a tiny audience is not a win.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout blue" style="margin-bottom:16px;">These two split creative failure cleanly. A weak thumbstop is an opening problem, the first frame and the first line. A strong thumbstop with a weak hold is a body problem, the ad earns attention and then loses it.</div>
+  </div>
+
+  <div class="blk b5">
+    <div class="blk-head"><span class="blk-num">5</span><h4>Traffic</h4></div>
+    <p class="blk-q">Did they click, did the click leave Meta, and did the page load?</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Column</th><th>What it answers</th></tr></thead>
+        <tbody>
+          <tr><td class="num">17</td><td class="colname">Unique clicks (all)</td><td>Every click, including likes, comments, profile taps and See more. Not a traffic number. Its job is to be compared against the next column.</td></tr>
+          <tr><td class="num">18</td><td class="colname">Unique outbound clicks</td><td>People who actually left Meta. This is the real traffic number.</td></tr>
+          <tr><td class="num">19</td><td class="colname">Unique link clicks <span class="tag tag-add">Add</span></td><td>The denominator behind Click &rarr; Lead % and Click &rarr; Schedule %. On screen so the ratios can be checked by hand.</td></tr>
+          <tr><td class="num">20</td><td class="colname">Link clicks</td><td>Total, not unique. The denominator of LPVR.</td></tr>
+          <tr><td class="num">21</td><td class="colname">Landing page views</td><td>Pages that actually loaded and fired the pixel.</td></tr>
+          <tr><td class="num">22</td><td class="colname">LPVR <span class="tag tag-cust">Custom</span></td><td>Landing page views over link clicks. The clearest single signal of a slow page, a broken link or a redirect eating traffic.</td></tr>
+          <tr><td class="num">23</td><td class="colname">Unique CTR (all)</td><td>Click rate on everything, measured against reach.</td></tr>
+          <tr><td class="num">24</td><td class="colname">Unique outbound CTR</td><td>Click rate that counts. Read this one, not the one above it.</td></tr>
+          <tr><td class="num">25</td><td class="colname">Cost per unique click (all)</td><td>What a click of any kind costs.</td></tr>
+          <tr><td class="num">26</td><td class="colname">Cost per unique outbound click</td><td>What a visitor costs. The gap between this and the previous column is the price of engagement that never leaves the platform.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout slate" style="margin-bottom:16px;"><strong>The all versus outbound gap is a diagnostic, not noise.</strong> A wide gap means people are engaging with the post instead of following it. That is usually a call to action problem or a caption that answers the question the landing page was supposed to answer.</div>
+  </div>
+
+  <div class="blk b6">
+    <div class="blk-head"><span class="blk-num">6</span><h4>Delivery</h4></div>
+    <p class="blk-q">What is the auction charging, and is the audience wearing out?</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Column</th><th>What it answers</th></tr></thead>
+        <tbody>
+          <tr><td class="num">27</td><td class="colname">CPM</td><td>Cost of a thousand impressions. Moves with audience, placement, creative quality score and seasonality.</td></tr>
+          <tr><td class="num">28</td><td class="colname">Frequency <span class="tag tag-add">Add</span></td><td>Average impressions per person. Rising alongside CPM means the audience is exhausted, not that the auction got harder.</td></tr>
+          <tr><td class="num">29</td><td class="colname">Impressions</td><td>Volume. Mostly here as a sanity check on whether any rate above is readable yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== CUSTOM METRICS ===================== -->
+<div id="tab-metrics" class="tab-panel">
+  <div class="campaign-header header-lm">
+    <span class="badge" style="background:var(--lm)">Formulas</span>
+    <div>
+      <h2>The seven PX custom metrics</h2>
+      <p>None of these ship with Ads Manager. Build them once per ad account in the custom metric builder, with these exact names and formats, so a column means the same thing on every account PX runs.</p>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Name</th><th>Formula</th><th>Format</th><th>Reads as</th></tr></thead>
+      <tbody>
+        <tr><td class="colname">LP CONV %</td><td><code>Leads / Landing page views</code></td><td>Percentage, 2dp</td><td>The landing page's conversion rate.</td></tr>
+        <tr><td class="colname">Click &rarr; Lead %</td><td><code>Leads / Unique link clicks</code></td><td>Percentage, 2dp</td><td>Click to lead, ad and page combined.</td></tr>
+        <tr><td class="colname">Click &rarr; Schedule %</td><td><code>Appointments scheduled / Unique link clicks</code></td><td>Percentage, 2dp</td><td>Click to booked call, end to end.</td></tr>
+        <tr><td class="colname">Lead &rarr; Schedule %</td><td><code>Appointments scheduled / Leads</code></td><td>Percentage, 2dp</td><td>Lead quality, in one number.</td></tr>
+        <tr><td class="colname">LPVR</td><td><code>Landing page views / Link clicks</code></td><td>Percentage, 2dp</td><td>How much traffic survives the trip to the page.</td></tr>
+        <tr><td class="colname">Thumbstop (hook)</td><td><code>3-second video plays / Impressions</code></td><td>Percentage, 2dp <span class="tag tag-fix">Fix</span></td><td>How often the first three seconds stopped the scroll.</td></tr>
+        <tr><td class="colname">Hold</td><td><code>ThruPlays / 3-second video plays</code></td><td>Percentage, 2dp</td><td>Retention among the people the hook already stopped.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Three things about these formulas</div>
+
+  <div class="grid-2">
+    <div class="card lm">
+      <div class="card-title">Hold is not measured on impressions</div>
+      <p style="font-size:13px;color:var(--ink2);">Its denominator is three second plays, not impressions, so Hold can legitimately be higher than Thumbstop on the same row. An ad that stops 3% of people and holds 29% of them is a niche hook with a strong body, not a broken metric. If Hold were measured on impressions it could never exceed Thumbstop, and the two columns would say almost the same thing.</p>
+    </div>
+    <div class="card lm">
+      <div class="card-title">Two denominators, on purpose</div>
+      <p style="font-size:13px;color:var(--ink2);">The click ratios use unique link clicks, one per person. LPVR uses total link clicks, because a landing page view is also counted in total. Mixing the two is what produces impossible rates, so keep each formula on the denominator listed above and do not swap one in because it was closer to hand in the builder.</p>
+    </div>
+  </div>
+
+  <div class="callout amber"><strong>LPVR above 100% is expected on small numbers and is not a bug.</strong> Landing page views and link clicks are counted independently, and a single click can produce more than one page view through a refresh or a back navigation. On a row with 10 link clicks that shows as 110%. The fix is a volume gate, not a formula change: do not read LPVR under 100 link clicks.</div>
+
+  <div class="sec">Verifying a metric is actually right</div>
+  <p class="lead">A custom metric built on the wrong event keeps returning plausible numbers forever. Check it by hand once, on a row with real volume, before trusting it.</p>
+  <div class="formula">Lead &rarr; Schedule %  =  Appointments &divide; Results     &rarr;  14 &divide; 18  =  77.78%</div>
+  <p class="lead">If the column and the arithmetic disagree, the metric is pointed at the wrong event, which is the usual after effect of a pixel event rename. Rebuild it, do not adjust around it.</p>
+
+  <div class="callout cyan"><strong>Check the Custom tab before creating anything.</strong> If a metric with the same name already exists in the account, use it. Two metrics called LP CONV % with different formulas is worse than having none, because the column header stops telling you which one you are reading.</div>
+</div>
+
+<!-- ===================== BUILD IT ===================== -->
+<div id="tab-build" class="tab-panel">
+  <div class="campaign-header header-prosp">
+    <span class="badge" style="background:var(--prosp)">Runbook</span>
+    <div>
+      <h2>Standing the preset up in an ad account</h2>
+      <p>Roughly twenty minutes the first time, five after that. Work top to bottom. Progress saves in this browser, so you can stop and come back.</p>
+    </div>
+  </div>
+
+  <div class="ck open" data-ck-key="columns-build">
+    <div class="ck-head" onclick="toggleCk(this)">
+      <span class="ck-badge">Setup</span>
+      <span class="ck-title">Build the PX columns preset</span>
+      <span class="ck-flag">Done</span>
+      <span class="ck-count"><b data-ck-done>0</b>/<span data-ck-total>0</span></span>
+      <span class="ck-toggle">&#9662;</span>
+    </div>
+    <div class="ck-body">
+      <div class="ck-meta">
+        <span><b>Where</b> Ads Manager, Campaigns view</span>
+        <span><b>Time</b> ~20 min</span>
+        <span><b>Repeat</b> Once per ad account</span>
+        <button class="ck-reset" data-ck-reset>Reset</button>
+      </div>
+
+      <div class="ck-phase">
+        <span class="ck-num">1</span>
+        <div>
+          <h4>Open the builder</h4>
+          <p class="ck-lead">Presets are saved per ad account, so start inside the account you are building for.</p>
+          <span class="ck-where">Ads Manager &rarr; Columns &rarr; Customize columns</span>
+          <ul class="ck-list">
+            <li><input type="checkbox" id="cb-1-1"><label for="cb-1-1">Open the correct ad account and switch to the <span class="set">Campaigns</span> tab.<span class="why">Build at campaign level. The saved preset carries to the ad set and ad tabs on its own.</span></label></li>
+            <li><input type="checkbox" id="cb-1-2"><label for="cb-1-2">Open the <span class="set">Columns</span> dropdown and check whether <span class="set">PX | DIAG</span> already exists.<span class="why">If it does, load it and skip to phase 5 to verify it. Do not build a second copy under a slightly different name.</span></label></li>
+            <li><input type="checkbox" id="cb-1-3"><label for="cb-1-3">Click <span class="set">Customize columns</span>.</label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ck-phase">
+        <span class="ck-num">2</span>
+        <div>
+          <h4>Create the seven custom metrics</h4>
+          <p class="ck-lead">These have to exist before they can be added as columns. Formulas are on the Custom Metrics tab.</p>
+          <span class="ck-where">Customize columns &rarr; Custom &rarr; Create custom metric</span>
+          <ul class="ck-list">
+            <li><input type="checkbox" id="cb-2-1"><label for="cb-2-1">Open the <span class="set">Custom</span> tab and list what already exists in this account.<span class="why">Reuse anything already there with the right formula. Duplicates are the main way these definitions drift between accounts.</span></label></li>
+            <li><input type="checkbox" id="cb-2-2"><label for="cb-2-2">Create <span class="set">LP CONV %</span>, <span class="set">Click &rarr; Lead %</span>, <span class="set">Click &rarr; Schedule %</span> and <span class="set">Lead &rarr; Schedule %</span>.<span class="why">Name them exactly as written. The names are the column headers and they are read at a glance.</span></label></li>
+            <li><input type="checkbox" id="cb-2-3"><label for="cb-2-3">Create <span class="set">LPVR</span>, <span class="set">Thumbstop (hook)</span> and <span class="set">Hold</span>.</label></li>
+            <li><input type="checkbox" id="cb-2-4"><label for="cb-2-4">Set every one of the seven to <span class="set">Percentage</span> format with two decimals.<span class="why">This is where Thumbstop usually goes wrong. If it shows as 24.03 instead of 24.03%, the format was left as a number.</span></label></li>
+            <li><input type="checkbox" id="cb-2-5"><label for="cb-2-5">Confirm each formula points at the account's live pixel events, not an archived one.<span class="why">After an event rename the old event keeps existing and keeps returning zero, so the metric looks built and reads as a dash.</span></label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ck-phase">
+        <span class="ck-num">3</span>
+        <div>
+          <h4>Add the standard columns in order</h4>
+          <p class="ck-lead">Order is part of the spec. The right hand panel of the builder is where you drag them into place.</p>
+          <span class="ck-where">Customize columns &rarr; search, tick, then drag to reorder</span>
+          <ul class="ck-list">
+            <li><input type="checkbox" id="cb-3-1"><label for="cb-3-1">Turn off every column that is not on the Preset list.<span class="why">Start from empty. Editing down from Meta's default set always leaves something behind.</span></label></li>
+            <li><input type="checkbox" id="cb-3-2"><label for="cb-3-2">Add blocks 1 and 2: budget, spend, results, cost per result, leads, cost per lead, appointments, cost per appointment.</label></li>
+            <li><input type="checkbox" id="cb-3-3"><label for="cb-3-3">Add block 3, the four funnel rate metrics, in funnel order.</label></li>
+            <li><input type="checkbox" id="cb-3-4"><label for="cb-3-4">Add block 4 with <span class="set">Thumbstop before Hold</span>.<span class="why">Three seconds happens before the hold. Reading them in that order is what makes the pair diagnostic.</span></label></li>
+            <li><input type="checkbox" id="cb-3-5"><label for="cb-3-5">Add block 5, including <span class="set">Unique link clicks</span>.<span class="why">It is the denominator of two custom metrics. On screen, the ratios can be checked. Off screen, they cannot.</span></label></li>
+            <li><input type="checkbox" id="cb-3-6"><label for="cb-3-6">Add block 6: CPM, then <span class="set">Frequency</span>, then Impressions.</label></li>
+            <li><input type="checkbox" id="cb-3-7"><label for="cb-3-7">Leave Purchases and Cost per purchase off unless this is an ecommerce account.<span class="why">Empty columns still cost screen width, and they sit at the far right where scrolling is most expensive.</span></label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ck-phase">
+        <span class="ck-num">4</span>
+        <div>
+          <h4>Set attribution, then save</h4>
+          <p class="ck-lead">Attribution belongs to the columns. Set it before saving so it travels with the preset instead of being whatever the last person left it on.</p>
+          <span class="ck-where">Customize columns &rarr; Attribution setting</span>
+          <ul class="ck-list">
+            <li><input type="checkbox" id="cb-4-1"><label for="cb-4-1">Set the attribution window to the account standard, <span class="set">7-day click, 1-day view</span>.<span class="why">Ratios built from metrics on different windows are not comparable, and the mismatch is invisible in the table.</span></label></li>
+            <li><input type="checkbox" id="cb-4-2"><label for="cb-4-2">Tick <span class="set">Save as preset</span> and name it <span class="set">PX | DIAG</span>.<span class="why">Exact name, spaces around the pipe, so it sorts next to the other PX presets in the dropdown.</span></label></li>
+            <li><input type="checkbox" id="cb-4-3"><label for="cb-4-3">Apply, then reopen the builder, cut the list down to the eleven SCAN columns and save that as <span class="set">PX | SCAN</span>.<span class="why">Build DIAG first and trim. Building SCAN from scratch afterwards is how the two presets drift apart.</span></label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ck-phase">
+        <span class="ck-num">5</span>
+        <div>
+          <h4>Verify before you trust it</h4>
+          <p class="ck-lead">Five checks on a campaign with real volume. Do them once now rather than discovering a broken denominator during a client call.</p>
+          <span class="ck-where">Any campaign with 100+ link clicks, last 30 days</span>
+          <ul class="ck-list">
+            <li><input type="checkbox" id="cb-5-1"><label for="cb-5-1">Check <span class="set">Lead &rarr; Schedule %</span> by hand: appointments divided by results should match the column.</label></li>
+            <li><input type="checkbox" id="cb-5-2"><label for="cb-5-2">Check <span class="set">LPVR</span> by hand: landing page views divided by link clicks should match.</label></li>
+            <li><input type="checkbox" id="cb-5-3"><label for="cb-5-3">Confirm <span class="set">Thumbstop</span> displays a percent sign.</label></li>
+            <li><input type="checkbox" id="cb-5-4"><label for="cb-5-4">Confirm no rate reads above 100% on a high volume row.<span class="why">LPVR above 100% on a row with a handful of clicks is expected. On a row with thousands, it is a formula error.</span></label></li>
+            <li><input type="checkbox" id="cb-5-5"><label for="cb-5-5">Switch to the Ads tab and confirm the preset loads there too, with columns in the same order.</label></li>
+          </ul>
+          <div class="callout green">Once this passes, the account is reportable. Any number that looks wrong from here is a campaign problem, not a reporting problem, which is the entire reason for doing this in a fixed order.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== READING IT ===================== -->
+<div id="tab-reading" class="tab-panel">
+  <div class="campaign-header header-win">
+    <span class="badge" style="background:var(--win)">Decisions</span>
+    <div>
+      <h2>The diagnostic ladder</h2>
+      <p>Read left to right and stop at the first rung that is broken. That rung owns the problem. Everything to the right of it is downstream damage, and fixing downstream damage is how a week gets spent changing creative on an account with a broken landing page.</p>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Read</th><th>Question</th><th>If it is broken</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="colname">Amount spent vs Budget</td><td>Is it delivering at all?</td><td>A large shortfall is a delivery problem: audience too small, bid or budget too low, or the ad set is still learning. Fix delivery first, ignore every other column on the row.</td></tr>
+        <tr><td class="num">2</td><td class="colname">Cost per appointment</td><td>Is it inside target?</td><td>If it is, stop reading. A healthy row does not need diagnosing, and looking for a problem in one is the fastest way to break it.</td></tr>
+        <tr><td class="num">3</td><td class="colname">Thumbstop (hook)</td><td>Did it stop the scroll?</td><td>Weak against the account median means the opening fails. That is the first frame and the first line, not the offer and not the audience.</td></tr>
+        <tr><td class="num">4</td><td class="colname">Hold</td><td>Did they stay?</td><td>Good thumbstop with weak hold means the ad earns attention and then loses it. Rework the middle, keep the hook.</td></tr>
+        <tr><td class="num">5</td><td class="colname">Unique outbound CTR</td><td>Did they click through?</td><td>They watched and did not act. Usually a missing or buried call to action, or a caption that satisfies the curiosity the click was supposed to satisfy.</td></tr>
+        <tr><td class="num">6</td><td class="colname">All vs outbound click gap</td><td>Where did the clicks go?</td><td>A wide gap means engagement that never leaves Meta: profile taps, See more, comments. Real interest pointed at the wrong target.</td></tr>
+        <tr><td class="num">7</td><td class="colname">LPVR</td><td>Did the page load?</td><td>Traffic paid for and never delivered. Check page speed, the link itself, redirects, and whether the pixel fires on the page that actually loads.</td></tr>
+        <tr><td class="num">8</td><td class="colname">LP CONV %</td><td>Did the page convert?</td><td>The ad did its job. This is a page and offer problem, and no amount of new creative fixes it.</td></tr>
+        <tr><td class="num">9</td><td class="colname">Lead &rarr; Schedule %</td><td>Were the leads real?</td><td>Volume without quality. Either the targeting is attracting the wrong person, the offer oversells, or the booking step is broken. Check the booking step before blaming the audience.</td></tr>
+        <tr><td class="num">10</td><td class="colname">CPM with Frequency</td><td>What is delivery costing, and why?</td><td>CPM up with frequency up is audience exhaustion, so widen or refresh. CPM up with frequency flat is auction pressure, so that is a bid, a season or a creative quality issue rather than a fatigue one.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Volume gates</div>
+  <p class="lead">Every column in blocks 3 to 6 is a rate, and a rate on a small denominator is noise wearing a percent sign. Do not act on one until the row clears its gate.</p>
+  <div class="grid-3">
+    <div class="card win"><div class="card-title">Creative metrics</div><p style="font-size:13px;color:var(--ink2);">At least <strong>1,000 impressions</strong> before reading Thumbstop or Hold.</p></div>
+    <div class="card win"><div class="card-title">Click and page rates</div><p style="font-size:13px;color:var(--ink2);">At least <strong>100 link clicks</strong> before reading LPVR, LP CONV % or either click ratio.</p></div>
+    <div class="card win"><div class="card-title">Lead quality</div><p style="font-size:13px;color:var(--ink2);">At least <strong>15 leads</strong> before reading Lead &rarr; Schedule %.</p></div>
+  </div>
+
+  <div class="callout teal"><strong>Benchmark against the account, not the industry.</strong> A good CPM in one vertical is a disaster in another, and a hook rate that is weak on cold prospecting can be strong on retargeting. The comparison that means something is this row against the account's own trailing 30 day median at the same funnel stage. Published benchmarks are for conversations with clients, not for decisions.</div>
+
+  <div class="sec">Two habits that make the view worth having</div>
+  <div class="grid-2">
+    <div class="card win">
+      <div class="card-title">Sort on spend, diagnose on rates</div>
+      <p style="font-size:13px;color:var(--ink2);">Always sort by Amount spent. Sorting by cost per result floats rows with two conversions to the top and hides the row quietly spending a third of the budget. Spend tells you what matters, rates tell you what is wrong with it.</p>
+    </div>
+    <div class="card win">
+      <div class="card-title">Change one rung at a time</div>
+      <p style="font-size:13px;color:var(--ink2);">Fix the highest broken rung, then let it run and read again. Changing creative and the page and the audience together produces a result nobody can attribute, and the next person to open the account inherits a mystery.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<p class="standalone-foot">Persuasion Experience &middot; internal reference &middot; part of the PX Meta Scaling System.</p>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+  var panel = document.getElementById('tab-' + id);
+  var btn   = document.querySelector('[data-tab="' + id + '"]');
+  if (panel) panel.classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleCk(head) { head.parentElement.classList.toggle('open'); }
+</script>
+<script>
+// Checklist state: ticks persist per runbook in localStorage.
+document.querySelectorAll('.ck[data-ck-key]').forEach(function (wrap) {
+  var key = wrap.getAttribute('data-ck-key');
+  var storeKey = 'px-columns-config-' + key;
+  var boxes = Array.prototype.slice.call(wrap.querySelectorAll('input[type=checkbox]'));
+  var doneEl = wrap.querySelector('[data-ck-done]');
+  var totalEl = wrap.querySelector('[data-ck-total]');
+  if (totalEl) totalEl.textContent = boxes.length;
+
+  function count() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    if (doneEl) doneEl.textContent = n;
+    wrap.classList.toggle('is-complete', boxes.length > 0 && n === boxes.length);
+    var badge = document.querySelector('[data-nav-count="' + key + '"]');
+    if (badge) {
+      var complete = boxes.length > 0 && n === boxes.length;
+      badge.textContent = complete ? '✓ done' : n + '/' + boxes.length;
+      badge.classList.toggle('is-complete', complete);
+    }
+  }
+  function save() {
+    var state = {};
+    boxes.forEach(function (b) { if (b.checked) state[b.id] = 1; });
+    try { localStorage.setItem(storeKey, JSON.stringify(state)); } catch (e) {}
+  }
+  function load() {
+    var state = {};
+    try { state = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch (e) {}
+    boxes.forEach(function (b) { b.checked = !!state[b.id]; });
+    count();
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', function () { save(); count(); }); });
+  var reset = wrap.querySelector('[data-ck-reset]');
+  if (reset) reset.addEventListener('click', function (e) {
+    e.stopPropagation();
+    boxes.forEach(function (b) { b.checked = false; });
+    save(); count();
+  });
+  load();
+});
+
+var doneBanner = document.querySelector('.ck[data-ck-key] .ck-body');
+if (doneBanner) {
+  var banner = document.createElement('div');
+  banner.className = 'ck-done';
+  banner.innerHTML = '<strong>Done.</strong> The preset is built and verified on this account.';
+  doneBanner.appendChild(banner);
+}
+</script>
+</body>
+</html>
