@@ -29,25 +29,8 @@
   .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px,5vw,46px); font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
   .hero h1 span { color: #93C5FD; }
   .hero p.hero-sub { color: #94A3B8; font-size: 15px; max-width: 640px; margin: 0 auto 30px; }
-  .hero-back { display:inline-flex; align-items:center; gap:7px; margin-top:26px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#0F172A; background:#93C5FD; padding:8px 16px; border-radius:20px; text-decoration:none; transition:filter .2s; }
-  .hero-back:hover { filter:brightness(1.06); }
 
   /* READ ORDER STRIP */
-  .funnel-wrap { max-width: 940px; margin: 0 auto; }
-  .funnel-strip { display: flex; justify-content: center; gap: 0; }
-  .funnel-seg { flex:1; position:relative; padding:12px 10px 12px 24px; cursor:pointer; transition:filter .2s; text-align:left; border:none; background:none; color:inherit; }
-  .funnel-seg:first-child { padding-left:16px; border-radius:8px 0 0 8px; }
-  .funnel-seg:last-child  { border-radius:0 8px 8px 0; }
-  .funnel-seg:hover { filter:brightness(1.08); }
-  .funnel-seg .seg-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.75; margin-bottom:2px; }
-  .funnel-seg .seg-name  { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; line-height:1.2; }
-  .funnel-seg::after { content:''; position:absolute; right:-14px; top:0; width:0; height:0; border-top:23px solid transparent; border-bottom:23px solid transparent; z-index:2; }
-  .seg-1 { background:var(--pixel);   color:#fff; } .seg-1::after { border-left:14px solid var(--pixel); }
-  .seg-2 { background:var(--tofu);    color:#fff; } .seg-2::after { border-left:14px solid var(--tofu); }
-  .seg-3 { background:var(--lm);      color:#fff; } .seg-3::after { border-left:14px solid var(--lm); }
-  .seg-4 { background:var(--prosp);   color:#fff; } .seg-4::after { border-left:14px solid var(--prosp); }
-  .seg-5 { background:var(--retarg);  color:#fff; } .seg-5::after { border-left:14px solid var(--retarg); }
-  .seg-6 { background:var(--win);     color:#fff; }
 
   /* NAV */
   .tabs-nav { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; }
@@ -200,119 +183,54 @@
 
   @media (max-width:600px) {
     .hero { padding:36px 18px 30px; }
-    .funnel-strip { flex-wrap:wrap; }
-    .funnel-seg::after { display:none; }
     .main { padding:20px 14px 50px; }
   }
+
+/* Playbook switcher: global nav across the four PX playbooks */
+.pb-switch { background:#0A0F1D; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:6px; padding:8px 20px; overflow-x:auto; scrollbar-width:none; }
+.pb-switch::-webkit-scrollbar { display:none; }
+.pb-switch-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#64748B; margin-right:8px; white-space:nowrap; }
+.pb-tab { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#94A3B8; text-decoration:none; padding:5px 13px; border-radius:20px; white-space:nowrap; transition:background .2s,color .2s; }
+.pb-tab:hover { color:#fff; background:rgba(255,255,255,.07); }
+.pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
+.pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
+.pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+.pb-tab.map { color:#93C5FD; background:rgba(147,197,253,.1); margin-left:auto; }
+.pb-tab.map:hover { color:#fff; background:rgba(147,197,253,.22); }
 </style>
 </head>
 <body>
+
+<!-- PLAYBOOK SWITCHER: links the four PX playbooks -->
+<div class="pb-switch">
+  <span class="pb-switch-label">PX Playbooks</span>
+  <a class="pb-tab" href="px-ad-creative-system.html">Ad Creative</a>
+  <a class="pb-tab active" href="px-meta-scaling.html">Meta Scaling</a>
+  <a class="pb-tab soon">CRO <span>soon</span></a>
+  <a class="pb-tab soon">Data <span>soon</span></a>
+  <a class="pb-tab map" href="https://link.excalidraw.com/l/A403qDUZDJv/7g0s81HDplN" target="_blank" rel="noopener">&#128506; Visual Map &#8599;</a>
+</div>
 
 <div class="hero">
   <p class="hero-label">Persuasion Experience &middot; Meta Advertising</p>
   <h1>Custom <span>Columns</span> Config</h1>
   <p class="hero-sub">The PX reporting view for Ads Manager. One saved preset that reads the funnel left to right, so the column you stop at is the thing that is actually broken. Build it once per ad account, then never argue about what to look at again.</p>
-  <div class="funnel-wrap">
-    <div class="funnel-strip">
-      <button class="funnel-seg seg-1" onclick="switchTab('preset')"><div class="seg-label">Block 1</div><div class="seg-name">Spend</div></button>
-      <button class="funnel-seg seg-2" onclick="switchTab('preset')"><div class="seg-label">Block 2</div><div class="seg-name">Outcome</div></button>
-      <button class="funnel-seg seg-3" onclick="switchTab('preset')"><div class="seg-label">Block 3</div><div class="seg-name">Funnel rates</div></button>
-      <button class="funnel-seg seg-4" onclick="switchTab('preset')"><div class="seg-label">Block 4</div><div class="seg-name">Creative</div></button>
-      <button class="funnel-seg seg-5" onclick="switchTab('preset')"><div class="seg-label">Block 5</div><div class="seg-name">Traffic</div></button>
-      <button class="funnel-seg seg-6" onclick="switchTab('preset')"><div class="seg-label">Block 6</div><div class="seg-name">Delivery</div></button>
-    </div>
-  </div>
-  <a class="hero-back" href="px-meta-scaling.html">&#8592; The PX Meta Scaling System</a>
 </div>
 
 <nav class="tabs-nav">
-  <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')"><span class="dot" style="background:#94A3B8"></span>Overview</button>
-  <div class="tab-divider"></div>
-  <button class="tab-btn" data-tab="preset"  onclick="switchTab('preset')"><span class="dot" style="background:var(--tofu)"></span>The Preset</button>
+  <button class="tab-btn active" data-tab="preset"  onclick="switchTab('preset')"><span class="dot" style="background:var(--tofu)"></span>The Preset</button>
   <button class="tab-btn" data-tab="metrics" onclick="switchTab('metrics')"><span class="dot" style="background:var(--lm)"></span>Custom Metrics</button>
   <div class="tab-divider"></div>
   <button class="tab-btn" data-tab="build"   onclick="switchTab('build')"><span class="dot" style="background:var(--prosp)"></span>Build It<span class="nav-count" data-nav-count="columns-build"></span></button>
   <button class="tab-btn" data-tab="reading" onclick="switchTab('reading')"><span class="dot" style="background:var(--win)"></span>Reading It</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="overview" onclick="switchTab('overview')"><span class="dot" style="background:#94A3B8"></span>Overview</button>
 </nav>
 
 <div class="main">
 
-<!-- ===================== OVERVIEW ===================== -->
-<div id="tab-overview" class="tab-panel active">
-  <p class="h2">One view, read in one direction</p>
-  <p class="lead">Ads Manager ships with columns built for reporting, not for deciding. This preset replaces them with a fixed order that follows the funnel: what it cost, what it produced, where people dropped, and why. You read left to right and stop at the first number that is broken. That number owns the problem, and everything to the right of it is a symptom.</p>
-
-  <div class="ov-grid">
-    <div class="ov-card ov-tofu"  onclick="switchTab('preset')"><span class="ov-tag">Reference</span><span class="ov-name">The Preset</span><span class="ov-desc">Every column in order, grouped into six blocks, with the question each one answers.</span></div>
-    <div class="ov-card ov-lm"    onclick="switchTab('metrics')"><span class="ov-tag">Formulas</span><span class="ov-name">Custom Metrics</span><span class="ov-desc">The seven PX metrics that do not exist in Ads Manager, and the exact formula for each.</span></div>
-    <div class="ov-card ov-prosp" onclick="switchTab('build')"><span class="ov-tag">Runbook</span><span class="ov-name">Build It</span><span class="ov-desc">Interactive checklist to stand the preset up in a new ad account, in order, without guessing.</span></div>
-    <div class="ov-card ov-win"   onclick="switchTab('reading')"><span class="ov-tag">Decisions</span><span class="ov-name">Reading It</span><span class="ov-desc">The diagnostic ladder. Which column to trust first, and what each break actually means.</span></div>
-  </div>
-
-  <div class="sec">Two presets, not one</div>
-  <p class="lead">The full diagnostic set is close to thirty columns wide. That is the right amount of detail for a weekly review and the wrong amount for a daily pacing check, where the horizontal scroll costs more than the data is worth. Save two.</p>
-
-  <div class="grid-2">
-    <div class="card prosp">
-      <div class="card-title">PX &#124; SCAN</div>
-      <p style="font-size:13px;color:var(--ink2);margin-bottom:10px;">Daily. Eleven columns, no horizontal scroll on a laptop. Answers one question: is anything on fire.</p>
-      <ul class="info-list">
-        <li>Off/On, Name, Budget, Amount spent</li>
-        <li>Results, Cost per result, Cost per appointment</li>
-        <li>Lead &rarr; Schedule %, Unique outbound CTR</li>
-        <li>CPM, Frequency</li>
-      </ul>
-    </div>
-    <div class="card tofu">
-      <div class="card-title">PX &#124; DIAG</div>
-      <p style="font-size:13px;color:var(--ink2);margin-bottom:10px;">Weekly, and any time SCAN shows a problem. The full set. Answers the second question: where exactly it broke.</p>
-      <ul class="info-list">
-        <li>Everything in SCAN, plus the full funnel rate block</li>
-        <li>Creative diagnostics, thumbstop and hold</li>
-        <li>The whole click and landing page chain</li>
-        <li>Cost per click on both denominators</li>
-      </ul>
-    </div>
-  </div>
-  <p class="lead">Ecommerce accounts get a third, <code>PX | ECOM</code>, which is DIAG with the lead block swapped for Purchases, Cost per purchase, Purchase ROAS and AOV. Do not carry purchase columns on a lead generation account.</p>
-
-  <div class="sec">Recommended changes to the current config</div>
-  <p class="lead">These are the adjustments to the config as it runs today. Each one either fixes something that reads wrong or removes something that costs screen width without paying for it.</p>
-  <div class="tbl-wrap">
-    <table class="tbl">
-      <thead><tr><th>Change</th><th>Why</th></tr></thead>
-      <tbody>
-        <tr><td class="colname">Format Thumbstop as a percentage <span class="tag tag-fix">Fix</span></td><td>It currently renders as a bare number, so a 24% hook rate shows as <code>24.03</code> sitting next to Hold at <code>16.13%</code>. Two rates, two formats, in adjacent columns. Set it to Percentage with two decimals in the metric builder.</td></tr>
-        <tr><td class="colname">Add Unique link clicks <span class="tag tag-add">Add</span></td><td>It is the denominator of both Click &rarr; Lead % and Click &rarr; Schedule %, and it is not on screen. Today those two ratios cannot be checked by hand against any visible column, which is how a broken custom metric survives for months.</td></tr>
-        <tr><td class="colname">Add Frequency, next to CPM <span class="tag tag-add">Add</span></td><td>A rising CPM has two very different causes: auction pressure or a burnt audience. Frequency is what tells them apart, and this is a scaling playbook. Fatigue is the failure mode that shows up first when budget goes up.</td></tr>
-        <tr><td class="colname">Add Leads and Cost per lead as fixed columns <span class="tag tag-add">Add</span></td><td>Results is relative to each campaign's optimization event, so one row reads Website Lead, the next reads Website Schedule. A mixed list cannot be sorted or summed on it honestly. Fixed event columns make rows comparable.</td></tr>
-        <tr><td class="colname">Put Thumbstop before Hold <span class="tag tag-move">Move</span></td><td>They are sequential moments in the same video, three seconds then the hold. Reading them out of order breaks the ladder, because a weak hold only means something once the thumbstop is healthy.</td></tr>
-        <tr><td class="colname">Move Purchases and Cost per purchase out <span class="tag tag-out">Out</span></td><td>On a lead generation account both columns are empty on every row and sit at the far right, past two screens of scroll. They belong in <code>PX | ECOM</code>.</td></tr>
-        <tr><td class="colname">Split into SCAN and DIAG <span class="tag tag-add">Add</span></td><td>A daily check that requires horizontal scrolling does not get done daily. Splitting the preset is the difference between a system and a screenshot.</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="callout amber"><strong>Do not change a custom metric's formula quietly.</strong> Every historical read of that column was made on the old definition. If a formula has to change, change it in every ad account on the same day and note the date, otherwise a month over month comparison silently compares two different metrics.</div>
-
-  <div class="sec">Scope</div>
-  <div class="grid-3">
-    <div class="card"><div class="card-title">Applies to</div><ul class="info-list"><li>Every PX lead generation ad account</li><li>Campaign, ad set and ad level</li><li>Any buyer, any client</li></ul></div>
-    <div class="card"><div class="card-title">Owned by</div><ul class="info-list"><li>The buyer on the account</li><li>Rebuilt from this page, not copied by eye</li><li>Checked on account handover</li></ul></div>
-    <div class="card"><div class="card-title">Rebuild when</div><ul class="info-list"><li>A new ad account is opened</li><li>The preset is missing from the dropdown</li><li>A pixel event is renamed</li></ul></div>
-  </div>
-</div>
-
 <!-- ===================== THE PRESET ===================== -->
-<div id="tab-preset" class="tab-panel">
-  <div class="campaign-header header-tofu">
-    <span class="badge" style="background:var(--tofu)">Reference</span>
-    <div>
-      <h2>PX &#124; DIAG, column by column</h2>
-      <p>Twenty nine columns in six blocks. The order is the point: each block is a step further down the funnel, so a problem announces itself by the block it appears in. Build them in this order and do not resort the view by anything other than Amount spent.</p>
-    </div>
-  </div>
-
+<div id="tab-preset" class="tab-panel active">
   <div class="blk b1">
     <div class="blk-head"><span class="blk-num">1</span><h4>Spend</h4></div>
     <p class="blk-q">Is this thing running, and is it running at the size we told it to?</p>
@@ -624,6 +542,73 @@
     </div>
   </div>
 </div>
+
+<!-- ===================== OVERVIEW ===================== -->
+<div id="tab-overview" class="tab-panel">
+  <p class="h2">One view, read in one direction</p>
+  <p class="lead">Ads Manager ships with columns built for reporting, not for deciding. This preset replaces them with a fixed order that follows the funnel: what it cost, what it produced, where people dropped, and why. You read left to right and stop at the first number that is broken. That number owns the problem, and everything to the right of it is a symptom.</p>
+
+  <div class="ov-grid">
+    <div class="ov-card ov-tofu"  onclick="switchTab('preset')"><span class="ov-tag">Reference</span><span class="ov-name">The Preset</span><span class="ov-desc">Every column in order, grouped into six blocks, with the question each one answers.</span></div>
+    <div class="ov-card ov-lm"    onclick="switchTab('metrics')"><span class="ov-tag">Formulas</span><span class="ov-name">Custom Metrics</span><span class="ov-desc">The seven PX metrics that do not exist in Ads Manager, and the exact formula for each.</span></div>
+    <div class="ov-card ov-prosp" onclick="switchTab('build')"><span class="ov-tag">Runbook</span><span class="ov-name">Build It</span><span class="ov-desc">Interactive checklist to stand the preset up in a new ad account, in order, without guessing.</span></div>
+    <div class="ov-card ov-win"   onclick="switchTab('reading')"><span class="ov-tag">Decisions</span><span class="ov-name">Reading It</span><span class="ov-desc">The diagnostic ladder. Which column to trust first, and what each break actually means.</span></div>
+  </div>
+
+  <div class="sec">Two presets, not one</div>
+  <p class="lead">The full diagnostic set is close to thirty columns wide. That is the right amount of detail for a weekly review and the wrong amount for a daily pacing check, where the horizontal scroll costs more than the data is worth. Save two.</p>
+
+  <div class="grid-2">
+    <div class="card prosp">
+      <div class="card-title">PX &#124; SCAN</div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:10px;">Daily. Eleven columns, no horizontal scroll on a laptop. Answers one question: is anything on fire.</p>
+      <ul class="info-list">
+        <li>Off/On, Name, Budget, Amount spent</li>
+        <li>Results, Cost per result, Cost per appointment</li>
+        <li>Lead &rarr; Schedule %, Unique outbound CTR</li>
+        <li>CPM, Frequency</li>
+      </ul>
+    </div>
+    <div class="card tofu">
+      <div class="card-title">PX &#124; DIAG</div>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:10px;">Weekly, and any time SCAN shows a problem. The full set. Answers the second question: where exactly it broke.</p>
+      <ul class="info-list">
+        <li>Everything in SCAN, plus the full funnel rate block</li>
+        <li>Creative diagnostics, thumbstop and hold</li>
+        <li>The whole click and landing page chain</li>
+        <li>Cost per click on both denominators</li>
+      </ul>
+    </div>
+  </div>
+  <p class="lead">Ecommerce accounts get a third, <code>PX | ECOM</code>, which is DIAG with the lead block swapped for Purchases, Cost per purchase, Purchase ROAS and AOV. Do not carry purchase columns on a lead generation account.</p>
+
+  <div class="sec">Recommended changes to the current config</div>
+  <p class="lead">These are the adjustments to the config as it runs today. Each one either fixes something that reads wrong or removes something that costs screen width without paying for it.</p>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>Change</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="colname">Format Thumbstop as a percentage <span class="tag tag-fix">Fix</span></td><td>It currently renders as a bare number, so a 24% hook rate shows as <code>24.03</code> sitting next to Hold at <code>16.13%</code>. Two rates, two formats, in adjacent columns. Set it to Percentage with two decimals in the metric builder.</td></tr>
+        <tr><td class="colname">Add Unique link clicks <span class="tag tag-add">Add</span></td><td>It is the denominator of both Click &rarr; Lead % and Click &rarr; Schedule %, and it is not on screen. Today those two ratios cannot be checked by hand against any visible column, which is how a broken custom metric survives for months.</td></tr>
+        <tr><td class="colname">Add Frequency, next to CPM <span class="tag tag-add">Add</span></td><td>A rising CPM has two very different causes: auction pressure or a burnt audience. Frequency is what tells them apart, and this is a scaling playbook. Fatigue is the failure mode that shows up first when budget goes up.</td></tr>
+        <tr><td class="colname">Add Leads and Cost per lead as fixed columns <span class="tag tag-add">Add</span></td><td>Results is relative to each campaign's optimization event, so one row reads Website Lead, the next reads Website Schedule. A mixed list cannot be sorted or summed on it honestly. Fixed event columns make rows comparable.</td></tr>
+        <tr><td class="colname">Put Thumbstop before Hold <span class="tag tag-move">Move</span></td><td>They are sequential moments in the same video, three seconds then the hold. Reading them out of order breaks the ladder, because a weak hold only means something once the thumbstop is healthy.</td></tr>
+        <tr><td class="colname">Move Purchases and Cost per purchase out <span class="tag tag-out">Out</span></td><td>On a lead generation account both columns are empty on every row and sit at the far right, past two screens of scroll. They belong in <code>PX | ECOM</code>.</td></tr>
+        <tr><td class="colname">Split into SCAN and DIAG <span class="tag tag-add">Add</span></td><td>A daily check that requires horizontal scrolling does not get done daily. Splitting the preset is the difference between a system and a screenshot.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout amber"><strong>Do not change a custom metric's formula quietly.</strong> Every historical read of that column was made on the old definition. If a formula has to change, change it in every ad account on the same day and note the date, otherwise a month over month comparison silently compares two different metrics.</div>
+
+  <div class="sec">Scope</div>
+  <div class="grid-3">
+    <div class="card"><div class="card-title">Applies to</div><ul class="info-list"><li>Every PX lead generation ad account</li><li>Campaign, ad set and ad level</li><li>Any buyer, any client</li></ul></div>
+    <div class="card"><div class="card-title">Owned by</div><ul class="info-list"><li>The buyer on the account</li><li>Rebuilt from this page, not copied by eye</li><li>Checked on account handover</li></ul></div>
+    <div class="card"><div class="card-title">Rebuild when</div><ul class="info-list"><li>A new ad account is opened</li><li>The preset is missing from the dropdown</li><li>A pixel event is renamed</li></ul></div>
+  </div>
+</div>
+
 
 </div>
 
