@@ -405,6 +405,7 @@
               <li><input type="checkbox" id="pl3d"><label for="pl3d">Conversion location: <span class="set">Website</span></label></li>
               <li><input type="checkbox" id="pl3e"><label for="pl3e">Pixel selected, performance goal: <span class="set">Maximise number of conversions</span>, conversion event: <span class="set">Lead</span></label></li>
               <li><input type="checkbox" id="pl3f"><label for="pl3f"><span class="val-off">Advantage+ audience: OFF</span><span class="why">Defaults to ON. Expand the Audience section and switch to original audience options, or your targeting below is only a suggestion.</span></label></li>
+              <li><input type="checkbox" id="pl3m"><label for="pl3m">Exclusions attached: <span class="set">Leads and Customers pools</span>, plus the <span class="set">Engaged pool</span> if retargeting is live on this account<span class="why">Blank exclusions means paying to re-acquire people who are already leads or customers. The pools are named <code>{Client} | LEADS | ...</code>, <code>| CUST |</code>, and <code>| ENG |</code> on the account. Full rules: Audience Pools in the Meta Scaling playbook.</span></label></li>
               <li><input type="checkbox" id="pl3g"><label for="pl3g">Location set (default <span class="set">United States</span>)</label></li>
               <li><input type="checkbox" id="pl3h"><label for="pl3h">Age range set, confirm both ends<span class="why">Setting only a minimum gives you "30+" and pulls in expensive 65+ inventory.</span></label></li>
               <li><input type="checkbox" id="pl3i"><label for="pl3i">Gender set if the angle calls for it, otherwise All</label></li>
@@ -473,6 +474,7 @@
             <ul class="ck-list">
               <li><input type="checkbox" id="pl7a"><label for="pl7a">Duplicate an ad set to build the rest, then edit each one<span class="why">Faster, and duplicating carries your enhancement settings across. Building each from scratch is where inconsistency creeps in.</span></label></li>
               <li><input type="checkbox" id="pl7b"><label for="pl7b">Every ad set has the same targeting, placements, and optimisation event</label></li>
+              <li><input type="checkbox" id="pl7g"><label for="pl7g">Exclusions attached on every ad set<span class="why">Duplicating carries them across. Check the ones you edited anyway.</span></label></li>
               <li><input type="checkbox" id="pl7c"><label for="pl7c">Every ad has URL parameters, all headlines, and enhancements off</label></li>
               <li><input type="checkbox" id="pl7d"><label for="pl7d">Names spot-checked, they become your report labels and cannot be cleanly fixed later</label></li>
               <li><input type="checkbox" id="pl7e"><label for="pl7e">Budget checked one final time</label></li>
@@ -512,6 +514,7 @@
               <tr><td>Ad set</td><td>Conversion event</td><td>Lead</td></tr>
               <tr><td>Ad set</td><td>Advantage+ audience</td><td class="val-off">OFF</td></tr>
               <tr><td>Ad set</td><td>Detailed targeting</td><td>Empty (broad)</td></tr>
+              <tr><td>Ad set</td><td>Excluded custom audiences</td><td>Leads + Customers (+ Engaged if RT live)</td></tr>
               <tr><td>Ad set</td><td>Placements</td><td>Manual, Audience Network off, everything else on</td></tr>
               <tr><td>Ad</td><td>Call to action</td><td>Learn more</td></tr>
               <tr><td>Ad</td><td>All creative enhancements</td><td class="val-off">OFF</td></tr>
@@ -565,10 +568,10 @@
             <h4>Build the audiences</h4>
             <p class="ck-where">Audiences &#8594; Create audience &#8594; Custom audience</p>
             <ul class="ck-list">
-              <li><input type="checkbox" id="nu1a"><label for="nu1a">Source is the <span class="set">pixel Lead event</span>, or a CRM customer list if the client syncs one<span class="why">A CRM list is better where it exists. It knows who actually booked and who already had the call, which the pixel does not.</span></label></li>
+              <li><input type="checkbox" id="nu1a"><label for="nu1a">Source is the <span class="set">Leads pool</span>: the pixel Lead event, or the CRM leads list if the client syncs one<span class="why">A CRM list is better where it exists. It knows who actually booked and who already had the call, which the pixel does not.</span></label></li>
               <li><input type="checkbox" id="nu1b"><label for="nu1b">Audience set to <span class="set">30 days of the primary conversion event</span>, usually Lead</label></li>
-              <li><input type="checkbox" id="nu1c"><label for="nu1c">Exclusion audience built: <span class="set">closed and won customers</span><span class="why">Paying to sell someone who already bought is the most obvious waste in the account, and clients notice it.</span></label></li>
-              <li><input type="checkbox" id="nu1d"><label for="nu1d">This nurture audience is <span class="set">excluded from the cold prospecting campaign</span><span class="why">Otherwise the two campaigns bid against each other for the same people and you pay twice.</span></label></li>
+              <li><input type="checkbox" id="nu1c"><label for="nu1c">Exclusion: the <span class="set">Customers pool</span>, closed and won<span class="why">Paying to sell someone who already bought is the most obvious waste in the account, and clients notice it.</span></label></li>
+              <li><input type="checkbox" id="nu1d"><label for="nu1d">The <span class="set">Leads pool is excluded on every prospecting ad set</span>, which keeps this audience out of prospecting<span class="why">If it is missing there, the two campaigns bid against each other for the same people and you pay twice.</span></label></li>
             </ul>
           </div>
         </div>
