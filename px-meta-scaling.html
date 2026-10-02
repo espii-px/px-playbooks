@@ -557,7 +557,7 @@
       </div>
     </div>
     <div class="notes-box"><strong>Notes / Scaling Logic</strong>Primary scaling engine. Majority of budget and testing volume lives here. Winners move into Cold Scaling and feed the Winning Ad Multiplier. Continually refresh with new packs. Never stop testing.</div>
-    <div class="exclude-box"><strong>Exclude from targeting</strong> Leads pool · Customers pool, always · Engaged pool, whenever a retargeting campaign is live on the account</div>
+    <div class="exclude-box"><strong>Exclude from targeting</strong> Leads pool · Customers pool, always. Never the Engaged pool.</div>
     <div class="ck-pointer"><span><strong>Building one by hand?</strong> The 52-step prospecting launch runbook, every setting in order, lives in the Checklists tab.</span><a class="jump" onclick="switchTab('checklists')">Open the checklist &#8594;</a></div>
 
   </div>
@@ -643,7 +643,7 @@
       </div>
     </div>
     <div class="notes-box"><strong>Notes / Scaling Logic</strong>Completely separate from the testing engine. Never test here. Use only proven winners. Budget decisions should always respect the primary phase of optimization first. Scaling prematurely pollutes the algorithm and wastes spend on unvalidated creative.</div>
-    <div class="exclude-box"><strong>Exclude from targeting</strong> Same as prospecting: Leads pool · Customers pool, always · Engaged pool, whenever a retargeting campaign is live</div>
+    <div class="exclude-box"><strong>Exclude from targeting</strong> Same as prospecting: Leads pool · Customers pool, always. Never the Engaged pool.</div>
   </div>
 
   <!-- WINNING AD MULTIPLIER -->
@@ -749,7 +749,7 @@
         <thead><tr><th>Stage</th><th>Job</th><th>Creative</th><th>Targets</th><th>Excludes</th></tr></thead>
         <tbody>
           <tr><td><strong>TOFU</strong> (Views)</td><td>Warm the market</td><td>Education, value, authority. No ask.</td><td>Broad</td><td>Leads + Customers</td></tr>
-          <tr><td><strong>PRSP</strong> (Lead)</td><td>Get the lead</td><td>Every conversion angle, DTO included</td><td>Broad</td><td>Leads + Customers, always. Plus Engaged whenever an RT campaign is live on the account.</td></tr>
+          <tr><td><strong>PRSP</strong> (Lead)</td><td>Get the lead</td><td>Every conversion angle, DTO included</td><td>Broad</td><td>Leads + Customers, always. Never Engaged.</td></tr>
           <tr><td><strong>RT</strong> (Lead)</td><td>Recover the lead</td><td>Offer, proof, objection handling, urgency and DTO</td><td>Engaged</td><td>Leads + Customers</td></tr>
           <tr><td><strong>NURT</strong> (Views)</td><td>Get them to show and close</td><td>Proof, authority, objection, explainer</td><td>Leads, 30 days, bookers included</td><td>Customers</td></tr>
           <tr><td><strong>Lead Magnet</strong></td><td>Capture future buyers early</td><td>Guides, tools, quizzes</td><td>Broad + TOFU viewers</td><td>Leads + Customers</td></tr>
@@ -764,9 +764,9 @@
     <div class="grid-3">
       <div class="card"><div class="card-title tofu">1. TOFU fills the pool</div><p style="font-size:13px;color:var(--ink2)">TOFU viewers land in the Engaged pool. That pool is what TOFU produces.</p></div>
       <div class="card"><div class="card-title retarg">2. Retargeting converts it</div><p style="font-size:13px;color:var(--ink2)">Retargeting targets the Engaged pool with the offer and proof. Retargeting owns everyone TOFU warmed.</p></div>
-      <div class="card"><div class="card-title prosp">3. Prospecting stays cold</div><p style="font-size:13px;color:var(--ink2)">Once retargeting is live, prospecting excludes the Engaged pool. Prospecting spend stays on new people.</p></div>
+      <div class="card"><div class="card-title prosp">3. Prospecting skips existing leads</div><p style="font-size:13px;color:var(--ink2)">Prospecting excludes only people who are already leads or customers. Engaged people stay in reach, so they can convert off either campaign.</p></div>
     </div>
-    <div class="callout red"><strong>Never exclude Engaged from prospecting on an account with no live retargeting.</strong> Those people would see no conversion ad at all. The launcher checks this itself: it adds the Engaged exclusion only when an active campaign with the <code>RT</code> stage token is running on the account. By hand, add it the day retargeting goes live.</div>
+    <div class="callout red"><strong>Prospecting never excludes the Engaged pool, even with retargeting live.</strong> The only people prospecting must not re-buy are existing leads and customers. Warm engagers are still worth a conversion ad. The launcher applies this itself: PRSP and SCALE ad sets exclude Leads + Customers and nothing else. (Changed 2 Oct 2026; earlier ad sets may still carry an Engaged exclusion.)</div>
     <div class="notes-box"><strong>Retargeting budget</strong>Start at 3&ndash;5% of spend. Raise it as TOFU grows the Engaged pool. Frequency is the guide: if it climbs while the pool grows, the budget is keeping up.</div>
 
     <div class="sec">Meta Audience Segments</div>
@@ -845,7 +845,7 @@
         <div class="h-note" style="margin-bottom:10px">Never run single + multi-ad pack on the same angle simultaneously while testing.</div>
         <div class="hierarchy">
           <div class="h-level"><div class="h-node h-campaign"><div class="h-label">Campaign</div><div class="h-detail">Cold Prospecting, Leads/Calls/Sales · 70&ndash;80% of budget</div></div></div>
-          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 1, Adset</div><div class="h-detail">Angle A · Avatar X · $1&ndash;$25 test budget · Excludes Leads + Customers (+ Engaged when RT is live)</div></div></div>
+          <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 1, Adset</div><div class="h-detail">Angle A · Avatar X · $1&ndash;$25 test budget · Excludes Leads + Customers</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span><span class="h-ad">Ad 4</span></div></div></div>
           <div class="h-level"><div class="h-indent"></div><div class="h-node h-adset-prosp"><div class="h-label">Pack 2, Adset</div><div class="h-detail">Angle B · Avatar X · $1&ndash;$25 test budget</div></div></div>
           <div class="h-level"><div class="h-indent"></div><div style="flex:1"><div class="h-ads"><span class="h-ad">Ad 1</span><span class="h-ad">Ad 2</span><span class="h-ad">Ad 3</span></div></div></div>
