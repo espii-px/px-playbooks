@@ -439,7 +439,7 @@
             <h4>URL parameters, do not skip</h4>
             <p class="ck-where">Ad level &#8594; Tracking &#8594; URL parameters</p>
             <p class="ck-lead">The launcher sets this automatically. By hand it is one field that is very easy to miss, and missing it silently breaks attribution for the entire campaign. Paste this exactly:</p>
-            <pre class="snippet"><code>utm_source=fb&amp;utm_medium={{adset.name}}&amp;utm_campaign={{campaign.name}}&amp;utm_content={{ad.name}}&amp;campaign_id={{campaign.id}}&amp;adset_id={{adset.id}}&amp;ad_id={{ad.id}}</code></pre>
+            <pre class="snippet"><code>utm_source=fb&amp;utm_medium=paid&amp;utm_campaign={{campaign.name}}&amp;utm_term={{adset.name}}&amp;utm_content={{ad.name}}&amp;campaign_id={{campaign.id}}&amp;adset_id={{adset.id}}&amp;ad_id={{ad.id}}</code></pre>
             <ul class="ck-list">
               <li><input type="checkbox" id="pl5a"><label for="pl5a">Pasted into <span class="set">URL parameters</span> on every ad<span class="why">Per ad. It does not inherit from the ad set or the campaign.</span></label></li>
               <li><input type="checkbox" id="pl5b"><label for="pl5b">The double curly braces survived the paste<span class="why">Those are Meta's dynamic macros. If they came through as literal text, attribution will be useless.</span></label></li>
@@ -628,7 +628,7 @@
               <li><input type="checkbox" id="nu4h"><label for="nu4h">Correct Facebook Page and Instagram account selected</label></li>
             </ul>
             <p class="ck-where" style="margin-top:14px">URL parameters, every ad</p>
-            <pre class="snippet"><code>utm_source=fb&amp;utm_medium={{adset.name}}&amp;utm_campaign={{campaign.name}}&amp;utm_content={{ad.name}}&amp;campaign_id={{campaign.id}}&amp;adset_id={{adset.id}}&amp;ad_id={{ad.id}}</code></pre>
+            <pre class="snippet"><code>utm_source=fb&amp;utm_medium=paid&amp;utm_campaign={{campaign.name}}&amp;utm_term={{adset.name}}&amp;utm_content={{ad.name}}&amp;campaign_id={{campaign.id}}&amp;adset_id={{adset.id}}&amp;ad_id={{ad.id}}</code></pre>
             <ul class="ck-list">
               <li><input type="checkbox" id="nu4i"><label for="nu4i">Pasted into <span class="set">URL parameters</span> on every ad, curly braces intact<span class="why">More important here than on a cold campaign. Clicks are one of the only signals this campaign produces, and untagged clicks are invisible.</span></label></li>
             </ul>
