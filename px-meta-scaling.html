@@ -610,6 +610,18 @@
     <div class="exclude-box"><strong>Exclude from targeting</strong> Customers pool</div>
     <div class="ck-pointer"><span><strong>Building one by hand?</strong> The pre-call nurture launch runbook, audiences through to the measurement decision, lives in the Checklists tab.</span><a class="jump" onclick="switchTab('checklists')">Open the checklist &#8594;</a></div>
 
+    <div class="sec">Optional: Hot Retargeting (leads who didn't book)</div>
+    <div class="callout pink"><strong>Core job:</strong> Get people who became a lead but never booked back to the calendar. Not part of the core stack; add it when an account has leads dropping out between the form and the booking.</div>
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Campaign Objective</div><div class="dg-value">Awareness, optimised for Reach. The pool is too small to optimise for a booking, and Meta's minimum for a conversion goal is far above $1/day.</div></div>
+      <div class="dg-item"><div class="dg-label">Budget</div><div class="dg-value">~$1/day, Meta's impression minimum for the currency (US$1.00, A$1.45)</div></div>
+      <div class="dg-item"><div class="dg-label">Audience</div><div class="dg-value">Pixel lead events (Lead, SubmitApplication, quiz lead), 180 days, excluding booking events (Schedule, call booked) over the same window</div></div>
+      <div class="dg-item"><div class="dg-label">Destination</div><div class="dg-value">Straight to the booking page, not the landing page. They have already opted in.</div></div>
+      <div class="dg-item"><div class="dg-label">Creative</div><div class="dg-value">One winning static or carousel from the account's history, plus one founder video</div></div>
+      <div class="dg-item"><div class="dg-label">Naming</div><div class="dg-value"><code>PX | HOT RT | Leads Not Booked | Reach | &lt;Month&gt;</code></div></div>
+    </div>
+    <div class="notes-box"><strong>Notes</strong>Added 12 Oct 2026. The pool starts small (around 20 people), so watch frequency rather than CPL, and judge it on bookings from the pool in the CRM.</div>
+
   </div>
 
   <!-- COLD SCALING -->
@@ -752,6 +764,7 @@
           <tr><td><strong>PRSP</strong> (Lead)</td><td>Get the lead</td><td>Every conversion angle, DTO included</td><td>Broad</td><td>Leads + Customers, always. Never Engaged.</td></tr>
           <tr><td><strong>RT</strong> (Lead)</td><td>Recover the lead</td><td>Offer, proof, objection handling, urgency and DTO</td><td>Engaged</td><td>Leads + Customers</td></tr>
           <tr><td><strong>NURT</strong> (Views)</td><td>Get them to show and close</td><td>Proof, authority, objection, explainer</td><td>Leads, 30 days, bookers included</td><td>Customers</td></tr>
+          <tr><td><strong>HOT RT</strong> (Reach, optional)</td><td>Get the lead to book</td><td>Winning static or carousel + founder video, to the booking page</td><td>Leads, 180 days</td><td>Bookers + Customers</td></tr>
           <tr><td><strong>Lead Magnet</strong></td><td>Capture future buyers early</td><td>Guides, tools, quizzes</td><td>Broad + TOFU viewers</td><td>Leads + Customers</td></tr>
           <tr><td><strong>Cold Scaling</strong></td><td>Scale proven winners</td><td>Winners only</td><td>Same as PRSP</td><td>Same as PRSP</td></tr>
         </tbody>
