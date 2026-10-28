@@ -135,12 +135,33 @@ footer { font-size: 13px; color: var(--ink3); border-top: 1px solid var(--border
   .run { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .where { justify-self: start; }
 }
+.pb-switch { background:#0A0F1D; border-bottom:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:6px; padding:8px 20px; overflow-x:auto; scrollbar-width:none; }
+.pb-switch::-webkit-scrollbar { display:none; }
+.pb-switch-label { font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#64748B; margin-right:8px; white-space:nowrap; }
+.pb-tab { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; color:#94A3B8; text-decoration:none; padding:5px 13px; border-radius:20px; white-space:nowrap; transition:background .2s,color .2s; }
+.pb-tab:hover { color:#fff; background:rgba(255,255,255,.07); }
+.pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
+.pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
+.pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff; }
+.pb-sep { width:1px; height:16px; background:rgba(255,255,255,.14); margin:0 6px; flex:none; }
 </style>
 </head>
 <body>
+<!-- PLAYBOOK SWITCHER: links the PX playbooks -->
+<div class="pb-switch">
+  <a class="pb-switch-label" href="index.html">PX Playbooks</a>
+  <a class="pb-tab" href="px-ad-creative-system.html">Ad Creative</a>
+  <a class="pb-tab" href="px-meta-scaling.html">Meta Scaling</a>
+  <a class="pb-tab" href="px-funnel-system.html">Funnels</a>
+  <a class="pb-tab soon">Data <span>soon</span></a>
+  <span class="pb-sep" aria-hidden="true"></span>
+  <a class="pb-tab active">System Map</a>
+</div>
+
 
 <header class="hero">
-  <p class="hero-label"><a href="index.html" style="color:inherit;text-decoration:none">PX Playbooks</a> · Systems</p>
+  <p class="hero-label">PX · Systems</p>
   <h1>The PX <span>System Map</span></h1>
   <p class="sub">Everything PX runs lives in one private GitHub repo instead of five. Each part has its own folder, so a single prompt, template or script can be updated on its own without touching the rest.</p>
   <nav class="chips" aria-label="Sections">

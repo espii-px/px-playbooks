@@ -313,6 +313,8 @@
 .pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
 .pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
 .pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff; }
+.pb-sep { width:1px; height:16px; background:rgba(255,255,255,.14); margin:0 6px; flex:none; }
 .pb-tab.map { color:#93C5FD; background:rgba(147,197,253,.1); margin-left:auto; }
 .pb-tab.map:hover { color:#fff; background:rgba(147,197,253,.22); }
 /* Hero visual-map link */
@@ -324,11 +326,13 @@
 
 <!-- PLAYBOOK SWITCHER: links the four PX playbooks -->
 <div class="pb-switch">
-  <span class="pb-switch-label">PX Playbooks</span>
+  <a class="pb-switch-label" href="index.html">PX Playbooks</a>
   <a class="pb-tab" href="px-ad-creative-system.html">Ad Creative</a>
   <a class="pb-tab active">Meta Scaling</a>
   <a class="pb-tab" href="px-funnel-system.html">Funnels</a>
   <a class="pb-tab soon">Data <span>soon</span></a>
+  <span class="pb-sep" aria-hidden="true"></span>
+  <a class="pb-tab" href="px-system-map.html">System Map</a>
   <a class="pb-tab map" href="https://link.excalidraw.com/l/A403qDUZDJv/7g0s81HDplN" target="_blank" rel="noopener">&#128506; Visual Map &#8599;</a>
 </div>
 

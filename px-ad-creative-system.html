@@ -204,6 +204,8 @@ body { font-family:'DM Sans',sans-serif; background:var(--surface); color:var(--
 .pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
 .pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
 .pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff; }
+.pb-sep { width:1px; height:16px; background:rgba(255,255,255,.14); margin:0 6px; flex:none; }
 
 /* Continuous learning-loop diagram */
 .loop { background:#1E293B; border:1px solid rgba(148,163,184,.18); border-radius:var(--r-lg); padding:24px 22px 20px; margin-bottom:28px; }
@@ -229,11 +231,13 @@ body { font-family:'DM Sans',sans-serif; background:var(--surface); color:var(--
 
 <!-- PLAYBOOK SWITCHER: links the four PX playbooks -->
 <div class="pb-switch">
-  <span class="pb-switch-label">PX Playbooks</span>
+  <a class="pb-switch-label" href="index.html">PX Playbooks</a>
   <a class="pb-tab active">Ad Creative</a>
   <a class="pb-tab" href="px-meta-scaling.html">Meta Scaling</a>
   <a class="pb-tab" href="px-funnel-system.html">Funnels</a>
   <a class="pb-tab soon">Data <span>soon</span></a>
+  <span class="pb-sep" aria-hidden="true"></span>
+  <a class="pb-tab" href="px-system-map.html">System Map</a>
 </div>
 
 <!-- HERO -->
