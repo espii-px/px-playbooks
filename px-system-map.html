@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PX System Map</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: PX framework page. Dark ink hero, then one centered column of sections; the repo tree is the centerpiece. */
+:root {
+  --ink: #0F172A; --ink2: #334155; --ink3: #64748B;
+  --surface: #F8FAFC; --card: #FFFFFF; --border: #E2E8F0;
+  --hero: #0F172A; --hero-fg: #F8FAFC; --hero-muted: #94A3B8;
+  --code-bg: #0F172A; --code-fg: #E2E8F0; --code-muted: #64748B;
+  --slot1: #2563EB; --slot1-bg: #EFF6FF;
+  --slot3: #059669; --slot3-bg: #ECFDF5;
+  --slot4: #D97706; --slot4-bg: #FFFBEB;
+  --slot5: #DB2777;
+  --slot6: #7C3AED; --slot6-bg: #F5F3FF;
+  --teal: #0F766E; --teal-bg: #F0FDFA;
+  --slate: #475569; --slate-bg: #F1F5F9;
+  --t-blue: #93C5FD; --t-green: #6EE7B7; --t-amber: #FCD34D; --t-pink: #F9A8D4; --t-purple: #C4B5FD; --t-teal: #5EEAD4; --t-slate: #CBD5E1;
+  --display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --ink: #F1F5F9; --ink2: #CBD5E1; --ink3: #94A3B8;
+  --surface: #0B1120; --card: #131C2E; --border: #1E293B;
+  --hero: #020617; --hero-fg: #F8FAFC; --hero-muted: #94A3B8;
+  --code-bg: #020617; --code-fg: #E2E8F0; --code-muted: #64748B;
+  --slot1: #60A5FA; --slot1-bg: #172554;
+  --slot3: #34D399; --slot3-bg: #052E25;
+  --slot4: #FBBF24; --slot4-bg: #3B2405;
+  --slot5: #F472B6;
+  --slot6: #A78BFA; --slot6-bg: #2E1065;
+  --teal: #2DD4BF; --teal-bg: #042F2E;
+  --slate: #94A3B8; --slate-bg: #1E293B;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --ink: #F1F5F9; --ink2: #CBD5E1; --ink3: #94A3B8;
+  --surface: #0B1120; --card: #131C2E; --border: #1E293B;
+  --hero: #020617; --hero-fg: #F8FAFC; --hero-muted: #94A3B8;
+  --code-bg: #020617; --code-fg: #E2E8F0; --code-muted: #64748B;
+  --slot1: #60A5FA; --slot1-bg: #172554;
+  --slot3: #34D399; --slot3-bg: #052E25;
+  --slot4: #FBBF24; --slot4-bg: #3B2405;
+  --slot5: #F472B6;
+  --slot6: #A78BFA; --slot6-bg: #2E1065;
+  --teal: #2DD4BF; --teal-bg: #042F2E;
+  --slate: #94A3B8; --slate-bg: #1E293B;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface); color: var(--ink2); font-family: var(--body); font-size: 15px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--display); color: var(--ink); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+code { font-family: var(--mono); font-size: 0.86em; background: var(--slate-bg); color: var(--ink); padding: 1px 6px; border-radius: 4px; }
+
+.hero { background: var(--hero); color: var(--hero-fg); padding-block: 56px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); text-align: center; }
+.hero-label { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hero-muted); margin-bottom: 14px; }
+.hero h1 { color: var(--hero-fg); font-size: clamp(28px, 5vw, 46px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; }
+.hero h1 span { color: #5EEAD4; }
+.hero p.sub { color: var(--hero-muted); max-width: 580px; margin: 0 auto 28px; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.chip { font-family: var(--display); font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid #334155; color: #E2E8F0; text-decoration: none; display: inline-flex; align-items: center; gap: 7px; }
+.chip:hover, .chip:focus-visible { border-color: #5EEAD4; outline: none; }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 48px; }
+section { display: grid; gap: 16px; min-width: 0; }
+.sec-label { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink3); }
+section h2 { font-size: clamp(21px, 3vw, 26px); font-weight: 700; letter-spacing: -0.01em; }
+.lede { max-width: 64ch; }
+
+.parts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.part { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 18px; display: grid; gap: 6px; align-content: start; border-top: 3px solid var(--c); }
+.part h3 { font-size: 16px; font-weight: 600; font-family: var(--mono); }
+.part p { font-size: 14px; }
+
+.tree { background: var(--code-bg); color: var(--code-fg); border-radius: var(--r-lg); padding: 22px 24px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.75; }
+.tree pre { margin: 0; font: inherit; }
+.tree .c { color: var(--code-muted); }
+.tree .d { color: #F8FAFC; font-weight: 500; }
+.tree .b { color: var(--t-blue); } .tree .g { color: var(--t-green); } .tree .a { color: var(--t-amber); }
+.tree .p { color: var(--t-pink); } .tree .v { color: var(--t-purple); } .tree .t { color: var(--t-teal); } .tree .s { color: var(--t-slate); }
+.tree .new { color: #F8FAFC; background: rgba(124,58,237,.35); border-radius: 3px; padding: 0 4px; font-size: 11px; }
+
+.runs { display: grid; gap: 10px; }
+.run { display: grid; grid-template-columns: 170px minmax(0, 1fr) auto; gap: 16px; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 18px; }
+.when { font-family: var(--display); font-weight: 600; color: var(--ink); font-size: 14px; }
+.when small { display: block; font-weight: 500; color: var(--ink3); font-size: 12px; }
+.what strong { color: var(--ink); font-weight: 600; display: block; }
+.what span { font-size: 14px; }
+.where { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap; background: var(--bg); color: var(--fg); }
+.w-server { --bg: var(--teal-bg); --fg: var(--teal); }
+.w-github { --bg: var(--slot6-bg); --fg: var(--slot6); }
+.w-mac { --bg: var(--slot4-bg); --fg: var(--slot4); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--card); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); background: var(--slate-bg); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { color: var(--ink); }
+table.files td:first-child { white-space: nowrap; }
+tr.grp td { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slot1); background: var(--slot1-bg); padding-block: 8px; white-space: normal; }
+
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; counter-reset: s; }
+.step { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 18px; display: grid; gap: 6px; align-content: start; }
+.step::before { counter-increment: s; content: "Step " counter(s); font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+.step strong { color: var(--ink); font-family: var(--display); font-weight: 600; }
+.step p { font-size: 14px; }
+
+/* Funnel strategy */
+.goal { background: var(--slot6-bg); border-left: 4px solid var(--slot6); border-radius: var(--r-md); padding: 20px 22px; }
+.goal p { color: var(--ink); font-size: 16px; line-height: 1.65; }
+.goal .tag { display: block; font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slot6); margin-bottom: 8px; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.stage { font-family: var(--display); font-size: 12px; font-weight: 600; color: var(--ink); background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px; white-space: nowrap; }
+.stage b { color: var(--slot6); font-weight: 700; margin-right: 4px; }
+.flow .arr { color: var(--ink3); font-size: 12px; }
+.loop { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.loop .step::before { color: var(--slot6); }
+.handover { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ho { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 12px 14px; font-size: 14px; }
+.ho strong { display: block; color: var(--ink); font-family: var(--display); font-weight: 600; }
+
+footer { font-size: 13px; color: var(--ink3); border-top: 1px solid var(--border); padding-top: 18px; }
+
+@media (max-width: 720px) {
+  .parts, .steps, .loop, .handover { grid-template-columns: minmax(0, 1fr); }
+  .run { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .where { justify-self: start; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-label"><a href="index.html" style="color:inherit;text-decoration:none">PX Playbooks</a> · Systems</p>
+  <h1>The PX <span>System Map</span></h1>
+  <p class="sub">Everything PX runs lives in one private GitHub repo instead of five. Each part has its own folder, so a single prompt, template or script can be updated on its own without touching the rest.</p>
+  <nav class="chips" aria-label="Sections">
+    <a class="chip" href="#map"><span class="dot" style="background:#5EEAD4"></span>The repo</a>
+    <a class="chip" href="#funnel"><span class="dot" style="background:#A78BFA"></span>Funnel strategy</a>
+    <a class="chip" href="#client"><span class="dot" style="background:#93C5FD"></span>A client folder</a>
+    <a class="chip" href="#runs"><span class="dot" style="background:#C4B5FD"></span>What runs when</a>
+    <a class="chip" href="#new"><span class="dot" style="background:#FCD34D"></span>Where new work goes</a>
+    <a class="chip" href="#change"><span class="dot" style="background:#F9A8D4"></span>Changing a report</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section aria-labelledby="parts-h">
+    <p class="sec-label">Three parts</p>
+    <h2 id="parts-h">Clients, playbooks, systems</h2>
+    <div class="parts">
+      <div class="part" style="--c: var(--slot1)"><h3>clients/</h3><p>One folder per client: voice, compliance, offers, avatars, winners, history and their Drive docs. One per client, plus a template for new ones. <a href="#client" style="color:var(--slot1)">What's inside</a></p></div>
+      <div class="part" style="--c: var(--slot4)"><h3>playbooks/</h3><p>How PX does things, true for every client: methodology, taxonomy, roles, the ad library, SOPs, the funnel framework and the design system.</p></div>
+      <div class="part" style="--c: var(--teal)"><h3>systems/</h3><p>The code that does the work: PAL, the Monday and EOW updates, Creative OS, the Meta and funnel analyses, the Meta launcher and the rest.</p></div>
+    </div>
+  </section>
+
+  <section id="map" aria-labelledby="map-h">
+    <p class="sec-label">The repo</p>
+    <h2 id="map-h">The full map</h2>
+    <p class="lede">Every folder has an <code>INDEX.md</code> that says what's in it. Start there.</p>
+    <div class="tree" role="region" aria-label="Repo folder tree" tabindex="0"><pre><span class="d">the repo</span>
+├── <span class="d">CLAUDE.md</span>                 <span class="c">router for agents: which INDEX to read first</span>
+├── <span class="d">MIGRATION.md</span>              <span class="c">where everything used to live</span>
+├── <span class="d">.claude/skills/</span>           <span class="c">client-audit, eow-update, meta-analysis</span>
+│
+├── <span class="b">clients/</span>                  <span class="c">one folder per client</span>
+│   ├── <span class="b">_template/</span>            <span class="c">copy this for a new client</span>
+│   └── <span class="b">&lt;client&gt;/</span>              <span class="c">one per client, same files in each</span>
+│
+├── <span class="a">playbooks/</span>                <span class="c">how PX does things, markdown only</span>
+│   ├── <span class="a">methodology/</span>          <span class="c">rulebooks</span>
+│   ├── <span class="a">taxonomy/</span>             <span class="c">ad naming and tagging standard</span>
+│   ├── <span class="a">roles/</span>                <span class="c">role prompts: copywriter, strategist...</span>
+│   ├── <span class="a">library/</span>              <span class="c">examples, prompts, execution styles</span>
+│   ├── <span class="a">sops/</span>                  <span class="c">step-by-step procedures</span>
+│   ├── <span class="v">funnels/</span>              <span class="c">funnel strategy: principles, stage tree, SOPs, trainings</span> <span class="new">new</span>
+│   ├── <span class="a">client-audit/</span>          <span class="c">how an audit is done</span>
+│   └── <span class="a">design-system.md</span>      <span class="c">the PX look for every page and doc</span>
+│
+├── <span class="t">systems/</span>                  <span class="c">code that runs</span>
+│   ├── <span class="t">pal/</span>                  <span class="c">PAL, the #PAL Slack bot</span>
+│   │   └── <span class="t">tools/</span>            <span class="c">meta, ghl, drive, slack, clickup, report, meta-analysis, funnel-analysis</span>
+│   ├── <span class="v">reporting/</span>            <span class="c">Monday + EOW client updates, Funnel Canary</span>
+│   │   └── <span class="v">notes/</span>            <span class="c">per-client notes for "Outstanding From You"</span>
+│   ├── <span class="v">funnel-analysis/</span>      <span class="c">finds the funnel constraint, writes the handover</span> <span class="new">new</span>
+│   ├── <span class="b">meta-analysis/</span>        <span class="c">the Meta Ads Diagnostic page per client</span> <span class="new">new</span>
+│   ├── <span class="g">creative-os/</span>          <span class="c">newsletter + briefs</span>
+│   │   └── <span class="g">newsletter/  briefs/  system3/  tools/</span>
+│   ├── <span class="p">pal-media-buyer/</span>      <span class="c">the Meta launcher</span>
+│   ├── <span class="b">client-audit/</span>         <span class="c">audit docs, audit pages, ad account analysis</span>
+│   ├── <span class="p">image-ads/</span>            <span class="c">AI static ads</span>
+│   ├── <span class="a">playbooks-site/</span>       <span class="c">the public playbooks site</span>
+│   └── <span class="s">shared/</span>               <span class="c">GHL and the other shared connections</span>
+│
+└── <span class="s">archive/</span>                  <span class="c">retired code, kept for reference</span></pre></div>
+  </section>
+
+  <section id="funnel" aria-labelledby="funnel-h">
+    <p class="sec-label">Funnel strategy</p>
+    <h2 id="funnel-h">Find the bottleneck, then improve it</h2>
+    <div class="goal">
+      <span class="tag">The goal</span>
+      <p>Find the choke point in the funnel by using quantitative data to see where the bottleneck is. Use qualitative data to come up with a hypothesis, and then figure out how to keep improving the funnel. Remember, the funnel is not random marketing activities. It is an acquisition system, and every system is constrained by some sort of bottleneck. All you want to do is find where you can improve it and get better results for the client.</p>
+    </div>
+    <p class="lede">Every funnel is read as the same 11 stages, top to bottom. A stage can only be judged once the stages above it are healthy, so the work always starts at the top.</p>
+    <div class="flow" aria-label="The 11 funnel stages">
+      <span class="stage"><b>1</b>Budget</span><span class="arr">→</span>
+      <span class="stage"><b>2</b>Traffic cost</span><span class="arr">→</span>
+      <span class="stage"><b>3</b>Traffic fit</span><span class="arr">→</span>
+      <span class="stage"><b>4</b>Click to page</span><span class="arr">→</span>
+      <span class="stage"><b>5</b>Page and offer</span><span class="arr">→</span>
+      <span class="stage"><b>6</b>Form</span><span class="arr">→</span>
+      <span class="stage"><b>7</b>Tracking</span><span class="arr">→</span>
+      <span class="stage"><b>8</b>Lead quality</span><span class="arr">→</span>
+      <span class="stage"><b>9</b>Booking</span><span class="arr">→</span>
+      <span class="stage"><b>10</b>Show-up</span><span class="arr">→</span>
+      <span class="stage"><b>11</b>Close</span>
+    </div>
+    <div class="steps loop">
+      <div class="step"><strong>Find the constraint</strong><p>The numbers say which stage is off. <code>@PAL funnel analysis &lt;client&gt;</code> walks all 11 against the client's targets or its own history, for 28 days and the last 7.</p></div>
+      <div class="step"><strong>Form a hypothesis</strong><p>Calls, recordings, lead notes and the page say why. The stage's SOP in <code>playbooks/funnels/</code> lists what to check, in order.</p></div>
+      <div class="step"><strong>Change one thing</strong><p>One test at a time, so we know which change worked. Never rebuild a funnel that works.</p></div>
+      <div class="step"><strong>Review and repeat</strong><p>Check the success metric on the review date, then find the next bottleneck. There is always one.</p></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Part</th><th>Where</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>The framework</td><td><code>playbooks/funnels/</code></td><td>11 principles, the metrics, the diagnosis tree, an SOP per problem (lead volume, technical QA, lead quality, booking, show rate, close rate) and 21 training videos with transcripts</td></tr>
+          <tr><td>Funnel analysis</td><td><code>systems/funnel-analysis/</code></td><td>Meta for traffic, opt-ins and bookings; GHL for everything after; the Lead Tracker where a client has no GHL. Names the constraint and writes the handover</td></tr>
+          <tr><td>Funnel Canary</td><td><code>systems/reporting/canary.py</code></td><td>Daily alarm for silent tracking breaks. Being reworked to report in the same 11 stages</td></tr>
+          <tr><td>Playbook page</td><td>playbooks site</td><td>The Funnel System, for the team and for clients</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lede">Every diagnosis ends with the same handover. If the evidence isn't there, it says "inconclusive" and what needs to be measured. It never guesses.</p>
+    <div class="handover">
+      <div class="ho"><strong>1. Observed problem</strong>Which metric is outside its range?</div>
+      <div class="ho"><strong>2. Evidence</strong>Which report, date range and segment?</div>
+      <div class="ho"><strong>3. Likely cause</strong>What does the evidence suggest?</div>
+      <div class="ho"><strong>4. Next action</strong>The single change or test.</div>
+      <div class="ho"><strong>5. Success metric</strong>The number that must improve.</div>
+      <div class="ho"><strong>6. Review date</strong>When the team checks the result.</div>
+    </div>
+  </section>
+
+  <section id="client" aria-labelledby="client-h">
+    <p class="sec-label">Inside a client folder</p>
+    <h2 id="client-h">Everything we know about one client, in one place</h2>
+    <p class="lede">Every client folder starts as a copy of <code>clients/_template/</code>. The briefs, the newsletter and PAL read these files, so the more complete a folder is, the more on-brand and compliant everything they write.</p>
+    <div class="table-wrap">
+      <table class="files">
+        <thead><tr><th>File</th><th>What it holds</th><th>Filled by</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="3">Who they are</td></tr>
+          <tr><td><code>brand-voice.md</code></td><td>How they sound, their words, what to avoid</td><td>Team</td></tr>
+          <tr><td><code>compliance.md</code></td><td>What we can and can't say, and the claims waiting on proof</td><td>Team + client</td></tr>
+          <tr><td><code>avatars-and-sub-niches.md</code></td><td>Who buys, the sub niches, who they're not for, objections</td><td>Team, Creative OS</td></tr>
+          <tr><td><code>offer-matrix.md</code></td><td>Paid and free offers, prices, guarantee, the sales process</td><td>Game plan</td></tr>
+          <tr><td><code>stakeholder-notes.md</code></td><td>Who we deal with and how to talk to each of them</td><td>Team, calls</td></tr>
+          <tr class="grp"><td colspan="3">What's happening</td></tr>
+          <tr><td><code>initiatives.md</code></td><td>What matters most to them right now, dated</td><td>Team, meetings</td></tr>
+          <tr><td><code>strategy-tracker.md</code></td><td>Running history: decisions, launches, wins, misses</td><td>After every brief, launch and call</td></tr>
+          <tr><td><code>winners.md</code></td><td>Their winning ads and why they work</td><td>Meta + team</td></tr>
+          <tr><td><code>winners-log.json</code></td><td>Every winner over time</td><td>Sunday newsletter run</td></tr>
+          <tr><td><code>media-buying-strategy.values.json</code></td><td>The game plan's budgets, audiences, events and targets</td><td>Game plan</td></tr>
+          <tr class="grp"><td colspan="3">Learned and produced</td></tr>
+          <tr><td><code>learning/</code></td><td>Copy taste and brief preferences, learned from their feedback</td><td>Feedback</td></tr>
+          <tr><td><code>briefs/</code></td><td>Every brief as text; the Google Doc is the published copy</td><td>Creative OS</td></tr>
+          <tr><td><code>audit/</code>, <code>pages/</code></td><td>The client audit tabs and their web pages</td><td>Client audit</td></tr>
+          <tr><td><code>meta-analysis/</code>, <code>funnel-analysis/</code></td><td>Every Meta analysis page and funnel analysis, dated, with its facts</td><td>PAL commands</td></tr>
+          <tr><td><code>notes/</code></td><td>Dated working notes: handoffs, launch checks</td><td>Team</td></tr>
+          <tr><td><code>drive/</code></td><td>Copies of their Drive docs: game plan, questionnaire, transcripts, ad tracker. Edit in Drive, never here</td><td>Synced automatically</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="runs" aria-labelledby="runs-h">
+    <p class="sec-label">What runs when</p>
+    <h2 id="runs-h">The weekly schedule</h2>
+    <p class="lede">The scheduled jobs run on the PAL server from a copy of this repo. Each run pulls the latest version first, so a change pushed to GitHub is live by the next run.</p>
+    <div class="runs">
+      <div class="run"><p class="when">Always on</p><p class="what"><strong>PAL in #PAL</strong><span>Answers about any client's Meta, GHL, Drive, ClickUp and Slack. Short answers by default; ask for a report when you want the full format.</span></p><span class="where w-server">Server</span></div>
+      <div class="run"><p class="when">On demand</p><p class="what"><strong>Meta analysis and funnel analysis</strong><span><code>@PAL meta analysis &lt;client&gt;</code> builds the Meta Ads Diagnostic page. <code>@PAL funnel analysis &lt;client&gt;</code> names the funnel constraint and the handover. Both save to the client's folder.</span></p><span class="where w-server">Server</span></div>
+      <div class="run"><p class="when">Sunday 7am<small>Los Angeles</small></p><p class="what"><strong>Creative OS newsletter + briefs</strong><span>Weekly winners, iterations, new angles and briefs for every client.</span></p><span class="where w-server">Server</span></div>
+      <div class="run"><p class="when">Sunday 2pm<small>Los Angeles</small></p><p class="what"><strong>Monday client update drafts</strong><span>One draft per active client, built from Meta, the Lead Tracker and the client's Slack channel, sent to the account leads to review and send.</span></p><span class="where w-server">Server</span></div>
+      <div class="run"><p class="when">Daily</p><p class="what"><strong>Funnel Canary</strong><span>Checks client funnels are up and tracking. Moving to the funnel strategy's 11 stages.</span></p><span class="where w-github">GitHub</span></div>
+      <div class="run"><p class="when">On every push</p><p class="what"><strong>Playbooks site</strong><span>A change to the playbooks site source publishes itself in 1 to 2 minutes.</span></p><span class="where w-github">GitHub</span></div>
+      <div class="run"><p class="when">On demand</p><p class="what"><strong>PAL Media Buyer and client audits</strong><span>Launches paused campaigns from ClickUp and Frame.io; builds audit docs. Every audit runs the Meta analysis first.</span></p><span class="where w-mac">Mac</span></div>
+    </div>
+  </section>
+
+  <section id="new" aria-labelledby="new-h">
+    <p class="sec-label">Where new work goes</p>
+    <h2 id="new-h">One home for everything</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>If it is...</th><th>It goes in</th></tr></thead>
+        <tbody>
+          <tr><td>About one client: their offer, game plan, ads, audit, notes</td><td><code>clients/&lt;client&gt;/</code>, copied from <code>_template/</code></td></tr>
+          <tr><td>How PX does something, true for every client</td><td><code>playbooks/</code></td></tr>
+          <tr><td>Code, a script, a bot or a pipeline</td><td><code>systems/&lt;system&gt;/</code></td></tr>
+          <tr><td>Code more than one system needs (Google, Meta, GHL, ClickUp, Slack)</td><td><code>systems/shared/</code></td></tr>
+          <tr><td>A new scheduled job</td><td>Next to its code in <code>systems/</code>, run on the server, with a PAL command for ad hoc runs</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="change" aria-labelledby="change-h">
+    <p class="sec-label">Changing a report</p>
+    <h2 id="change-h">Edit from Slack, no GitHub needed</h2>
+    <p class="lede">Each client's Monday update has a template (its fields plus a notes file in <code>systems/reporting/notes/</code>). You can change it from #PAL.</p>
+    <div class="steps">
+      <div class="step"><strong>Ask PAL</strong><p>Use <code>report template</code> to see a client's template, or <code>report set</code> and <code>report notes</code> to change it.</p></div>
+      <div class="step"><strong>Approve it</strong><p>PAL proposes the change in the thread. A ✅ from an account lead approves it.</p></div>
+      <div class="step"><strong>It's saved</strong><p>PAL commits the change to the repo, and the next Sunday run uses it. Run one now with <code>report weekly</code>.</p></div>
+    </div>
+  </section>
+
+  <footer>Updated 28 Oct 2026. <a href="index.html" style="color:inherit">Back to the PX playbooks</a></footer>
+</main>
+</body>
+</html>
