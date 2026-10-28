@@ -204,7 +204,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
 │   ├── <span class="a">taxonomy/</span>             <span class="c">ad naming and tagging standard</span>
 │   ├── <span class="a">roles/</span>                <span class="c">role prompts: copywriter, strategist...</span>
 │   ├── <span class="a">library/</span>              <span class="c">examples, prompts, execution styles</span>
-│   ├── <span class="a">sops/</span>                  <span class="c">step-by-step procedures</span>
+│   ├── <span class="a">sops/</span>                  <span class="c">step-by-step procedures, incl. Red Account Recovery</span>
 │   ├── <span class="v">funnels/</span>              <span class="c">funnel strategy: principles, stage tree, SOPs, trainings</span> <span class="new">new</span>
 │   ├── <span class="a">client-audit/</span>          <span class="c">how an audit is done</span>
 │   └── <span class="a">design-system.md</span>      <span class="c">the PX look for every page and doc</span>
@@ -261,6 +261,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
           <tr><td>The framework</td><td><code>playbooks/funnels/</code></td><td>11 principles, the metrics, the diagnosis tree, an SOP per problem (lead volume, technical QA, lead quality, booking, show rate, close rate) and 21 training videos with transcripts</td></tr>
           <tr><td>Funnel analysis</td><td><code>systems/funnel-analysis/</code></td><td>Meta for traffic, opt-ins and bookings; GHL for everything after; the Lead Tracker where a client has no GHL. Names the constraint and writes the handover</td></tr>
           <tr><td>Funnel Canary</td><td><code>systems/reporting/canary.py</code></td><td>Daily alarm for silent tracking breaks. Being reworked to report in the same 11 stages</td></tr>
+          <tr><td>Red Account Recovery</td><td><code>playbooks/sops/</code></td><td>Weekly Red/Yellow/Green rating and the recovery steps; its diagnose step is the funnel analysis</td></tr>
           <tr><td>Playbook page</td><td>playbooks site</td><td>The Funnel System, for the team and for clients</td></tr>
         </tbody>
       </table>
@@ -274,6 +275,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
       <div class="ho"><strong>5. Success metric</strong>The number that must improve.</div>
       <div class="ho"><strong>6. Review date</strong>When the team checks the result.</div>
     </div>
+    <p class="lede"><strong style="color:var(--ink)">When an account goes Red.</strong> Every client is rated Red, Yellow or Green each week on performance and on sentiment. Yellow is where we intervene. A Red account runs the funnel analysis within 48 hours, the handover becomes the recovery plan (one root cause, up to three actions, one checkpoint metric two weeks out), the client hears it from us first, and it escalates if the checkpoint is missed.</p>
   </section>
 
   <section id="client" aria-labelledby="client-h">
