@@ -347,6 +347,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
     <div class="add-chips">
       <span class="chips-label">Also:</span>
       <button class="add-chip chip-slot6" onclick="switchTab('trouble')">When it is wrong or stuck</button>
+      <button class="add-chip chip-slate" onclick="switchTab('workbench')">PAL Workbench (Claude Code)</button>
       <button class="add-chip chip-slate" onclick="switchTab('structure')">How it is built</button>
     </div>
   </div>
@@ -362,6 +363,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
   <button class="tab-btn" data-tab="teach" onclick="switchTab('teach')"><span class="dot" style="background:var(--slot5)"></span>Teaching PAL</button>
   <div class="tab-divider"></div>
   <button class="tab-btn" data-tab="trouble" onclick="switchTab('trouble')"><span class="dot" style="background:var(--slot6)"></span>Wrong or stuck</button>
+  <button class="tab-btn" data-tab="workbench" onclick="switchTab('workbench')"><span class="dot" style="background:var(--teal)"></span>PAL Workbench</button>
   <div class="tab-divider"></div>
   <button class="tab-btn" data-tab="structure" onclick="switchTab('structure')"><span class="dot" style="background:var(--ink2)"></span>Structure</button>
 </nav>
@@ -389,6 +391,11 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
       <div class="ov-card ov-slot4" onclick="switchTab('approvals')"><span class="ov-tag">Writes</span><span class="ov-name">Changes and approvals</span><span class="ov-desc">What PAL can change, and why nothing happens until an approver ticks it.</span></div>
       <div class="ov-card ov-slot5" onclick="switchTab('teach')"><span class="ov-tag">Learning</span><span class="ov-name">Teaching PAL</span><span class="ov-desc">How a correction becomes a saved lesson, and how report preferences stick.</span></div>
       <div class="ov-card ov-slot6" onclick="switchTab('trouble')"><span class="ov-tag">Support</span><span class="ov-name">When it is wrong or stuck</span><span class="ov-desc">Timeouts, missing data, the monthly budget, and who to tell.</span></div>
+    </div>
+
+    <div class="sec">Beyond Slack</div>
+    <div class="ov-grid">
+      <div class="ov-card ov-slate" onclick="switchTab('workbench')"><span class="ov-tag">Claude Code</span><span class="ov-name">PAL Workbench</span><span class="ov-desc">Launch ads, run client audits and change CRM settings from Claude Code, with a person approving each step.</span></div>
     </div>
 
     <div class="sec">Three rules PAL follows</div>
@@ -567,6 +574,60 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
       <div class="card"><div class="card-title slot6">"PAL is paused"</div><ul class="info-list"><li>The monthly budget is used up</li><li>PAL posts a notice in <code>#pal</code> and stops answering until it is topped up or the month rolls over</li><li>Tell the systems lead if you need it sooner</li></ul></div>
     </div>
     <div class="callout purple"><strong>Always worth doing:</strong> when PAL is wrong, say so in the thread instead of fixing it quietly. A corrected thread is how it stops making the same mistake.</div>
+  </div>
+
+  <!-- WORKBENCH -->
+  <div id="tab-workbench" class="tab-panel">
+    <div class="campaign-header header-teal">
+      <span class="badge badge-teal">Claude Code</span>
+      <div><h2 style="color:var(--teal-dark)">PAL Workbench</h2><p>The same PX systems, run from Claude Code on your own machine. PAL in Slack answers and drafts. The Workbench is where the work that changes things gets done.</p></div>
+    </div>
+    <div class="callout teal"><strong>Core job:</strong> run the PX systems that launch, build and change things, with a person in the seat approving each step.</div>
+
+    <div class="detail-grid">
+      <div class="dg-item"><div class="dg-label">Where</div><div class="dg-value">Claude Code, opened in the PX repository folder</div></div>
+      <div class="dg-item"><div class="dg-label">How</div><div class="dg-value">Ask in plain words, the same way you ask PAL. Claude reads the repository's rules before it acts</div></div>
+      <div class="dg-item"><div class="dg-label">Who</div><div class="dg-value">Team members who have been set up with Claude Code and the PX repository</div></div>
+      <div class="dg-item"><div class="dg-label">Difference from PAL</div><div class="dg-value">It can write: launch ads, build docs and pages, change CRM settings. You confirm before it does</div></div>
+    </div>
+
+    <div class="sec">When to use which</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title slot1">Use PAL in Slack when</div><ul class="info-list"><li>You want a number, a status or an explanation</li><li>You want a report draft or an analysis page</li><li>The rest of the team should see the answer</li><li>You are away from your desk</li></ul></div>
+      <div class="card"><div class="card-title teal">Use the Workbench when</div><ul class="info-list"><li>Something has to be launched, built or changed</li><li>The job has several steps and needs your judgement between them</li><li>You are working with files: creative, copy docs, pages</li><li>PAL's 20-minute limit is too short</li></ul></div>
+    </div>
+
+    <div class="sec">What you can run</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title teal">Ad launcher</div>
+        <p class="cmd"><code>launch ads</code></p>
+        <ul class="info-list"><li>Lists the tasks marked ready to launch and what each one still needs</li><li>Pulls creative and copy, then runs a dry run</li><li>Builds the campaigns in Meta, always paused. A person turns them on</li><li>Marks the tasks launched in ClickUp</li></ul></div>
+      <div class="card"><div class="card-title teal">Client audit</div>
+        <p class="cmd"><code>client audit for &lt;client&gt;</code></p>
+        <ul class="info-list"><li>Runs the Meta analysis first</li><li>Drafts each tab of the audit doc: overview, buyer psychology, media buying, ad creative, roadmap</li><li>Builds the audit page once the doc is signed off</li></ul></div>
+      <div class="card"><div class="card-title teal">Meta and funnel analysis</div>
+        <p class="cmd"><code>meta analysis for &lt;client&gt;</code></p>
+        <ul class="info-list"><li>The same pages PAL produces, with room to dig further</li><li>Follow-up questions on the same data without a time limit</li></ul></div>
+      <div class="card"><div class="card-title teal">Client reports</div>
+        <p class="cmd"><code>EOW update</code></p>
+        <ul class="info-list"><li>Monday and end of week updates for several clients at once</li><li>Drafts go to the person running it, never to a client channel</li></ul></div>
+      <div class="card"><div class="card-title teal">Creative OS</div>
+        <p class="cmd"><code>run the newsletter for &lt;client&gt;</code></p>
+        <ul class="info-list"><li>The weekly creative newsletter, concepts and briefs</li><li>Winners by sales, then bookings</li><li>Static image ad generation</li></ul></div>
+      <div class="card"><div class="card-title teal">CRM and tracking work</div>
+        <p class="cmd"><code>why are ad chats not being tagged for &lt;client&gt;?</code></p>
+        <ul class="info-list"><li>Reads workflows, calendars, tags and pipelines to find the cause</li><li>With your go-ahead, makes the fix and checks it against a saved copy</li><li>Bulk corrections to contacts, tested on a few first</li></ul></div>
+    </div>
+
+    <div class="sec">The rules it works under</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title slot4">Nothing goes live by itself</div><p style="font-size:13px;color:var(--ink2)">Every Meta launch is created paused. Budgets are not changed without asking. A person turns campaigns on.</p></div>
+      <div class="card"><div class="card-title slot4">Confirm before it writes</div><p style="font-size:13px;color:var(--ink2)">Changes to a client's CRM, a shared doc or anything hard to undo are shown first and run only on your word.</p></div>
+      <div class="card"><div class="card-title slot4">Dry run first</div><p style="font-size:13px;color:var(--ink2)">Launches and bulk changes run as a test before the real thing, and the result is checked afterwards.</p></div>
+    </div>
+
+    <div class="notes-box"><strong>Getting set up</strong>You need Claude Code installed, the PX repository on your machine, and your own access keys in the local secrets folder. Each system has a dry run to prove the setup works before anything real. Ask the systems lead to set you up.</div>
+    <div class="exclude-box"><strong>Keep in mind</strong>Pull the latest version of the repository before you start · never paste a key or password into a chat · two people should not run the launcher on the same tasks at once</div>
   </div>
 
   <!-- STRUCTURE -->
