@@ -69,6 +69,7 @@
   .tab-btn[data-tab="bonus"].active      { border-color:var(--bonus);   color:var(--bonus-dark); }
   .tab-btn[data-tab="winner"].active     { border-color:var(--win);     color:var(--win-dark); }
   .tab-btn[data-tab="structure"].active  { border-color:var(--ink2);    color:var(--ink); }
+  .tab-btn[data-tab="testing"].active    { border-color:var(--retarg);  color:var(--retarg-dark); }
   .tab-divider { width:1px; background:var(--border); margin:8px 0; flex-shrink:0; }
 
   /* MAIN */
@@ -313,6 +314,8 @@
 .pb-tab.active { color:#fff; background:rgba(147,197,253,.18); }
 .pb-tab.soon { color:#475569; cursor:default; pointer-events:none; }
 .pb-tab.soon span { font-size:9px; opacity:.7; margin-left:3px; text-transform:uppercase; letter-spacing:.06em; }
+a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff; }
+.pb-sep { width:1px; height:16px; background:rgba(255,255,255,.14); margin:0 6px; flex:none; }
 .pb-tab.map { color:#93C5FD; background:rgba(147,197,253,.1); margin-left:auto; }
 .pb-tab.map:hover { color:#fff; background:rgba(147,197,253,.22); }
 /* Hero visual-map link */
@@ -405,7 +408,7 @@
               <li><input type="checkbox" id="pl3d"><label for="pl3d">Conversion location: <span class="set">Website</span></label></li>
               <li><input type="checkbox" id="pl3e"><label for="pl3e">Pixel selected, performance goal: <span class="set">Maximise number of conversions</span>, conversion event: <span class="set">Lead</span></label></li>
               <li><input type="checkbox" id="pl3f"><label for="pl3f"><span class="val-off">Advantage+ audience: OFF</span><span class="why">Defaults to ON. Expand the Audience section and switch to original audience options, or your targeting below is only a suggestion.</span></label></li>
-              <li><input type="checkbox" id="pl3m"><label for="pl3m">Exclusions attached: <span class="set">Leads and Customers pools</span>, plus the <span class="set">Engaged pool</span> if retargeting is live on this account<span class="why">Blank exclusions means paying to re-acquire people who are already leads or customers. The pools are named <code>{Client} | LEADS | ...</code>, <code>| CUST |</code>, and <code>| ENG |</code> on the account. Full rules: Audience Pools in the Meta Scaling playbook.</span></label></li>
+              <li><input type="checkbox" id="pl3m"><label for="pl3m">Exclusions attached: <span class="set">Leads and Customers pools</span>. Never the Engaged pool, even with retargeting live<span class="why">Blank exclusions means paying to re-acquire people who are already leads or customers. The pools are named <code>{Client} | LEADS | ...</code>, <code>| CUST |</code>, and <code>| ENG |</code> on the account. Full rules: Audience Pools in the Meta Scaling playbook.</span></label></li>
               <li><input type="checkbox" id="pl3g"><label for="pl3g">Location set (default <span class="set">United States</span>)</label></li>
               <li><input type="checkbox" id="pl3h"><label for="pl3h">Age range set, confirm both ends<span class="why">Setting only a minimum gives you "30+" and pulls in expensive 65+ inventory.</span></label></li>
               <li><input type="checkbox" id="pl3i"><label for="pl3i">Gender set if the angle calls for it, otherwise All</label></li>
@@ -514,7 +517,7 @@
               <tr><td>Ad set</td><td>Conversion event</td><td>Lead</td></tr>
               <tr><td>Ad set</td><td>Advantage+ audience</td><td class="val-off">OFF</td></tr>
               <tr><td>Ad set</td><td>Detailed targeting</td><td>Empty (broad)</td></tr>
-              <tr><td>Ad set</td><td>Excluded custom audiences</td><td>Leads + Customers (+ Engaged if RT live)</td></tr>
+              <tr><td>Ad set</td><td>Excluded custom audiences</td><td>Leads + Customers. Never Engaged.</td></tr>
               <tr><td>Ad set</td><td>Placements</td><td>Manual, Audience Network off, everything else on</td></tr>
               <tr><td>Ad</td><td>Call to action</td><td>Learn more</td></tr>
               <tr><td>Ad</td><td>All creative enhancements</td><td class="val-off">OFF</td></tr>

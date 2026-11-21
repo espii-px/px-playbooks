@@ -69,6 +69,7 @@
   .tab-btn[data-tab="bonus"].active      { border-color:var(--bonus);   color:var(--bonus-dark); }
   .tab-btn[data-tab="winner"].active     { border-color:var(--win);     color:var(--win-dark); }
   .tab-btn[data-tab="structure"].active  { border-color:var(--ink2);    color:var(--ink); }
+  .tab-btn[data-tab="testing"].active    { border-color:var(--retarg);  color:var(--retarg-dark); }
   .tab-divider { width:1px; background:var(--border); margin:8px 0; flex-shrink:0; }
 
   /* MAIN */
@@ -370,6 +371,8 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
   <div class="tab-divider"></div>
   <button class="tab-btn" data-tab="checklists" onclick="switchTab('checklists')"><span class="dot" style="background:var(--ink2)"></span>Launch Checklists</button>
   <button class="tab-btn" data-tab="naming"    onclick="switchTab('naming')"><span class="dot" style="background:var(--ink2)"></span>Naming</button>
+  <div class="tab-divider"></div>
+  <button class="tab-btn" data-tab="testing"   onclick="switchTab('testing')"><span class="dot" style="background:var(--retarg)"></span>In Testing</button>
 </nav>
 
 <main class="main">
@@ -402,6 +405,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
       <div class="card"><div class="card-title win">Multiply winners</div><p style="font-size:13px;color:var(--ink2)">Once an ad proves itself by spend at KPI, create 4 hook variants, trimmed and extended. Launch them in a new CBO pack and find the next winner.</p></div>
     </div>
     <div class="ck-pointer"><span><strong>Who sees which campaign?</strong> Every account has three standard audience pools. Each stage targets or excludes them the same way on every account.</span><a class="jump" onclick="switchTab('audiences')">Open Audience Pools &#8594;</a></div>
+    <div class="ck-pointer"><span><strong>What is changing?</strong> Rules and methods being tested before they join the method, plus the backlog of ideas waiting for a test.</span><a class="jump" onclick="switchTab('testing')">Open In Testing &#8594;</a></div>
 
     <div class="sec">Creative Launch Volume: the bridge to Ad Creative</div>
     <div class="notes-box"><strong>Where media buying meets creative</strong>
@@ -588,6 +592,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
     </div>
     <div class="notes-box"><strong>Notes / Scaling Logic</strong>Often the highest ROI campaign as traffic volume increases. Scale retargeting budget proportionally as prospecting spend grows. Watch frequency. If it spikes, refresh creative before cutting budget.</div>
     <div class="exclude-box"><strong>Exclude from targeting</strong> Leads pool (bookers included) · Customers pool</div>
+    <div class="ck-pointer"><span><strong>Two rules on this tab are in testing.</strong> Launching retargeting on day one, and starting it at 10 to 15% of spend. The rules above stand until a test passes.</span><a class="jump" onclick="switchTab('testing')">Open In Testing &#8594;</a></div>
   </div>
 
   <!-- HOT NURTURE -->
@@ -797,6 +802,67 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
       </ul>
     </div>
     <div class="callout amber"><strong>Leads campaigns report "Unknown".</strong> Observed September 2026 across every PX ad account: Meta only splits results into new, engaged, and existing customers on Sales-objective campaigns. Every Leads campaign reports "Unknown", even on an account where segments are defined. On Leads campaigns the exclusions are the control. Segments are for reporting, where Meta supports it.</div>
+  </div>
+
+  <!-- IN TESTING -->
+  <div id="tab-testing" class="tab-panel retarg">
+    <div class="campaign-header header-retarg">
+      <span class="badge" style="background:var(--retarg)">Method · In Testing</span>
+      <div><h2 style="color:var(--retarg-dark)">In Testing and Backlog</h2><p>Rules and methods PX is trying before they become part of the method. Nothing on this tab is the rule yet. The rule is whatever the rest of this playbook says until a test passes.</p></div>
+    </div>
+    <div class="callout amber"><strong>How a rule changes.</strong> An idea starts in the backlog. To move into testing it needs the rule today, the change, the account, the measure, the pass line, and a review date, all written before it starts. A pass rewrites the rule in this playbook. A fail goes to the log with the numbers. Every test is judged on cost per booked call, never CPL or ROAS alone. One test per account at a time, so a result has one cause.</div>
+
+    <div class="sec">In testing</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title retarg">T1 · Retargeting live from day one</div>
+        <ul class="info-list">
+          <li><strong>Rule today:</strong> launch retargeting after 3 to 6 weeks of brand launch and 30+ days of traffic exposure.</li>
+          <li><strong>Change:</strong> launch retargeting with prospecting on day one. The Engaged pool is built at maximum windows before any launch, so a rebuilt account starts with people in it. TOFU and prospecting video fill it from the first day.</li>
+          <li><strong>Run on:</strong> the next new or rebuilt account. Record the Engaged pool size on launch day.</li>
+          <li><strong>Measure:</strong> retargeting cost per booked call against prospecting on the same account, plus retargeting frequency.</li>
+          <li><strong>Pass line (draft):</strong> over the first 28 days, retargeting books calls at or below prospecting's cost per booked call with 7-day frequency under 4.</li>
+          <li><strong>Review:</strong> 28 days after launch.</li>
+        </ul>
+        <p style="font-size:12px;color:var(--ink3);margin-top:10px">Approved 20 Nov 2026. Account not assigned.</p></div>
+      <div class="card"><div class="card-title retarg">T2 · Higher retargeting share</div>
+        <ul class="info-list">
+          <li><strong>Rule today:</strong> start retargeting at 3 to 5% of spend and raise it as the Engaged pool grows.</li>
+          <li><strong>Change:</strong> start at 10 to 15% of spend. Move toward 20% if the pass line holds.</li>
+          <li><strong>Run on:</strong> an account with a large Engaged pool and enough weekly booked calls to read. Not the T1 account until T1 has been read.</li>
+          <li><strong>Measure:</strong> blended account cost per booked call before and during, retargeting cost per booked call, retargeting frequency.</li>
+          <li><strong>Pass line (draft):</strong> over 14 days, blended cost per booked call is flat or lower and 7-day frequency stays under 4. Past 4, the pool is too small for the share. Step back down and record the pool size.</li>
+          <li><strong>Review:</strong> 14 days after the budget change.</li>
+        </ul>
+        <p style="font-size:12px;color:var(--ink3);margin-top:10px">Approved 20 Nov 2026. Account not assigned.</p></div>
+    </div>
+
+    <div class="sec">Backlog</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Idea</th><th>Why it might work</th><th>Before it can run</th></tr></thead>
+        <tbody>
+          <tr><td><strong>B1</strong></td><td>Same post across prospecting and retargeting</td><td>Likes, comments, and shares stack on one post, and the engager audience grows faster.</td><td>Confirm what the launcher does on a new retargeting launch. Duplicates already reuse the creative.</td></tr>
+          <tr><td><strong>B2</strong></td><td>Run the cold winners in retargeting next to the offer and proof ads</td><td>Identical ads on both sides isolate the audience as the only difference.</td><td>T1 live</td></tr>
+          <tr><td><strong>B3</strong></td><td>Tighten the video-view threshold when the Engaged pool stops converting</td><td>A loose threshold fills the pool with low-intent viewers.</td><td>A retargeting campaign that has gone flat</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">Decided against</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Idea</th><th>Why not</th></tr></thead>
+        <tbody>
+          <tr><td>One retargeting ad set per source (site, Facebook, Instagram, video)</td><td>At retargeting budgets no single ad set gets enough spend to read. One Engaged ad set plus the appointment-intent ad set stays.</td></tr>
+          <tr><td>Stop excluding leads and customers</td><td>In a call funnel an existing lead who re-submits is a duplicate, not a sale.</td></tr>
+          <tr><td>Interest targeting on cold</td><td>The default is broad. No evidence against it.</td></tr>
+          <tr><td>Exclude video viewers from prospecting to force new reach</td><td>Prospecting never excludes the Engaged pool.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec">Log</div>
+    <div class="notes-box"><strong>Finished tests</strong>None yet. Each finished test lands here with what ran, the numbers, and what changed in the playbook.</div>
   </div>
 
   <!-- STRUCTURE -->
@@ -1017,7 +1083,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
               <li><input type="checkbox" id="pl3d"><label for="pl3d">Conversion location: <span class="set">Website</span></label></li>
               <li><input type="checkbox" id="pl3e"><label for="pl3e">Pixel selected, performance goal: <span class="set">Maximise number of conversions</span>, conversion event: <span class="set">Lead</span></label></li>
               <li><input type="checkbox" id="pl3f"><label for="pl3f"><span class="val-off">Advantage+ audience: OFF</span><span class="why">Defaults to ON. Expand the Audience section and switch to original audience options, or your targeting below is only a suggestion.</span></label></li>
-              <li><input type="checkbox" id="pl3m"><label for="pl3m">Exclusions attached: <span class="set">Leads and Customers pools</span>, plus the <span class="set">Engaged pool</span> if retargeting is live on this account<span class="why">Blank exclusions means paying to re-acquire people who are already leads or customers. The pools are named <code>{Client} | LEADS | ...</code>, <code>| CUST |</code>, and <code>| ENG |</code> on the account. Full rules: Audience Pools in the Meta Scaling playbook.</span></label></li>
+              <li><input type="checkbox" id="pl3m"><label for="pl3m">Exclusions attached: <span class="set">Leads and Customers pools</span>. Never the Engaged pool, even with retargeting live<span class="why">Blank exclusions means paying to re-acquire people who are already leads or customers. The pools are named <code>{Client} | LEADS | ...</code>, <code>| CUST |</code>, and <code>| ENG |</code> on the account. Full rules: Audience Pools in the Meta Scaling playbook.</span></label></li>
               <li><input type="checkbox" id="pl3g"><label for="pl3g">Location set (default <span class="set">United States</span>)</label></li>
               <li><input type="checkbox" id="pl3h"><label for="pl3h">Age range set, confirm both ends<span class="why">Setting only a minimum gives you "30+" and pulls in expensive 65+ inventory.</span></label></li>
               <li><input type="checkbox" id="pl3i"><label for="pl3i">Gender set if the angle calls for it, otherwise All</label></li>
@@ -1126,7 +1192,7 @@ a.pb-switch-label { text-decoration:none; } a.pb-switch-label:hover { color:#fff
               <tr><td>Ad set</td><td>Conversion event</td><td>Lead</td></tr>
               <tr><td>Ad set</td><td>Advantage+ audience</td><td class="val-off">OFF</td></tr>
               <tr><td>Ad set</td><td>Detailed targeting</td><td>Empty (broad)</td></tr>
-              <tr><td>Ad set</td><td>Excluded custom audiences</td><td>Leads + Customers (+ Engaged if RT live)</td></tr>
+              <tr><td>Ad set</td><td>Excluded custom audiences</td><td>Leads + Customers. Never Engaged.</td></tr>
               <tr><td>Ad set</td><td>Placements</td><td>Manual, Audience Network off, everything else on</td></tr>
               <tr><td>Ad</td><td>Call to action</td><td>Learn more</td></tr>
               <tr><td>Ad</td><td>All creative enhancements</td><td class="val-off">OFF</td></tr>
