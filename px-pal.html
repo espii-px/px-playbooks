@@ -387,7 +387,7 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
 
     <div class="ov-grid">
       <div class="ov-card ov-slot1" onclick="switchTab('ask')"><span class="ov-tag">Start here</span><span class="ov-name">Ask anything</span><span class="ov-desc">Plain-language questions PAL answers, with examples to copy.</span></div>
-      <div class="ov-card ov-slot2" onclick="switchTab('commands')"><span class="ov-tag">Named jobs</span><span class="ov-name">Commands</span><span class="ov-desc">Reports, Meta analysis, funnel analysis and funnel watch. What to type and what comes back.</span></div>
+      <div class="ov-card ov-slot2" onclick="switchTab('commands')"><span class="ov-tag">Named jobs</span><span class="ov-name">Commands</span><span class="ov-desc">Reports, Meta analysis, funnel analysis, tracking watch and performance watch. What to type and what comes back.</span></div>
       <div class="ov-card ov-slot3" onclick="switchTab('reads')"><span class="ov-tag">Sources</span><span class="ov-name">What it reads</span><span class="ov-desc">Meta, the CRM, ClickUp, Drive, Slack and the playbooks, and the limits of each.</span></div>
       <div class="ov-card ov-slot4" onclick="switchTab('approvals')"><span class="ov-tag">Writes</span><span class="ov-name">Changes and approvals</span><span class="ov-desc">What PAL can change, and why nothing happens until an approver ticks it.</span></div>
       <div class="ov-card ov-slot5" onclick="switchTab('teach')"><span class="ov-tag">Learning</span><span class="ov-name">Teaching PAL</span><span class="ov-desc">How a correction becomes a saved lesson, and how report preferences stick.</span></div>
@@ -485,9 +485,12 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
       <div class="card"><div class="card-title slot2">Funnel analysis</div>
         <p class="cmd"><code>@PAL funnel analysis &lt;client&gt;</code></p>
         <ul class="info-list"><li>Walks the 11 funnel stages for the last 28 days against the period before</li><li>Names the constraint and writes the handover: evidence, likely cause, next action, success metric, review date</li><li>Add <code>56d</code> or <code>90d</code> for a longer window</li><li>Under a minute</li></ul></div>
-      <div class="card"><div class="card-title slot2">Funnel watch</div>
+      <div class="card"><div class="card-title slot2">Tracking watch (daily)</div>
         <p class="cmd"><code>@PAL canary</code> or <code>@PAL canary &lt;client&gt;</code></p>
-        <ul class="info-list"><li>The daily check for silent tracking breaks</li><li>Posts breaks, errors and deploys to <code>#pal</code> every day at noon Los Angeles time</li><li>Ask for the full list, including watch-level findings</li><li>About a minute</li></ul></div>
+        <ul class="info-list"><li>The daily check for tracking that silently broke. It was called Funnel watch until 25 Nov 2026</li><li>Before it posts, it checks whether the live ad sets optimise to the event that stopped and whether another event still comes in</li><li>Posts breaks, errors and deploys to <code>#pal</code> every day at noon Los Angeles time, each with what it checked and the next step</li><li>Ask for the full list, including the findings it checked and judged not urgent</li></ul></div>
+      <div class="card"><div class="card-title slot2">Performance watch (weekly)</div>
+        <p class="cmd"><code>@PAL performance watch</code> or <code>@PAL performance watch &lt;client&gt;</code></p>
+        <ul class="info-list"><li>What changed from normal in every active client's funnel: cost per lead, CPM, lead quality, booking rate, show rate, close rate</li><li>Posts to <code>#pal</code> every Wednesday at 9am Los Angeles time</li><li>Last 28 days against the 12 weeks before, with the last 7 days for what is new</li><li>Each finding has what we see, the likely cause and the playbook step to open. About 30 seconds a client</li></ul></div>
     </div>
 
     <div class="sec">Not live yet</div>
