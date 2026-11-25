@@ -485,6 +485,9 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1
       <div class="card"><div class="card-title slot2">Funnel analysis</div>
         <p class="cmd"><code>@PAL funnel analysis &lt;client&gt;</code></p>
         <ul class="info-list"><li>Walks the 11 funnel stages for the last 28 days against the period before</li><li>Names the constraint and writes the handover: evidence, likely cause, next action, success metric, review date</li><li>Add <code>56d</code> or <code>90d</code> for a longer window</li><li>Under a minute</li></ul></div>
+      <div class="card"><div class="card-title slot2">Command list</div>
+        <p class="cmd"><code>@PAL commands</code> or <code>@PAL help</code></p>
+        <ul class="info-list"><li>PAL replies with every command it has, grouped: ask anything, client reports, analysis, watches</li><li>Instant, and it costs nothing: the list is sent without a model call</li></ul></div>
       <div class="card"><div class="card-title slot2">Tracking watch (daily)</div>
         <p class="cmd"><code>@PAL canary</code> or <code>@PAL canary &lt;client&gt;</code></p>
         <ul class="info-list"><li>The daily check for tracking that silently broke. It was called Funnel watch until 25 Nov 2026</li><li>Before it posts, it checks whether the live ad sets optimise to the event that stopped and whether another event still comes in</li><li>Posts breaks, errors and deploys to <code>#pal</code> every day at noon Los Angeles time, each with what it checked and the next step</li><li>Ask for the full list, including the findings it checked and judged not urgent</li></ul></div>
